@@ -2,19 +2,12 @@
 name = "bert-artisan-nlp"
 version = "0.1.0"
 description = "Analyse automatique d'entretiens d'artisans avec NER"
-authors = ["Aymeric Eyer <aymeric.eyer@example.com>"]
+authors = ["Aymeric Eyer <aymeric.eyer@gmail.com>"]
 license = ""  # À AJOUTER PLUS TARD
 readme = "README.md"
 repository = "https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans"
 keywords = ["nlp", "ner", "bert", "artisan", "interview"]
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-]
+
 
 packages = [
     { include = "models", from = "src" },
@@ -27,7 +20,6 @@ packages = [
 python = "^3.9"
 
 # Core NLP & ML
-torch = "^2.1.0"
 transformers = "^4.35.0"
 spacy = "^3.7.0"
 
