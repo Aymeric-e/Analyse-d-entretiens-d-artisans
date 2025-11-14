@@ -125,5 +125,5 @@ class InterviewCleaner:
 if __name__ == "__main__":
     cleaner = InterviewCleaner()
     cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_full.csv"), mode="full")
-    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned.csv"), mode="paragraph")
-    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_segmente.csv"), mode="sentence")
+    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_paragraph.csv"), mode="paragraph")
+    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_sentence.csv"), mode="sentence")

@@ -3,10 +3,18 @@ name = "bert-artisan-nlp"
 version = "0.1.0"
 description = "Analyse automatique d'entretiens d'artisans avec NER"
 authors = ["Aymeric Eyer <aymeric.eyer@gmail.com>"]
-license = ""  # À AJOUTER PLUS TARD
+license = "MIT"  # À vérifier
 readme = "README.md"
 repository = "https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans"
 keywords = ["nlp", "ner", "bert", "artisan", "interview"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Developers",
+    "Natural Language :: French"
+]
 
 
 packages = [
@@ -14,6 +22,9 @@ packages = [
     { include = "preprocessing", from = "src" },
     { include = "utils", from = "src" }
 ]
+
+include = ["README.md", "src/models/*", "src/preprocessing/*", "src/utils/*", "pyproject.toml","scripts/*", "tests/*"]
+exclude = [ "data"]
 
 
 [tool.poetry.dependencies]
@@ -69,3 +80,5 @@ addopts = "--cov=src/bert_artisan_nlp --cov-report=html"
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+
+[tool.poetry.scripts]
