@@ -1,0 +1,1 @@
+Projet industriel de 3A ICM qui a pour objectif de concevoir et expérimenter une méthode d’analyse automatique des entretiens d’artisans, en s’appuyant sur BERT et  des  techniques  de  NLP  et  NER. L’objectif est d’extraire des thèmes et entités pertinentes pour qualifier la relation  artisan/matière.
