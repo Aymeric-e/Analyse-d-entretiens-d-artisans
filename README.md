@@ -87,7 +87,6 @@ pip install dist/bert_artisan_nlp-0.1.0-py3-none-any.whl
 
 ```bash
 poetry run python scripts/1_clean.py        # Nettoyage
-poetry run python scripts/2_export.py       # Export HTML/TXT
 poetry run python scripts/3_detect_tools.py # Détection d'outils
 ```
 
