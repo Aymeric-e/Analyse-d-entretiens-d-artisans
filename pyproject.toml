@@ -1,0 +1,79 @@
+[tool.poetry]
+name = "bert-artisan-nlp"
+version = "0.1.0"
+description = "Analyse automatique d'entretiens d'artisans avec NER"
+authors = ["Aymeric Eyer <aymeric.eyer@example.com>"]
+license = ""  # À AJOUTER PLUS TARD
+readme = "README.md"
+repository = "https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans"
+keywords = ["nlp", "ner", "bert", "artisan", "interview"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+packages = [
+    { include = "models", from = "src" },
+    { include = "preprocessing", from = "src" },
+    { include = "utils", from = "src" }
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+# Core NLP & ML
+torch = "^2.1.0"
+transformers = "^4.35.0"
+spacy = "^3.7.0"
+
+# Data processing
+pandas = "^2.1.0"
+numpy = "^1.26.0"
+
+# File handling
+python-docx = "^1.1.0"
+
+# Utilities
+tqdm = "^4.66.0"
+protobuf = "^4.20.0"  # Nécessaire pour transformers
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+black = "^23.11.0"
+isort = "^5.12.0"
+pylint = "^3.0.0"
+flake8 = "^6.1.0"
+ruff = "^0.1.0"
+pre-commit = "^3.5.0"  # Pour les hooks git
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^7.2.0"
+sphinx-rtd-theme = "^2.0.0"
+sphinx-autodoc-typehints = "^1.25.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# Configuration des outils
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src/bert_artisan_nlp --cov-report=html"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
