@@ -211,7 +211,7 @@ if __name__ == "__main__":
     ]
     
     # Dossier de sortie
-    output_dir = Path("data/processed_tool")
+    output_dir = Path("data/processed_tool_ner")
     
     # Traiter tous les CSV et generer le dictionnaire
     detector.process_all_csvs(
