@@ -124,6 +124,14 @@ class InterviewCleaner:
 
 if __name__ == "__main__":
     cleaner = InterviewCleaner()
-    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_full.csv"), mode="full")
-    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_paragraph.csv"), mode="paragraph")
-    cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_sentence.csv"), mode="sentence")
+    input_dir = Path("data/raw")
+    out_dir = Path("data/processed")
+
+    print("\n=== NETTOYAGE : VERSION NON SEGMENTÉE ===")
+    cleaner.batch_process(input_dir, out_dir / "cleaned_full.csv", mode="full")
+
+    print("\n=== NETTOYAGE : VERSION PARAGRAPHE ===")
+    cleaner.batch_process(input_dir, out_dir / "cleaned_paragraph.csv", mode="paragraph")
+
+    print("\n=== NETTOYAGE : VERSION PAR PHRASE ===")
+    cleaner.batch_process(input_dir, out_dir / "cleaned_sentence.csv", mode="sentence")
