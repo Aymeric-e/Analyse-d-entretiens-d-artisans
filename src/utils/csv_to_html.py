@@ -19,17 +19,17 @@ def csv_to_html(csv_path, output_dir):
         print(f"Impossible de lire le CSV : {e}")
         sys.exit(1)
 
-    # CSS pour un rendu propre
+    # Nouveau style HTML (reprend le style du premier script)
     css_style = """
     <style>
-        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; background: white; }
-        th { background: #4CAF50; color: white; padding: 10px; }
-        td { padding: 8px; border-bottom: 1px solid #ddd; }
-        tr:nth-child(even) { background: #f2f2f2; }
-        tr:hover { background: #ddd; }
-        .container { max-width: 1100px; margin: auto; }
-        h2 { text-align: center; }
+    body { font-family: Arial, Helvetica, sans-serif; background:#f7f7fb; color:#222; padding:20px; }
+    .container { max-width:1200px; margin:auto; }
+    table { border-collapse: collapse; width:100%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+    th, td { padding:10px 12px; border-bottom:1px solid #eee; text-align:left; vertical-align:top; }
+    th { background:#263238; color:#fff; font-weight:600; position:sticky; top:0; }
+    tr:nth-child(even) td { background:#fbfcff; }
+    .code { font-family:"Courier New", monospace; font-size:0.95em; color:#333; }
+    .small { font-size:0.9em; color:#555; }
     </style>
     """
 

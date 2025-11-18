@@ -28,10 +28,7 @@ poetry.lock
 htmlcov/
 
 # Data
-data/processed_tool/*
-data/processed/*
-data/processed_tool/.gitkeep
-!data/processed/.gitkeep
+
 
 # Logs
 *.log
