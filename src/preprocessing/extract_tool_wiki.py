@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import csv
 from pathlib import Path
 
+#Liste des outils à exclure
+EXCEPTION = ["verre", "chaîne", "tour", "coin","bol", "plane", "niveau"]
+#tas ? Outil mais aussi expression pour "beacoup"
+
 def extract_tools():
     # URL de la page Wikipedia
     url = "https://fr.wikipedia.org/wiki/Liste_d'outils"
@@ -30,7 +34,9 @@ def extract_tools():
             #on veut supprimer les textes entre parenthèses
             if "(" in text:
                 text = text[:text.index("(")].strip()
-            tools.append(text)
+            #On exclut les exceptions
+            if text.lower() not in EXCEPTION:
+                tools.append(text)
 
     #On veut garder les mots entre Aérographe et Xylographe car le reste ne sont pas des outils
     start_index = None
