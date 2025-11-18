@@ -28,7 +28,8 @@ poetry.lock
 htmlcov/
 
 # Data
-
+data/processed_tool_comparaison_strict/
+data/processed/
 
 # Logs
 *.log
