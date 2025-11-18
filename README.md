@@ -6,8 +6,6 @@ Ceci est un projet réalisé dans le cadre de mes études qui a pour objectif de
 
 ---
 
-## A faire : 
-
 ## Contexte du projet
 
 Ce projet s’inscrit dans une exploration des relations entre **l’artisan** et **la matière**, en s’appuyant notamment sur les travaux décrits dans la thèse suivante : https://theses.fr/s394689  
