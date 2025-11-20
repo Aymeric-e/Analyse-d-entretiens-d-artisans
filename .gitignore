@@ -28,11 +28,14 @@ poetry.lock
 htmlcov/
 
 # Data
-data/processed_tool_comparaison_strict/
-data/processed/
+data/*
+!data/raw/
+!data/raw/**
+!data/list_tool.csv
+!data/recap_entretien.csv
 
 # Logs
 *.log
 
-# pyenv
+# p yenv
 .python-version
