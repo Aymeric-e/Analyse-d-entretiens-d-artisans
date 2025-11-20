@@ -91,9 +91,6 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
         print("Applying augmenter type:", augmenter_type)
         augmented_df = augment_dataframe(df, text_column, augmenter_type, num_aug)
         augmented_df_complete = pd.concat([augmented_df_complete, augmented_df], ignore_index=True)
-    
-    #Mise à jour des ids pour qu'ils soient uniques
-    augmented_df_complete.replace(0, 'id', range(1, len(augmented_df_complete) + 1))
         
 
     #Si le dossier n'existe pas, le créer
