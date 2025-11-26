@@ -32,6 +32,7 @@ python = "^3.9"
 
 # Core NLP & ML
 transformers = "^4.35.0"
+sacremoses = "^0.0.41" 
 spacy = "^3.7.0"
 nlpaug = "^1.1.10"
 nltk = "^3.8.0"

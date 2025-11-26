@@ -5,6 +5,9 @@ import os
 from tqdm import tqdm
 tqdm.pandas()
 
+# Désactiver le parallélisme des tokenizers pour éviter les avertissements
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 
 def augment_text(text, augmenter_type,num_aug):
     """
@@ -28,7 +31,10 @@ def augment_text(text, augmenter_type,num_aug):
         case _:
             raise ValueError("Augmenter non supporté: {}".format(augmenter_type))
 
-    augmented_texts = [augmenter.augment(text) for _ in range(num_aug)]
+    augmented_texts = []
+    for _ in range(num_aug):
+        text_augmented = augmenter.augment(text)[0].replace("[", "").replace("]", "").replace('"','')
+        augmented_texts.append(text_augmented)
     return augmented_texts
 
 def augment_dataframe(df, text_column, augmenter_type, num_aug):
@@ -60,15 +66,6 @@ def augment_dataframe(df, text_column, augmenter_type, num_aug):
     df_exploded[text_column] = df_exploded["augmented_texts"]
     df_exploded["augmentation_type"] = augmenter_type
 
-
-    # Créer une nouvelle colonne id unique
-    old_id_col = df_exploded.columns[0]       # colonne 0 du df
-    df_exploded["id"] = (
-        df_exploded[old_id_col].astype(str) 
-        + "_" 
-        + df_exploded["augmentation_type"]
-    )
-
     # Nettoyage
     df_exploded.drop(columns=["augmented_texts"], inplace=True)
 
@@ -85,13 +82,22 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
     augmenter_type (str): Type d augmenter.
     num_aug (int): Nombre d augmentation à faire par type.
     """
-    df = pd.read_csv(input_csv)
+    df = pd.read_csv(input_csv, sep=';')
     augmented_df_complete = df.copy()
+    augmented_df_complete["id"]= augmented_df_complete["id"].astype(str)
     for augmenter_type in augmenter_types:
         print("Applying augmenter type:", augmenter_type)
         augmented_df = augment_dataframe(df, text_column, augmenter_type, num_aug)
         augmented_df_complete = pd.concat([augmented_df_complete, augmented_df], ignore_index=True)
         
+    #trie par id alphabétique et nouvelle colonne id
+    old_id_col = augmented_df_complete.columns[0]       # colonne 0 du df
+    augmented_df_complete["id"] = (
+        augmented_df_complete[old_id_col].astype(str) 
+        + "_" 
+        + augmented_df_complete["augmentation_type"]
+    )
+    augmented_df_complete = augmented_df_complete.sort_values(by='id')
 
     #Si le dossier n'existe pas, le créer
     if not os.path.exists(output_csv):
@@ -101,11 +107,11 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
     # Si le output_csv est un dossier, créer le chemin complet
     if os.path.isdir(output_csv):
 
-        filename = os.path.basename(input_csv).replace(".csv", "_prepared.csv")
+        filename = os.path.basename(input_csv).replace(".csv", "_augmented.csv")
         output_csv = os.path.join(output_csv, filename)
 
     print("Saving augmented data to:", output_csv)
-    augmented_df_complete.to_csv(output_csv, index=False)
+    augmented_df_complete.to_csv(output_csv, index=False, sep=';')
 
 if __name__ == "__main__":
 

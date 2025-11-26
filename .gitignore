@@ -31,6 +31,8 @@ htmlcov/
 data/*
 !data/raw/
 !data/raw/**
+!data/annotation/**
+!data/annotation/
 !data/list_tool.csv
 !data/recap_entretien.csv
 
