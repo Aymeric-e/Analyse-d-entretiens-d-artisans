@@ -1,8 +1,9 @@
 import os
 import sys
 import pandas as pd
+import argparse
 
-def csv_to_html(csv_path, output_dir):
+def csv_to_html(csv_path, output_dir, separator):
     # Vérification CSV
     if not os.path.isfile(csv_path):
         print(f"Erreur : le fichier '{csv_path}' est introuvable.")
@@ -14,7 +15,7 @@ def csv_to_html(csv_path, output_dir):
 
     # Lit le CSV avec pandas
     try:
-        df = pd.read_csv(csv_path)
+        df = pd.read_csv(csv_path, sep=separator)
     except Exception as e:
         print(f"Impossible de lire le CSV : {e}")
         sys.exit(1)
@@ -60,11 +61,35 @@ def csv_to_html(csv_path, output_dir):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage : python csv_to_html.py <fichier.csv> <chemin_output>")
-        sys.exit(1)
 
-    csv_file = sys.argv[1]
-    output_dir = sys.argv[2]
 
-    csv_to_html(csv_file, output_dir)
+    parser = argparse.ArgumentParser(
+        description="Convertir un fichier CSV en une page HTML jolie"
+    )
+    parser.add_argument(
+        "--input",
+        required=True,
+        help="Chemin du fichier CSV à convertir"
+    )
+    parser.add_argument(
+        "--separator",
+        required=True,
+        help="Séparateur utilisé dans le CSV (ex: ; ou ,), par défaut ,",
+        default=","
+    )
+    parser.add_argument(
+        "--output-dir",
+        help="Dossier contenant le fichier html de sorti, par défault le même dossier que le CSV d'entrée",
+        default=None
+    )
+    
+    args = parser.parse_args()
+
+    print("CONVERSION CSV -> HTML")
+    print(f"Fichier d'entrée : {args.input}")
+
+    output_dir = args.output_dir if args.output_dir else args.input.rsplit("/", 1)[0]
+
+    csv_to_html(args.input, output_dir, args.separator)
+
+    
