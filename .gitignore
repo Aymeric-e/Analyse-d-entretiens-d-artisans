@@ -35,9 +35,16 @@ data/*
 !data/annotation/
 !data/list_tool.csv
 !data/recap_entretien.csv
+!data/verbalisation/
 
 # Logs
 *.log
 
 # p yenv
 .python-version
+
+#model
+models/
+
+#tmp
+tmp*/
