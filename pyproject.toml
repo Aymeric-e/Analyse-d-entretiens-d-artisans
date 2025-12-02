@@ -28,7 +28,7 @@ exclude = [ "data"]
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 
 # Core NLP & ML
 transformers = "^4.35.0"
@@ -37,6 +37,8 @@ nlpaug = "^1.1.10"
 nltk = "^3.8.0"
 scikit-learn = "^1.4.0"
 joblib = "^1.4.0"
+datasets = "^2.14.0"
+torch = "^2.2.0"
 
 # Data processing
 pandas = "^2.1.0"
@@ -52,6 +54,8 @@ protobuf = "^4.20.0"  # Nécessaire pour transformers
 # Scraping
 requests = "^2.32.0"
 beautifulsoup4 = "^4.12.0"
+pyarrow = "^22.0.0"
+accelerate = ">=0.26.0"
 
 
 

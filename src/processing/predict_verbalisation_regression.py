@@ -108,10 +108,10 @@ class VerbRegPredicter:
         predictions = self.predict(df['text'])
         
         # Add predictions to dataframe
-        df['difficulté_verbalisation'] = predictions
+        df['note_regression'] = predictions
         
         # Keep only required columns in right order
-        output_cols = ['filename', 'text', 'word_count', 'difficulté_verbalisation']
+        output_cols = ['filename', 'text', 'word_count', 'note_regression']
         df_output = df[output_cols]
         
         # Save
