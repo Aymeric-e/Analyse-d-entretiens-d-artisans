@@ -1,6 +1,0 @@
-{
-  "learning_rate": 5e-05,
-  "batch_size": 16,
-  "max_length": 256,
-  "num_epochs": 7
-}
