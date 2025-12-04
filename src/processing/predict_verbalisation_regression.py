@@ -46,7 +46,7 @@ class VerbRegPredicter:
         # Try comma first, then semicolon
         try:
             df = pd.read_csv(csv_path, sep=",")
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             df = pd.read_csv(csv_path, sep=";")
 
         # Validate required columns
@@ -64,7 +64,7 @@ class VerbRegPredicter:
         print("\nPrédiction des difficultés de verbalisation...")
 
         # Vectorize
-        X_vec = self.vectorizer.transform(texts)
+        X_vec = self.vectorizer.transform(texts)  # pylint: disable=invalid-name
 
         # Predict (0-3 scale)
         y_pred_0_3 = self.model.predict(X_vec)
@@ -83,13 +83,13 @@ class VerbRegPredicter:
 
     def save_predictions(self, df: pd.DataFrame, output_path: Path) -> None:
         """Save dataframe with predictions to CSV"""
-        print(f"\nSauvegarde des prédictions...")
+        print("\nSauvegarde des prédictions...")
 
         # Use semicolon separator as specified
         df.to_csv(output_path, sep=";", index=False)
 
         print(f"Résultats sauvegardés: {output_path}")
-        print(f"\nAperçu des premières lignes:")
+        print("\nAperçu des premières lignes:")
         print(df.head(10))
 
     def run(self, input_csv: Path, output_csv: Path) -> None:
@@ -120,9 +120,8 @@ class VerbRegPredicter:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Prédire la difficulté de verbalisation sur de nouvelles phrases"
-    )
+    """Main function to parse arguments and run prediction"""
+    parser = argparse.ArgumentParser(description="Prédire la difficulté de verbalisation sur de nouvelles phrases")
     parser.add_argument(
         "--input",
         type=Path,

@@ -40,7 +40,7 @@ class VerbRegTrainer:
         if missing:
             raise ValueError(f"Colonnes manquantes dans CSV: {missing}")
 
-        X = df["text"]
+        X = df["text"]  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
         print(f"Données chargées: {len(df)} phrases")
@@ -90,7 +90,7 @@ class VerbRegTrainer:
 
         return ridge_params
 
-    def prepare_features(self, X_train: pd.Series, X_test: pd.Series = None) -> tuple:
+    def prepare_features(self, X_train: pd.Series, X_test: pd.Series = None) -> tuple:  # pylint: disable=invalid-name
         """Vectorize text using TF-IDF with best parameters"""
         print("\nVectorisation TF-IDF avec paramètres optimaux...")
 
@@ -98,17 +98,17 @@ class VerbRegTrainer:
 
         self.vectorizer = TfidfVectorizer(**tfidf_params)
 
-        X_train_vec = self.vectorizer.fit_transform(X_train)
+        X_train_vec = self.vectorizer.fit_transform(X_train)  # pylint: disable=invalid-name
 
         if X_test is not None:
-            X_test_vec = self.vectorizer.transform(X_test)
+            X_test_vec = self.vectorizer.transform(X_test)  # pylint: disable=invalid-name
             print(f"Nombre de features TF-IDF: {X_train_vec.shape[1]}")
             return X_train_vec, X_test_vec
-        else:
-            print(f"Nombre de features TF-IDF: {X_train_vec.shape[1]}")
-            return X_train_vec, None
 
-    def train(self, X_train_vec, y_train) -> None:
+        print(f"Nombre de features TF-IDF: {X_train_vec.shape[1]}")
+        return X_train_vec, None
+
+    def train(self, X_train_vec, y_train) -> None:  # pylint: disable=invalid-name
         """Train Ridge regression model with best parameters"""
         print("\nEntraînement du modèle de régression avec paramètres optimaux...")
 
@@ -119,7 +119,7 @@ class VerbRegTrainer:
 
         print("Modèle entraîné avec succès.")
 
-    def evaluate(self, X_test_vec, y_test) -> dict:
+    def evaluate(self, X_test_vec, y_test) -> dict:  # pylint: disable=invalid-name
         """Evaluate model performance on test set"""
         print("\nÉvaluation du modèle...")
 
@@ -131,7 +131,7 @@ class VerbRegTrainer:
         rmse = np.sqrt(mse)
         r2 = r2_score(y_test, y_pred)
 
-        print(f"Résultats sur l'ensemble de test:")
+        print("Résultats sur l'ensemble de test:")
         print(f"  - R² score: {r2:.4f}")
         print(f"  - MAE: {mae:.4f}")
         print(f"  - RMSE: {rmse:.4f}")
@@ -142,8 +142,8 @@ class VerbRegTrainer:
         """Save trained model and vectorizer"""
         print("\nSauvegarde du modèle...")
 
-        model_path = self.model_dir / f"verbalisation_regressor.pkl"
-        vectorizer_path = self.model_dir / f"verbalisation_vectorizer.pkl"
+        model_path = self.model_dir / "verbalisation_regressor.pkl"
+        vectorizer_path = self.model_dir / "verbalisation_vectorizer.pkl"
 
         joblib.dump(self.model, model_path)
         joblib.dump(self.vectorizer, vectorizer_path)
@@ -160,18 +160,18 @@ class VerbRegTrainer:
         self.best_params = self.load_best_params(best_params_path)
 
         # Load data
-        X, y = self.load_data(csv_path)
+        X, y = self.load_data(csv_path)  # pylint: disable=invalid-name
 
         if with_eval:
             # Split pour évaluation
-            print(f"\nSéparation train/test (80/20) pour évaluation...")
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.2, random_state=42
+            print("\nSéparation train/test (80/20) pour évaluation...")
+            X_train, X_test, y_train, y_test = train_test_split(  # pylint: disable=invalid-name
+                X, y, test_size=0.2, random_state=42  # pylint: disable=invalid-name
             )
             print(f"Train: {len(X_train)}, Test: {len(X_test)}")
 
             # Features
-            X_train_vec, X_test_vec = self.prepare_features(X_train, X_test)
+            X_train_vec, X_test_vec = self.prepare_features(X_train, X_test)  # pylint: disable=invalid-name
 
             # Train
             self.train(X_train_vec, y_train)
@@ -183,7 +183,7 @@ class VerbRegTrainer:
             print(f"\nEntraînement sur tout le dataset ({len(X)} phrases)...")
 
             # Features
-            X_train_vec, _ = self.prepare_features(X)
+            X_train_vec, _ = self.prepare_features(X)  # pylint: disable=invalid-name
 
             # Train
             self.train(X_train_vec, y)
@@ -195,9 +195,8 @@ class VerbRegTrainer:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Entraîner le modèle avec les meilleurs hyperparamètres trouvés"
-    )
+    """Main function to parse arguments and run trainer"""
+    parser = argparse.ArgumentParser(description="Entraîner le modèle avec les meilleurs hyperparamètres trouvés")
     parser.add_argument(
         "--input",
         type=Path,

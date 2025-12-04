@@ -65,8 +65,8 @@ pytest-cov = "^4.1.0"
 black = "^23.11.0"
 isort = "^5.12.0"
 pylint = "^3.0.0"
-ruff = "^0.1.0"
 pre-commit = "^3.5.0"  # Pour les hooks git
+
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^7.2.0"
@@ -79,20 +79,16 @@ build-backend = "poetry.core.masonry.api"
 
 # Configuration des outils
 [tool.black]
-line-length = 100
+line-length = 130
 target-version = ['py39', 'py310', 'py311']
 
 [tool.isort]
 profile = "black"
-line_length = 100
+line_length = 130
 
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--cov=src/bert_artisan_nlp --cov-report=html"
-
-[tool.ruff]
-line-length = 100
-target-version = "py39"
 
 [tool.poetry.scripts]

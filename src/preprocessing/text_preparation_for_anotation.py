@@ -76,9 +76,9 @@ if __name__ == "__main__":
 
     if os.path.isdir(args.input):
         # Traiter tous les fichiers CSV dans le dossier
-        for filename in os.listdir(args.input):
-            if filename.endswith(".csv"):
-                input_path = os.path.join(args.input, filename)
+        for file_name in os.listdir(args.input):
+            if file_name.endswith(".csv"):
+                input_path = os.path.join(args.input, file_name)
                 print("Processing file:", input_path)
                 prepare_text_for_annotation(input_path, args.output, args.labels)
     else:

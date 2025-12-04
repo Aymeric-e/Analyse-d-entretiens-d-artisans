@@ -1,3 +1,22 @@
+"""
+build_tool_dicts.py
+
+Ce script lit deux fichiers CSV :
+1. Le fichier d'entretien contenant les colonnes "Nom Fichier", "Matériau", "Artisanat".
+2. Le fichier des outils contenant les colonnes "filename", "text", "tools_found_unique".
+
+Pour chaque catégorie (matériau et artisanat), le script :
+- Compte le nombre d'occurrences de chaque outil dans les fichiers correspondants.
+- Génère deux fichiers CSV de sortie dans un dossier spécifié :
+    - dict_outils_materiau.csv
+    - dict_outils_artisanat.csv
+
+Usage :
+    python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>
+
+Si aucun argument n'est fourni, le script utilise des chemins par défaut définis dans le bloc __main__.
+"""
+
 import csv
 import sys
 from collections import defaultdict
@@ -6,10 +25,18 @@ from pathlib import Path
 
 def load_entretien_file(path):
     """
-    Charge le fichier entretien (Index,Nom Fichier,...,Matériau,Artisanat,...)
-    Retourne deux dictionnaires :
-        fichier -> matériau
-        fichier -> artisanat
+    Charge le fichier d'entretien et retourne deux dictionnaires.
+
+    Le fichier CSV doit contenir au moins les colonnes :
+        "Nom Fichier", "Matériau", "Artisanat"
+
+    Args:
+        path (str | Path): Chemin vers le fichier CSV d'entretien.
+
+    Returns:
+        tuple[dict, dict]:
+            - file_to_materiau: dictionnaire fichier -> matériau
+            - file_to_artisanat: dictionnaire fichier -> artisanat
     """
     file_to_materiau = {}
     file_to_artisanat = {}
@@ -30,17 +57,23 @@ def load_entretien_file(path):
 
 def load_tools_file(path):
     """
-    Charge le fichier tools (filename,text,word_count,tools_found,tools_found_unique)
-    Retourne un dict : fichier -> liste outils
+    Charge le fichier tools et retourne un dictionnaire fichier -> liste d'outils.
+
+    Le fichier CSV doit contenir au moins les colonnes :
+        "filename", "tools_found_unique"
+
+    Args:
+        path (str | Path): Chemin vers le fichier CSV des outils.
+
+    Returns:
+        dict[str, list[str]]: Mapping du nom de fichier vers la liste des outils uniques trouvés.
     """
     file_to_tools = {}
 
     with open(path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            filename = (
-                row.get("filename", "").strip().replace(" ", "_").replace("_traitement_A", "")
-            )
+            filename = row.get("filename", "").strip().replace(" ", "_").replace("_traitement_A", "")
             tools_raw = row.get("tools_found_unique", "")
             tools = [t.strip() for t in tools_raw.split(",") if t.strip()]
 
@@ -52,9 +85,14 @@ def load_tools_file(path):
 
 def count_tools_by_category(mapping_file_to_category, mapping_file_to_tools):
     """
-    mapping_file_to_category : dict fichier -> materiau ou artisanat
-    mapping_file_to_tools : dict fichier -> liste d'outils
-    Retourne un dict category -> dict outil -> count
+    Compte les occurrences des outils par catégorie.
+
+    Args:
+        mapping_file_to_category (dict[str, str]): Mapping fichier -> catégorie (matériau ou artisanat)
+        mapping_file_to_tools (dict[str, list[str]]): Mapping fichier -> liste d'outils
+
+    Returns:
+        dict[str, dict[str, int]]: Dictionnaire catégorie -> dictionnaire outil -> count
     """
     result = defaultdict(lambda: defaultdict(int))
 
@@ -70,8 +108,12 @@ def count_tools_by_category(mapping_file_to_category, mapping_file_to_tools):
 
 def write_output_csv(path, category_name, data_dict):
     """
-    Écrit un CSV :
-    category,outil,count
+    Écrit un dictionnaire d'outils par catégorie dans un fichier CSV.
+
+    Args:
+        path (str | Path): Chemin du fichier de sortie CSV.
+        category_name (str): Nom de la colonne pour la catégorie (ex: "materiau", "artisanat").
+        data_dict (dict[str, dict[str, int]]): Dictionnaire catégorie -> outil -> count
     """
     with open(path, "w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
@@ -83,6 +125,14 @@ def write_output_csv(path, category_name, data_dict):
 
 
 def main():
+    """
+    Fonction principale pour générer les CSV de comptage d'outils par catégorie.
+
+    Utilisation :
+        python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>
+
+    Si aucun argument n'est fourni, utilise les chemins par défaut définis à la fin du script.
+    """
     if len(sys.argv) != 4:
         print("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
         sys.exit(1)
@@ -118,12 +168,12 @@ def main():
 
 if __name__ == "__main__":
     # Appel automatique des chemins voulus
-    entretien_path = "data/recap_entretien.csv"
-    tools_path = "data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv"
-    output_path = "results/tool_comparaison"
+    ENTRETIEN_PATH = "data/recap_entretien.csv"
+    TOOLS_PATH = "data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv"
+    OUTPUT_PATH = "results/tool_comparaison"
 
     # Si arguments fournis, on les utilise, sinon on prend les chemins par défaut
     if len(sys.argv) == 1:
-        sys.argv = ["", entretien_path, tools_path, output_path]
+        sys.argv = ["", ENTRETIEN_PATH, TOOLS_PATH, OUTPUT_PATH]
 
     main()

@@ -21,12 +21,7 @@ import torch
 from datasets import Dataset
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    Trainer,
-    TrainingArguments,
-)
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
 warnings.filterwarnings("ignore")
 
@@ -49,7 +44,7 @@ class BertFinalTrainer:
 
     def load_best_hyperparams(self, tuning_results_path: Path) -> Dict:
         """Load best hyperparameters from tuning results CSV"""
-        print(f"Chargement des meilleurs hyperparamètres...")
+        print("Chargement des meilleurs hyperparamètres...")
 
         # Default hyperparameters
         default_params = {
@@ -69,7 +64,7 @@ class BertFinalTrainer:
             df = pd.read_csv(tuning_results_path, sep=";")
 
             if df.empty:
-                print(f" Fichier de tuning vide, utilisation des défauts")
+                print(" Fichier de tuning vide, utilisation des défauts")
                 return default_params
 
             # Get row with best R2
@@ -82,7 +77,7 @@ class BertFinalTrainer:
                 "num_epochs": int(best_row["num_epochs"]),
             }
 
-            print(f"Meilleurs hyperparamètres trouvés:")
+            print("Meilleurs hyperparamètres trouvés:")
             print(f"  - Learning rate: {best_params['learning_rate']}")
             print(f"  - Batch size: {best_params['batch_size']}")
             print(f"  - Max length: {best_params['max_length']}")
@@ -91,19 +86,19 @@ class BertFinalTrainer:
 
             return best_params
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             print(f" Erreur lors du chargement du tuning: {str(e)}")
             print(f"Utilisation des hyperparamètres par défaut: {default_params}")
             return default_params
 
     def save_hyperparams(self, hyperparams: Dict) -> None:
         """Save hyperparameters to JSON file"""
-        print(f"\nSauvegarde des hyperparamètres...")
+        print("\nSauvegarde des hyperparamètres...")
 
         params_path = self.model_dir / "bert_final" / "hyperparams.json"
         params_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(params_path, "w") as f:
+        with open(params_path, "w", encoding="utf-8") as f:
             json.dump(hyperparams, f, indent=2)
 
         print(f"Hyperparamètres sauvegardés: {params_path}")
@@ -118,7 +113,7 @@ class BertFinalTrainer:
         if missing:
             raise ValueError(f"Colonnes manquantes: {missing}")
 
-        X = df["text"].astype(str)
+        X = df["text"].astype(str)  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
         print(f"Données chargées: {len(df)} phrases")
@@ -168,17 +163,18 @@ class BertFinalTrainer:
 
     def train(
         self,
-        X_train: pd.Series,
-        y_train: pd.Series,
-        X_test: pd.Series,
-        y_test: pd.Series,
-        learning_rate: float,
-        batch_size: int,
-        max_length: int,
-        num_epochs: int,
+        data: Tuple[pd.Series, pd.Series, pd.Series, pd.Series],
+        best_params: Dict,
     ) -> dict:
         """Train BERT model"""
         print("\nEntraînement du modèle BERT...")
+
+        X_train, y_train, X_test, y_test = data  # pylint: disable=invalid-name
+
+        learning_rate = (best_params["learning_rate"],)
+        batch_size = (best_params["batch_size"],)
+        max_length = (best_params["max_length"],)
+        num_epochs = (best_params["num_epochs"],)
 
         self.prepare_tokenizer()
 
@@ -214,7 +210,7 @@ class BertFinalTrainer:
         trainer.train()
         eval_results = trainer.evaluate()
 
-        print(f"\nRésultats d'évaluation:")
+        print("\nRésultats d'évaluation:")
         print(f"  - R² score: {eval_results.get('eval_r2', 0):.4f}")
         print(f"  - MAE: {eval_results.get('eval_mae', 0):.4f}")
         print(f"  - RMSE: {eval_results.get('eval_rmse', 0):.4f}")
@@ -223,7 +219,7 @@ class BertFinalTrainer:
 
     def save_model(self) -> None:
         """Save model and tokenizer"""
-        print(f"\nSauvegarde du modèle...")
+        print("\nSauvegarde du modèle...")
 
         model_output = self.model_dir / "bert_final"
         model_output.mkdir(parents=True, exist_ok=True)
@@ -244,24 +240,16 @@ class BertFinalTrainer:
         best_params = self.load_best_hyperparams(tuning_results_path)
 
         # Load data
-        X, y = self.load_data(csv_path)
+        X, y = self.load_data(csv_path)  # pylint: disable=invalid-name
 
         # Split
         print("\nSéparation train/test (80/20)...")
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  # pylint: disable=invalid-name
         print(f"Train: {len(X_train)}, Test: {len(X_test)}")
 
         # Train with loaded hyperparameters
-        self.train(
-            X_train,
-            y_train,
-            X_test,
-            y_test,
-            learning_rate=best_params["learning_rate"],
-            batch_size=best_params["batch_size"],
-            max_length=best_params["max_length"],
-            num_epochs=best_params["num_epochs"],
-        )
+        Data_X_y = X_train, y_train, X_test, y_test  # pylint: disable=invalid-name
+        self.train(Data_X_y, best_params)  # pylint: disable=invalid-name
 
         # Save model and hyperparameters
         self.save_model()
@@ -271,9 +259,16 @@ class BertFinalTrainer:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Entraîner le modèle BERT final avec meilleurs hyperparamètres"
-    )
+    """
+    Point d'entrée du script. Vérifie les arguments et lance l'entraînement final BERT.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    parser = argparse.ArgumentParser(description="Entraîner le modèle BERT final avec meilleurs hyperparamètres")
     parser.add_argument("--input", type=Path, required=True, help="Chemin du CSV annoté")
     parser.add_argument(
         "--tuning-results",
@@ -287,9 +282,7 @@ def main():
         default="distilbert-base-multilingual-cased",
         help="Nom du modèle Hugging Face",
     )
-    parser.add_argument(
-        "--model-dir", type=Path, default=Path("models"), help="Dossier de sauvegarde"
-    )
+    parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Dossier de sauvegarde")
 
     args = parser.parse_args()
 

@@ -13,7 +13,6 @@ import argparse
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 
@@ -58,13 +57,9 @@ class PredictionsMerger:
             how="inner",
         )
 
-        self.merged_df["moyenne"] = (
-            self.merged_df["note_regression"] + self.merged_df["note_bert"]
-        ) / 2.0
+        self.merged_df["moyenne"] = (self.merged_df["note_regression"] + self.merged_df["note_bert"]) / 2.0
 
-        self.merged_df["difference_abs"] = abs(
-            self.merged_df["note_regression"] - self.merged_df["note_bert"]
-        )
+        self.merged_df["difference_abs"] = abs(self.merged_df["note_regression"] - self.merged_df["note_bert"])
 
         print(f"Prédictions mergées: {len(self.merged_df)} phrases")
 
@@ -74,19 +69,19 @@ class PredictionsMerger:
         """Display comparison statistics"""
         print("\nStatistiques de comparaison:")
         print(f"  - Prédictions en commun: {len(self.merged_df)}")
-        print(f"\n  Regression:")
+        print("\n  Regression:")
         print(f"    - Moyenne: {self.merged_df['note_regression'].mean():.2f}")
         print(f"    - Std dev: {self.merged_df['note_regression'].std():.2f}")
         print(f"    - Min: {self.merged_df['note_regression'].min():.2f}")
         print(f"    - Max: {self.merged_df['note_regression'].max():.2f}")
 
-        print(f"\n  BERT:")
+        print("\n  BERT:")
         print(f"    - Moyenne: {self.merged_df['note_bert'].mean():.2f}")
         print(f"    - Std dev: {self.merged_df['note_bert'].std():.2f}")
         print(f"    - Min: {self.merged_df['note_bert'].min():.2f}")
         print(f"    - Max: {self.merged_df['note_bert'].max():.2f}")
 
-        print(f"\n  Différences absolues:")
+        print("\n  Différences absolues:")
         print(f"    - Moyenne: {self.merged_df['difference_abs'].mean():.2f}")
         print(f"    - Std dev: {self.merged_df['difference_abs'].std():.2f}")
         print(f"    - Min: {self.merged_df['difference_abs'].min():.2f}")
@@ -97,13 +92,11 @@ class PredictionsMerger:
 
     def save_merged(self, output_path: Path) -> None:
         """Save merged predictions"""
-        print(f"\nSauvegarde du fichier merged...")
+        print("\nSauvegarde du fichier merged...")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        self.merged_df = self.merged_df[
-            ["filename", "text", "note_regression", "note_bert", "moyenne", "difference_abs"]
-        ]
+        self.merged_df = self.merged_df[["filename", "text", "note_regression", "note_bert", "moyenne", "difference_abs"]]
 
         self.merged_df.to_csv(output_path, index=False, sep=";")
 
@@ -121,13 +114,10 @@ class PredictionsMerger:
 
 
 def main():
+    """Main function to parse arguments and run merger"""
     parser = argparse.ArgumentParser(description="Fusionner les prédictions de regression et BERT")
-    parser.add_argument(
-        "--regression", type=Path, required=True, help="Chemin du CSV avec prédictions regression"
-    )
-    parser.add_argument(
-        "--bert", type=Path, required=True, help="Chemin du CSV avec prédictions BERT"
-    )
+    parser.add_argument("--regression", type=Path, required=True, help="Chemin du CSV avec prédictions regression")
+    parser.add_argument("--bert", type=Path, required=True, help="Chemin du CSV avec prédictions BERT")
     parser.add_argument("--output", type=Path, required=True, help="Chemin du CSV de sortie")
 
     args = parser.parse_args()

@@ -15,14 +15,15 @@ extension-pkg-whitelist=torch,transformers,pandas,numpy,sklearn
 
 
 [FORMAT]
-max-line-length = 120           # Fixe la longueur max d'une ligne
+max-line-length = 130           # Fixe la longueur max d'une ligne
 indent-string = '    '          # Indentation en 4 espaces
 
 [DESIGN]
 max-attributes = 12             # Nombre max d'attributs par classe
-max-args = 8                    # Nombre max d'arguments par fonction
-max-locals = 20                 # Nombre max de variables locales
+max-args = 10                   # Nombre max d'arguments par fonction
+max-locals = 35                 # Nombre max de variables locales
 max-bool-expr = 5               # Complexité max des expressions booléennes
+max-nested-blocks = 6         # Profondeur max de blocs imbriqués
 
 
 [VARIABLES]

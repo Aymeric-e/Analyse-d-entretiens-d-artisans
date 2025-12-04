@@ -1,3 +1,14 @@
+"""
+Module pour détecter les outils dans des textes à partir d'une liste CSV d'outils.
+
+Ce programme :
+- charge une liste d'outils depuis un CSV (une colonne, pas d'en-tête),
+- parcourt plusieurs fichiers CSV de textes nettoyés (par paragraphe, phrase ou entier),
+- détecte les occurrences des outils dans chaque texte,
+- écrit des CSV annotés avec les outils trouvés et leurs occurrences uniques,
+- génère un dictionnaire global d'outils trié par fréquence.
+"""
+
 import csv
 import re
 from collections import Counter
@@ -5,7 +16,15 @@ from pathlib import Path
 
 
 def load_tool_list(tool_csv_path):
-    """Charge la liste des outils dans un CSV (une colonne, pas d'entête)."""
+    """
+    Charge la liste des outils depuis un CSV.
+
+    Parameters:
+    tool_csv_path (Path): chemin vers le fichier CSV contenant les outils.
+
+    Returns:
+    list: liste des outils en minuscules.
+    """
     tools = []
     with open(tool_csv_path, newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
@@ -16,6 +35,16 @@ def load_tool_list(tool_csv_path):
 
 
 def detect_tools_in_text(text, tools):
+    """
+    Détecte les outils présents dans un texte donné.
+
+    Parameters:
+    text (str): texte à analyser.
+    tools (list): liste des outils à rechercher.
+
+    Returns:
+    list: outils trouvés, répétitions incluses.
+    """
     found = []
     for tool in tools:
         pattern = r"\b" + re.escape(tool) + r"\b"
@@ -25,6 +54,14 @@ def detect_tools_in_text(text, tools):
 
 
 def process_single_csv(tool_csv, input_csv, output_dir):
+    """
+    Traite un CSV unique : détecte les outils et écrit le CSV annoté + dictionnaire global.
+
+    Parameters:
+    tool_csv (Path): chemin vers le CSV des outils.
+    input_csv (Path): chemin vers le CSV à traiter.
+    output_dir (Path): dossier de sortie pour les fichiers générés.
+    """
     output_dir.mkdir(parents=True, exist_ok=True)
 
     tools = load_tool_list(tool_csv)
@@ -34,9 +71,10 @@ def process_single_csv(tool_csv, input_csv, output_dir):
 
     global_counter = Counter()
 
-    with open(input_csv, newline="", encoding="utf-8") as fin, open(
-        output_csv_path, "w", newline="", encoding="utf-8"
-    ) as fout:
+    with (
+        open(input_csv, newline="", encoding="utf-8") as fin,
+        open(output_csv_path, "w", newline="", encoding="utf-8") as fout,
+    ):
         reader = csv.DictReader(fin)
         fieldnames = reader.fieldnames + ["tools_found", "tools_found_unique"]
         writer = csv.DictWriter(fout, fieldnames=fieldnames)
@@ -54,7 +92,7 @@ def process_single_csv(tool_csv, input_csv, output_dir):
 
             writer.writerow(row)
 
-    # Écrire le dictionnaire global et le trie par nombre d'occurence dans l'ordre décroissant
+    # Écrire le dictionnaire global et le trier par nombre d'occurence dans l'ordre décroissant
     global_counter = dict(sorted(global_counter.items(), key=lambda item: item[1], reverse=True))
 
     with open(dict_csv_path, "w", newline="", encoding="utf-8") as fdict:
@@ -69,6 +107,12 @@ def process_single_csv(tool_csv, input_csv, output_dir):
 
 
 def process_all_csvs():
+    """
+    Traite tous les CSV de textes nettoyés : paragraphe, phrase et full.
+
+    Lit les fichiers depuis data/processed et écrit les résultats dans
+    data/processed_tool_comparaison_strict.
+    """
     tool_csv = Path("data/list_tool.csv")
 
     base_dir = Path("data/processed")

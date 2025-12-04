@@ -1,3 +1,37 @@
+"""
+csv_text_augmentation.py
+
+Ce module permet d'augmenter automatiquement le texte contenu dans un CSV pour des 
+besoins de data augmentation en NLP. 
+
+Fonctionnalités principales :
+- Lecture d'un fichier CSV contenant une colonne de texte.
+- Augmentation du texte via différents types d'augmenter :
+    - "contextual" : substitutions contextuelles avec CamemBERT
+    - "translation" : back-translation (FR->DE->FR)
+    - "swap" : permutation aléatoire de mots
+- Génération de plusieurs versions augmentées par type d'augmentation.
+- Création d'un CSV final contenant toutes les lignes originales et augmentées.
+- Support de traitement de plusieurs CSV dans un dossier.
+- Gestion automatique de la création des dossiers de sortie si nécessaire.
+
+Usage :
+    python csv_text_augmentation.py --input <chemin_csv> --output <dossier_sortie> 
+                                    [--text_column <nom_colonne_texte>]
+                                    [--augmenter_types contextual translation swap]
+                                    [--num_aug 1]
+
+Arguments :
+- --input : chemin vers le fichier CSV d'entrée ou dossier contenant des CSV.
+- --output : chemin vers le fichier CSV de sortie ou dossier pour sauvegarder les CSV augmentés.
+- --text_column : nom de la colonne contenant le texte à augmenter (par défaut "text").
+- --augmenter_types : liste des types d'augmentation à appliquer (par défaut ["contextual", "translation", "swap"]).
+- --num_aug : nombre d'augmentations à générer par type (par défaut 1).
+
+Exemple :
+    python csv_text_augmentation.py --input data/my_data.csv --output data/augmented
+"""
+
 import argparse
 import os
 
@@ -34,13 +68,11 @@ def augment_text(text, augmenter_type, num_aug):
         case "swap":
             augmenter = naw.RandomWordAug(action="swap")
         case _:
-            raise ValueError("Augmenter non supporté: {}".format(augmenter_type))
+            raise ValueError(f"Augmenter non supporté: {augmenter_type}")
 
     augmented_texts = []
     for _ in range(num_aug):
-        text_augmented = (
-            augmenter.augment(text)[0].replace("[", "").replace("]", "").replace('"', "")
-        )
+        text_augmented = augmenter.augment(text)[0].replace("[", "").replace("]", "").replace('"', "")
         augmented_texts.append(text_augmented)
     return augmented_texts
 
@@ -102,11 +134,7 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
 
     # trie par id alphabétique et nouvelle colonne id
     old_id_col = augmented_df_complete.columns[0]  # colonne 0 du df
-    augmented_df_complete["id"] = (
-        augmented_df_complete[old_id_col].astype(str)
-        + "_"
-        + augmented_df_complete["augmentation_type"]
-    )
+    augmented_df_complete["id"] = augmented_df_complete[old_id_col].astype(str) + "_" + augmented_df_complete["augmentation_type"]
     augmented_df_complete = augmented_df_complete.sort_values(by="id")
 
     # Si le dossier n'existe pas, le créer
@@ -126,9 +154,7 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
 if __name__ == "__main__":
     # Configuration des paramètres si spécifiés en argument
     # Soit on demande pour un csv particulier ou tous les csv d un dossier
-    parser = argparse.ArgumentParser(
-        description="Augmente le texte dans un CSV pour data augmentation."
-    )
+    parser = argparse.ArgumentParser(description="Augmente le texte dans un CSV pour data augmentation.")
     parser.add_argument(
         "--input",
         type=str,
@@ -141,9 +167,7 @@ if __name__ == "__main__":
         required=True,
         help="Chemin vers le fichier CSV de sortie ou dossier pour sauvegarder les CSV augmentés.",
     )
-    parser.add_argument(
-        "--text_column", type=str, default="text", help="Nom de la colonne où se trouve le texte."
-    )
+    parser.add_argument("--text_column", type=str, default="text", help="Nom de la colonne où se trouve le texte.")
     parser.add_argument(
         "--augmenter_types",
         type=str,
@@ -151,18 +175,14 @@ if __name__ == "__main__":
         default=["contextual", "translation", "swap"],
         help="Liste des types d augmenter ( 'contextual', 'translation', 'swap').",
     )
-    parser.add_argument(
-        "--num_aug", type=int, default=1, help="Nombre d augmentation à faire par type."
-    )
+    parser.add_argument("--num_aug", type=int, default=1, help="Nombre d augmentation à faire par type.")
     args = parser.parse_args()
 
     if os.path.isdir(args.input):
-        for filename in os.listdir(args.input):
-            if filename.endswith(".csv"):
-                input_csv = os.path.join(args.input, filename)
-                print("Processing file:", input_csv)
-                process_csv(
-                    input_csv, args.output, args.text_column, args.augmenter_types, args.num_aug
-                )
+        for file_name in os.listdir(args.input):
+            if file_name.endswith(".csv"):
+                input_path = os.path.join(args.input, file_name)
+                print("Processing file:", input_path)
+                process_csv(input_path, args.output, args.text_column, args.augmenter_types, args.num_aug)
     else:
         process_csv(args.input, args.output, args.text_column, args.augmenter_types, args.num_aug)

@@ -1,3 +1,27 @@
+"""
+csv_to_html_converter.py
+
+Convertit un fichier CSV en une page HTML stylée.
+
+Fonctionnalités principales :
+- Lit un CSV avec pandas (en tenant compte du séparateur choisi)
+- Génère un tableau HTML reprenant toutes les colonnes
+- Applique un style CSS simple pour rendre le tableau lisible et agréable
+- Crée automatiquement le dossier de sortie si nécessaire
+- Gère les erreurs de lecture du CSV ou de chemin invalide
+
+Usage :
+    python csv_to_html_converter.py --input <fichier.csv> --separator <sep> [--output-dir <dossier_html>]
+
+Arguments :
+    --input : Chemin du fichier CSV à convertir (obligatoire)
+    --separator : Séparateur utilisé dans le CSV (obligatoire, ex: ',' ou ';')
+    --output-dir : Dossier où générer le HTML (optionnel, par défaut le dossier du CSV d'entrée)
+
+Exemple :
+    python csv_to_html_converter.py --input data/my_data.csv --separator , --output-dir results/html
+"""
+
 import argparse
 import os
 import sys
@@ -6,6 +30,23 @@ import pandas as pd
 
 
 def csv_to_html(csv_path, output_dir, separator):
+    """
+    Convertit un fichier CSV en une page HTML avec style.
+
+    Chaque colonne du CSV devient une colonne du tableau HTML.
+    Le style reprend celui utilisé dans csv_to_html_highlight_tool.py.
+
+    Args:
+        csv_path (str): Chemin vers le fichier CSV à convertir.
+        output_dir (str): Dossier où sera généré le fichier HTML.
+        separator (str): Séparateur utilisé dans le CSV (ex: ',' ou ';').
+
+    Raises:
+        SystemExit: Si le fichier CSV est introuvable ou ne peut pas être lu.
+
+    Outputs:
+        Fichier HTML dans `output_dir` portant le même nom que le CSV.
+    """
     # Vérification CSV
     if not os.path.isfile(csv_path):
         print(f"Erreur : le fichier '{csv_path}' est introuvable.")
@@ -18,7 +59,7 @@ def csv_to_html(csv_path, output_dir, separator):
     # Lit le CSV avec pandas
     try:
         df = pd.read_csv(csv_path, sep=separator)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         print(f"Impossible de lire le CSV : {e}")
         sys.exit(1)
 
@@ -82,6 +123,6 @@ if __name__ == "__main__":
     print("CONVERSION CSV -> HTML")
     print(f"Fichier d'entrée : {args.input}")
 
-    output_dir = args.output_dir if args.output_dir else args.input.rsplit("/", 1)[0]
+    output_folder = args.output_dir if args.output_dir else args.input.rsplit("/", 1)[0]
 
-    csv_to_html(args.input, output_dir, args.separator)
+    csv_to_html(args.input, output_folder, args.separator)

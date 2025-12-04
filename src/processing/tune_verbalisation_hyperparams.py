@@ -9,12 +9,10 @@ import sys
 from pathlib import Path
 
 import joblib
-import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import GridSearchCV, cross_val_score
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
 
@@ -41,7 +39,7 @@ class VerbRegHyperparameterTuner:
         if missing:
             raise ValueError(f"Colonnes manquantes dans CSV: {missing}")
 
-        X = df["text"]
+        X = df["text"]  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
         print(f"Données chargées: {len(df)} phrases")
@@ -70,7 +68,7 @@ class VerbRegHyperparameterTuner:
         }
         return param_grid
 
-    def tune_hyperparameters(self, X: pd.Series, y: pd.Series, cv: int = 5) -> dict:
+    def tune_hyperparameters(self, X: pd.Series, y: pd.Series, cv: int = 5) -> dict:  # pylint: disable=invalid-name
         """Use GridSearchCV to find best hyperparameters"""
         print(f"\nTUNING: Recherche des meilleurs hyperparamètres ({cv}-fold cross-validation)")
 
@@ -93,9 +91,7 @@ class VerbRegHyperparameterTuner:
         # Fit
         grid_search.fit(X, y)
 
-        print(
-            f"\nNombre total de combinaisons à tester: {len(list(grid_search.cv_results_['params']))}"
-        )
+        print(f"\nNombre total de combinaisons à tester: {len(list(grid_search.cv_results_['params']))}")
 
         # Store results
         self.best_model = grid_search.best_estimator_
@@ -120,16 +116,14 @@ class VerbRegHyperparameterTuner:
 
         # Top 5 results
         print("\nTop 5 des meilleures combinaisons:")
-        top_5 = self.results.nsmallest(5, "rank_test_score")[
-            ["params", "mean_test_score", "std_test_score", "rank_test_score"]
-        ]
+        top_5 = self.results.nsmallest(5, "rank_test_score")[["params", "mean_test_score", "std_test_score", "rank_test_score"]]
         for idx, (_, row) in enumerate(top_5.iterrows()):
             print(f"\n  {idx+1}. MAE: {-row['mean_test_score']:.4f} (±{row['std_test_score']:.4f})")
             print(f"     Params: {row['params']}")
 
     def save_results(self, output_path: Path) -> None:
         """Save tuning results to CSV"""
-        print(f"\nSauvegarde des résultats du tuning...")
+        print("\nSauvegarde des résultats du tuning...")
 
         # Create simplified results dataframe
         results_simplified = self.results[
@@ -145,9 +139,7 @@ class VerbRegHyperparameterTuner:
             ]
         ].copy()
 
-        results_simplified["mean_test_score"] = -results_simplified[
-            "mean_test_score"
-        ]  # Convert back to MAE
+        results_simplified["mean_test_score"] = -results_simplified["mean_test_score"]  # Convert back to MAE
         results_simplified = results_simplified.sort_values("rank_test_score")
 
         results_simplified.to_csv(output_path, index=False, sep=";")
@@ -155,7 +147,7 @@ class VerbRegHyperparameterTuner:
 
     def save_best_model(self) -> None:
         """Save best model from tuning"""
-        print(f"\nSauvegarde du meilleur modèle...")
+        print("\nSauvegarde du meilleur modèle...")
 
         params_path = self.model_dir / "verbalisation_best_params.pkl"
 
@@ -168,10 +160,10 @@ class VerbRegHyperparameterTuner:
         print("HYPERPARAMETER TUNING: Verbalization Difficulty Regression")
 
         # Load
-        X, y = self.load_data(csv_path)
+        X, y = self.load_data(csv_path)  # pylint: disable=invalid-name
 
         # Tune
-        results = self.tune_hyperparameters(X, y, cv=cv)
+        _ = self.tune_hyperparameters(X, y, cv=cv)
 
         # Display
         self.display_results()
@@ -187,6 +179,7 @@ class VerbRegHyperparameterTuner:
 
 
 def main():
+    """Main function to parse arguments and run hyperparameter tuning"""
     parser = argparse.ArgumentParser(
         description="Trouver les meilleurs hyperparamètres pour le modèle de difficulté de verbalisation"
     )
@@ -202,9 +195,7 @@ def main():
         default=Path("results/hyperparams_tuning.csv"),
         help="Chemin du fichier CSV de sortie avec résultats du tuning (défaut: results/hyperparams_tuning.csv)",
     )
-    parser.add_argument(
-        "--cv", type=int, default=5, help="Nombre de folds pour cross-validation (défaut: 5)"
-    )
+    parser.add_argument("--cv", type=int, default=5, help="Nombre de folds pour cross-validation (défaut: 5)")
     parser.add_argument(
         "--model-dir",
         type=Path,

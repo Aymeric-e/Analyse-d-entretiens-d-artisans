@@ -77,9 +77,7 @@ class DifficultyReportGenerator:
             filename = row["filename"]
 
             if filename in self.merged_data:
-                self.merged_data[filename]["phrases"].append(
-                    {"text": row["text"], "difficulty": float(row[self.difficulty_col])}
-                )
+                self.merged_data[filename]["phrases"].append({"text": row["text"], "difficulty": float(row[self.difficulty_col])})
 
         print(f"Données mergées: {len(self.merged_data)} entretiens")
 
@@ -89,7 +87,8 @@ class DifficultyReportGenerator:
         hex_color = self.rgb_to_hex(rgb)
         tooltip = f"Difficulté: {difficulty:.2f}/10"
 
-        return f'<span style="background-color: {hex_color}; padding: 2px 4px; border-radius: 3px; cursor: help;" title="{tooltip}">{text}</span>'
+        return f'<span style="background-color: {hex_color}; padding: 2px 4px; border-radius: 3px; cursor: help;" \
+                       title="{tooltip}">{text}</span>'
 
     def generate_html(self) -> str:
         """Generate complete HTML report"""
@@ -262,7 +261,7 @@ class DifficultyReportGenerator:
 
     def save_html(self, output_path: Path) -> None:
         """Save HTML report to file"""
-        print(f"Génération du rapport HTML...")
+        print("Génération du rapport HTML...")
 
         html_content = self.generate_html()
 
@@ -291,9 +290,8 @@ class DifficultyReportGenerator:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Générer un rapport HTML avec visualisation des difficultés de verbalisation"
-    )
+    """Main function to parse arguments and run report generation"""
+    parser = argparse.ArgumentParser(description="Générer un rapport HTML avec visualisation des difficultés de verbalisation")
     parser.add_argument(
         "--phrases",
         type=Path,
@@ -306,9 +304,7 @@ def main():
         required=True,
         help="Chemin du CSV avec métadonnées des entretiens (colonne requise: filename)",
     )
-    parser.add_argument(
-        "--output", type=Path, required=True, help="Chemin du fichier HTML de sortie"
-    )
+    parser.add_argument("--output", type=Path, required=True, help="Chemin du fichier HTML de sortie")
     parser.add_argument(
         "--difficulty-col",
         type=str,

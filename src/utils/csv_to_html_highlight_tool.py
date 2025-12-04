@@ -18,10 +18,7 @@ import re
 import sys
 from pathlib import Path
 
-HIGHLIGHT_TEMPLATE = (
-    '<mark style="background:#fff59d;padding:0 2px;border-radius:3px;">'
-    "<strong>{}</strong></mark>"
-)
+HIGHLIGHT_TEMPLATE = '<mark style="background:#fff59d;padding:0 2px;border-radius:3px;"><strong>{}</strong></mark>'
 
 HTML_PAGE_TEMPLATE = """<!doctype html>
 <html lang="fr">
@@ -60,6 +57,16 @@ tr:nth-child(even) td {{ background:#fbfcff; }}
 
 
 def build_pattern_for_tools(tools):
+    """
+    Construit un motif regex pour détecter tous les outils dans une liste.
+
+    Args:
+        tools (list[str]): Liste d'outils à rechercher dans le texte.
+
+    Returns:
+        re.Pattern | None: Objet regex compilé pouvant être utilisé pour
+        rechercher les outils, ou None si la liste est vide.
+    """
     cleaned = [t.strip() for t in tools if t.strip()]
     if not cleaned:
         return None
@@ -70,6 +77,16 @@ def build_pattern_for_tools(tools):
 
 
 def highlight_text_with_tools(text, tools):
+    """
+    Surligne les occurrences des outils dans un texte donné.
+
+    Args:
+        text (str): Texte dans lequel surligner les outils.
+        tools (list[str]): Liste d'outils à surligner.
+
+    Returns:
+        str: Texte HTML avec les outils surlignés.
+    """
     if not text:
         return ""
     if not tools:
@@ -93,6 +110,16 @@ def highlight_text_with_tools(text, tools):
 
 
 def process_csv_to_html(input_csv_path: Path, output_folder: Path):
+    """
+    Lit un fichier CSV et génère un fichier HTML avec les outils surlignés.
+
+    Args:
+        input_csv_path (Path): Chemin vers le fichier CSV d'entrée.
+        output_folder (Path): Dossier où enregistrer le fichier HTML.
+
+    Returns:
+        None
+    """
     rows = []
     with input_csv_path.open("r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -108,9 +135,7 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
 
     tbody = []
     for row in rows:
-        tools_list = [
-            t.strip() for t in (row.get("tools_found_unique") or "").split(",") if t.strip()
-        ]
+        tools_list = [t.strip() for t in (row.get("tools_found_unique") or "").split(",") if t.strip()]
         highlighted = highlight_text_with_tools(row.get("text", ""), tools_list)
 
         tds = []
@@ -142,6 +167,15 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
 
 
 def main():
+    """
+    Point d'entrée du script. Vérifie les arguments et lance le traitement CSV → HTML.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     if len(sys.argv) != 3:
         print("Usage : python csv_to_html_highlight_tool.py <fichier.csv> <dossier_output>")
         sys.exit(1)

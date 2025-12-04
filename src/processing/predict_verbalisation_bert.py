@@ -18,12 +18,7 @@ import numpy as np
 import pandas as pd
 import torch
 from datasets import Dataset
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    Trainer,
-    TrainingArguments,
-)
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
 warnings.filterwarnings("ignore")
 
@@ -48,15 +43,10 @@ class BertPredictor:
         tokenizer_path = self.model_dir / "tokenizer"
 
         if not model_path.exists() or not tokenizer_path.exists():
-            raise FileNotFoundError(
-                f"Modèle non trouvé dans {self.model_dir}. "
-                f"Veuillez d'abord entraîner avec train_bert.py"
-            )
+            raise FileNotFoundError(f"Modèle non trouvé dans {self.model_dir}. " f"Veuillez d'abord entraîner avec train_bert.py")
 
         self.tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
-        self.model = AutoModelForSequenceClassification.from_pretrained(str(model_path)).to(
-            self.device
-        )
+        self.model = AutoModelForSequenceClassification.from_pretrained(str(model_path)).to(self.device)
 
         print("Modèle et tokenizer chargés avec succès")
 
@@ -71,7 +61,7 @@ class BertPredictor:
         if "filename" not in df.columns:
             raise ValueError("Le CSV doit contenir une colonne 'filename'")
 
-        X = df["text"].astype(str)
+        X = df["text"].astype(str)  # pylint: disable=invalid-name
         filenames = df["filename"].astype(str)
 
         print(f"Données chargées: {len(df)} phrases")
@@ -118,15 +108,11 @@ class BertPredictor:
 
         return predictions
 
-    def save_predictions(
-        self, filenames: pd.Series, texts: pd.Series, predictions: np.ndarray, output_path: Path
-    ) -> None:
+    def save_predictions(self, filenames: pd.Series, texts: pd.Series, predictions: np.ndarray, output_path: Path) -> None:
         """Save predictions to CSV"""
-        print(f"Sauvegarde des prédictions...")
+        print("Sauvegarde des prédictions...")
 
-        results_df = pd.DataFrame(
-            {"filename": filenames.values, "text": texts.values, "note_bert": predictions}
-        )
+        results_df = pd.DataFrame({"filename": filenames.values, "text": texts.values, "note_bert": predictions})
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         results_df.to_csv(output_path, index=False, sep=";")
@@ -138,7 +124,7 @@ class BertPredictor:
         """Complete prediction pipeline"""
         print("Prédiction: BERT pour Difficulté de Verbalisation")
 
-        X, filenames = self.load_data(csv_path)
+        X, filenames = self.load_data(csv_path)  # pylint: disable=invalid-name
         predictions = self.predict(X, max_length)
         self.save_predictions(filenames, X, predictions, output_csv)
 
@@ -146,10 +132,9 @@ class BertPredictor:
 
 
 def main():
+    """Main function to parse arguments and run predictor"""
     parser = argparse.ArgumentParser(description="Générer des prédictions avec le modèle BERT")
-    parser.add_argument(
-        "--input", type=Path, required=True, help="Chemin du CSV avec textes à prédire"
-    )
+    parser.add_argument("--input", type=Path, required=True, help="Chemin du CSV avec textes à prédire")
     parser.add_argument(
         "--model-dir",
         type=Path,

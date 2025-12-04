@@ -8,7 +8,7 @@ Détection d'outils dans les transcriptions d'entretiens
 
 from collections import Counter
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 import pandas as pd
 from tqdm import tqdm
@@ -21,9 +21,7 @@ class ToolDetector:
     def __init__(self):
         """Initialiser le modèle NER"""
         print("Chargement du modele NER CamemBERT...")
-        self.ner_pipeline = pipeline(
-            "ner", model="cmarkea/distilcamembert-base-ner", aggregation_strategy="simple"
-        )
+        self.ner_pipeline = pipeline("ner", model="cmarkea/distilcamembert-base-ner", aggregation_strategy="simple")
         print("Modele charge avec succes.\n")
 
     def detect_tools_in_text(self, text: str) -> List[str]:
@@ -55,7 +53,7 @@ class ToolDetector:
 
             return tools
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
             print(f"Erreur lors de la detection: {e}")
             return []
 
@@ -86,7 +84,7 @@ class ToolDetector:
         # Traiter chaque ligne
         print(f"Traitement de {len(df)} lignes de {input_csv.name}...")
 
-        for idx, row in tqdm(df.iterrows(), total=len(df), desc="Detection"):
+        for _, row in tqdm(df.iterrows(), total=len(df), desc="Detection"):
             text = row["text"]
 
             # Detecter les outils
@@ -150,9 +148,7 @@ class ToolDetector:
 
         return df_dict
 
-    def process_all_csvs(
-        self, input_csvs: List[Path], output_dir: Path, dict_filename: str = "tool_dictionary.csv"
-    ):
+    def process_all_csvs(self, input_csvs: List[Path], output_dir: Path, dict_filename: str = "tool_dictionary.csv"):
         """
         Traiter tous les CSV et generer le dictionnaire global
 
@@ -202,16 +198,14 @@ if __name__ == "__main__":
     # Definir les chemins des 3 CSV d'entree
     base_dir = Path("data/processed")
 
-    input_csvs = [
+    INPUT_CSV_PATH = [
         base_dir / "cleaned_paragraph.csv",  # Version paragraphe
         base_dir / "cleaned_sentence.csv",  # Version phrase
         base_dir / "cleaned_full.csv",  # Version document entier
     ]
 
     # Dossier de sortie
-    output_dir = Path("data/processed_tool_ner")
+    OUTPUT_DIR_PATH = Path("data/processed_tool_ner")
 
     # Traiter tous les CSV et generer le dictionnaire
-    detector.process_all_csvs(
-        input_csvs=input_csvs, output_dir=output_dir, dict_filename="tool_dictionary.csv"
-    )
+    detector.process_all_csvs(input_csvs=INPUT_CSV_PATH, output_dir=OUTPUT_DIR_PATH, dict_filename="tool_dictionary.csv")

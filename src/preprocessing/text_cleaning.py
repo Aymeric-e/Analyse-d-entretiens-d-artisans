@@ -1,3 +1,26 @@
+"""
+InterviewCleaner : Nettoyage et traitement des entretiens au format .docx
+
+Ce programme permet de :
+- Extraire le texte des fichiers .docx d'entretiens.
+- Nettoyer le texte des mentions de [Interviewe], [Interviewé], [Chercheur]
+  et des indications de temps ou symboles inutiles.
+- Produire des versions nettoyées du texte selon trois niveaux de segmentation :
+    - paragraph : chaque paragraphe est une ligne (par défaut)
+    - sentence  : chaque phrase est une ligne
+    - full      : tout le texte de l’entretien est concaténé en un seul bloc
+- Exporter le résultat dans un fichier CSV avec les colonnes :
+    - filename : nom du fichier source
+    - text     : texte nettoyé
+    - word_count : nombre de mots dans le texte
+
+Exemple d'utilisation :
+    cleaner = InterviewCleaner()
+    df_full = cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_full.csv"), mode="full")
+    df_paragraph = cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_paragraph.csv"), mode="paragraph")
+    df_sentence = cleaner.batch_process(Path("data/raw"), Path("data/processed/cleaned_sentence.csv"), mode="sentence")
+"""
+
 import re
 from pathlib import Path
 from typing import Dict, List
@@ -48,9 +71,7 @@ class InterviewCleaner:
                 continue
 
             if cleaned and len(cleaned.split()) >= 2:
-                cleaned_lines.append(
-                    {"filename": filename, "text": cleaned, "word_count": len(cleaned.split())}
-                )
+                cleaned_lines.append({"filename": filename, "text": cleaned, "word_count": len(cleaned.split())})
 
         return cleaned_lines
 
@@ -110,7 +131,7 @@ class InterviewCleaner:
                 else:  # paragraph
                     all_rows.extend(utterances)
 
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-except
                 print(f"Erreur avec {file_path.name}: {e}")
 
         df = pd.DataFrame(all_rows)
@@ -123,11 +144,7 @@ class InterviewCleaner:
         print(f"   - Mode: {mode}")
         print(f"   - Lignes nettoyées: {len(df)}")
         print(f"   - Fichiers traités: {df['filename'].nunique() if not df.empty else 0}")
-        print(
-            f"   - Mots/ligne (moy): {df['word_count'].mean():.1f}"
-            if not df.empty
-            else "   - Mots/ligne (moy): 0"
-        )
+        print(f"   - Mots/ligne (moy): {df['word_count'].mean():.1f}" if not df.empty else "   - Mots/ligne (moy): 0")
         print(f"   - Fichier de sortie: {output_csv}\n")
 
         return df
@@ -135,14 +152,14 @@ class InterviewCleaner:
 
 if __name__ == "__main__":
     cleaner = InterviewCleaner()
-    input_dir = Path("data/raw")
-    out_dir = Path("data/processed")
+    input_dir_path = Path("data/raw")
+    out_dir_path = Path("data/processed")
 
     print("\n=== NETTOYAGE : VERSION NON SEGMENTÉE ===")
-    cleaner.batch_process(input_dir, out_dir / "cleaned_full.csv", mode="full")
+    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_full.csv", mode="full")
 
     print("\n=== NETTOYAGE : VERSION PARAGRAPHE ===")
-    cleaner.batch_process(input_dir, out_dir / "cleaned_paragraph.csv", mode="paragraph")
+    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_paragraph.csv", mode="paragraph")
 
     print("\n=== NETTOYAGE : VERSION PAR PHRASE ===")
-    cleaner.batch_process(input_dir, out_dir / "cleaned_sentence.csv", mode="sentence")
+    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_sentence.csv", mode="sentence")
