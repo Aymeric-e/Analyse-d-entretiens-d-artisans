@@ -1,7 +1,7 @@
 import csv
-from pathlib import Path
-from collections import Counter
 import re
+from collections import Counter
+from pathlib import Path
 
 
 def load_tool_list(tool_csv_path):
@@ -34,9 +34,9 @@ def process_single_csv(tool_csv, input_csv, output_dir):
 
     global_counter = Counter()
 
-    with open(input_csv, newline="", encoding="utf-8") as fin, \
-         open(output_csv_path, "w", newline="", encoding="utf-8") as fout:
-
+    with open(input_csv, newline="", encoding="utf-8") as fin, open(
+        output_csv_path, "w", newline="", encoding="utf-8"
+    ) as fout:
         reader = csv.DictReader(fin)
         fieldnames = reader.fieldnames + ["tools_found", "tools_found_unique"]
         writer = csv.DictWriter(fout, fieldnames=fieldnames)
@@ -61,7 +61,7 @@ def process_single_csv(tool_csv, input_csv, output_dir):
         writer = csv.writer(fdict)
         writer.writerow(["tool", "count"])
         for tool, count in global_counter.items():
-            writer.writerow([tool, count])        
+            writer.writerow([tool, count])
 
     print(f" Fichier traité : {input_csv.name}")
     print(f"   Résultat : {output_csv_path}")

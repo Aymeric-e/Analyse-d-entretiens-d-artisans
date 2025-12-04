@@ -1,0 +1,53 @@
+[MASTER]
+# Permet d'éviter les faux positifs sur les modules compilés ou dynamiques (torch, transformers, numpy…)
+extension-pkg-whitelist=torch,transformers,pandas,numpy,sklearn
+
+
+[MESSAGES CONTROL]
+# Désactivation de règles jugées trop strictes ou non pertinentes
+#disable=
+#    missing-docstring,          # N'exige pas une docstring pour chaque fonction/classe
+#    too-many-arguments,         # Autorise les fonctions avec de nombreux arguments
+#    too-many-locals,            # Autorise beaucoup de variables locales
+#    line-too-long,              # Ignore la règle sur la longueur maximale des lignes
+#    too-many-instance-attributes, # Autorise des classes avec de nombreux attributs
+#    import-outside-toplevel     # Autorise les imports à l'intérieur des fonctions
+
+
+[FORMAT]
+max-line-length = 120           # Fixe la longueur max d'une ligne
+indent-string = '    '          # Indentation en 4 espaces
+
+[DESIGN]
+max-attributes = 12             # Nombre max d'attributs par classe
+max-args = 8                    # Nombre max d'arguments par fonction
+max-locals = 20                 # Nombre max de variables locales
+max-bool-expr = 5               # Complexité max des expressions booléennes
+
+
+[VARIABLES]
+dummy-variables-rgx = _         # Variables nommées '_' ignorées par Pylint (volontairement inutilisées)
+
+
+[LOGGING]
+logging-format-style = new      # Utilise le format moderne '{}' pour logging
+logging-modules = logging       # Module de logging analysé
+
+
+[SIMILARITIES]
+min-similarity-lines = 5        # Détection de code dupliqué à partir de 5 lignes identiques
+ignore-comments = yes           # Ignore les commentaires pour la détection de duplications
+
+
+[REPORTS]
+output-format = colorized       # Rapport coloré dans le terminal
+reports = yes                   # Active le rapport global (score Pylint)
+
+
+[TYPECHECK]
+generated-members = torch.*,transformers.*   # Évite les faux "no-member" pour les modules générant des attributs dynamiques
+
+
+[BASIC]
+good-names = i,j,k,x,y,z,_,ex,Run           # Noms courts autorisés (boucles, maths…)
+bad-names = foo,bar,baz,toto,tutu,tata      # Noms déconseillés, trop génériques ou non professionnels

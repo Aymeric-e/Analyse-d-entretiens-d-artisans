@@ -3,6 +3,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+
 def load_entretien_file(path):
     """
     Charge le fichier entretien (Index,Nom Fichier,...,Matériau,Artisanat,...)
@@ -37,7 +38,9 @@ def load_tools_file(path):
     with open(path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            filename = row.get("filename", "").strip().replace(" ", "_").replace("_traitement_A","")
+            filename = (
+                row.get("filename", "").strip().replace(" ", "_").replace("_traitement_A", "")
+            )
             tools_raw = row.get("tools_found_unique", "")
             tools = [t.strip() for t in tools_raw.split(",") if t.strip()]
 

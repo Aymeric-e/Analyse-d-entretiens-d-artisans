@@ -20,7 +20,7 @@ from pathlib import Path
 
 HIGHLIGHT_TEMPLATE = (
     '<mark style="background:#fff59d;padding:0 2px;border-radius:3px;">'
-    '<strong>{}</strong></mark>'
+    "<strong>{}</strong></mark>"
 )
 
 HTML_PAGE_TEMPLATE = """<!doctype html>
@@ -58,14 +58,16 @@ tr:nth-child(even) td {{ background:#fbfcff; }}
 </html>
 """
 
+
 def build_pattern_for_tools(tools):
     cleaned = [t.strip() for t in tools if t.strip()]
     if not cleaned:
         return None
     cleaned.sort(key=len, reverse=True)
     escaped = [re.escape(t) for t in cleaned]
-    pattern = r'\b(?:' + "|".join(escaped) + r')\b'
+    pattern = r"\b(?:" + "|".join(escaped) + r")\b"
     return re.compile(pattern)
+
 
 def highlight_text_with_tools(text, tools):
     if not text:
@@ -89,6 +91,7 @@ def highlight_text_with_tools(text, tools):
     parts.append(html.escape(text[last_pos:]))
     return "".join(parts)
 
+
 def process_csv_to_html(input_csv_path: Path, output_folder: Path):
     rows = []
     with input_csv_path.open("r", encoding="utf-8") as f:
@@ -105,7 +108,9 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
 
     tbody = []
     for row in rows:
-        tools_list = [t.strip() for t in (row.get("tools_found_unique") or "").split(",") if t.strip()]
+        tools_list = [
+            t.strip() for t in (row.get("tools_found_unique") or "").split(",") if t.strip()
+        ]
         highlighted = highlight_text_with_tools(row.get("text", ""), tools_list)
 
         tds = []
@@ -135,6 +140,7 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
 
     print(f" Fichier HTML généré : {output_html_path}")
 
+
 def main():
     if len(sys.argv) != 3:
         print("Usage : python csv_to_html_highlight_tool.py <fichier.csv> <dossier_output>")
@@ -148,6 +154,7 @@ def main():
         sys.exit(1)
 
     process_csv_to_html(input_csv, output_dir)
+
 
 if __name__ == "__main__":
     main()

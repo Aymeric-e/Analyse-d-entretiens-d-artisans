@@ -1,7 +1,9 @@
+import argparse
 import os
 import sys
+
 import pandas as pd
-import argparse
+
 
 def csv_to_html(csv_path, output_dir, separator):
     # Vérification CSV
@@ -61,28 +63,20 @@ def csv_to_html(csv_path, output_dir, separator):
 
 
 if __name__ == "__main__":
-
-
-    parser = argparse.ArgumentParser(
-        description="Convertir un fichier CSV en une page HTML jolie"
-    )
-    parser.add_argument(
-        "--input",
-        required=True,
-        help="Chemin du fichier CSV à convertir"
-    )
+    parser = argparse.ArgumentParser(description="Convertir un fichier CSV en une page HTML jolie")
+    parser.add_argument("--input", required=True, help="Chemin du fichier CSV à convertir")
     parser.add_argument(
         "--separator",
         required=True,
         help="Séparateur utilisé dans le CSV (ex: ; ou ,), par défaut ,",
-        default=","
+        default=",",
     )
     parser.add_argument(
         "--output-dir",
         help="Dossier contenant le fichier html de sorti, par défault le même dossier que le CSV d'entrée",
-        default=None
+        default=None,
     )
-    
+
     args = parser.parse_args()
 
     print("CONVERSION CSV -> HTML")
@@ -91,5 +85,3 @@ if __name__ == "__main__":
     output_dir = args.output_dir if args.output_dir else args.input.rsplit("/", 1)[0]
 
     csv_to_html(args.input, output_dir, args.separator)
-
-    

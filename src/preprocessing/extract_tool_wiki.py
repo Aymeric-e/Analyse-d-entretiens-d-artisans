@@ -1,28 +1,30 @@
-import requests
-from bs4 import BeautifulSoup
 import csv
 from pathlib import Path
 
-#Liste des outils à exclure
-EXCEPTION = ["verre", "chaîne", "tour", "coin","bol", "plane", "niveau"]
-#tas ? Outil mais aussi expression pour "beacoup"
+import requests
+from bs4 import BeautifulSoup
+
+# Liste des outils à exclure
+EXCEPTION = ["verre", "chaîne", "tour", "coin", "bol", "plane", "niveau"]
+# tas ? Outil mais aussi expression pour "beacoup"
+
 
 def extract_tools():
     # URL de la page Wikipedia
     url = "https://fr.wikipedia.org/wiki/Liste_d'outils"
 
-    # Récupération du contenu HTML  
+    # Récupération du contenu HTML
     headers = {
-    "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0"
-    }   
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0"
+    }
 
-    response = requests.get(url,headers=headers)
+    response = requests.get(url, headers=headers)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-        # Récupérer uniquement les <li> contenant un lien d'outil
-        # Ne sélectionner que les liens <a> avec un attribut title (nom d’outil)
+    # Récupérer uniquement les <li> contenant un lien d'outil
+    # Ne sélectionner que les liens <a> avec un attribut title (nom d’outil)
     tool_links = soup.select("li > a[title]")
 
     tools = []
@@ -31,14 +33,14 @@ def extract_tools():
         text = a.get("title", "").strip()
         # On ne garde que les vrais noms (non vides)
         if text:
-            #on veut supprimer les textes entre parenthèses
+            # on veut supprimer les textes entre parenthèses
             if "(" in text:
-                text = text[:text.index("(")].strip()
-            #On exclut les exceptions
+                text = text[: text.index("(")].strip()
+            # On exclut les exceptions
             if text.lower() not in EXCEPTION:
                 tools.append(text)
 
-    #On veut garder les mots entre Aérographe et Xylographe car le reste ne sont pas des outils
+    # On veut garder les mots entre Aérographe et Xylographe car le reste ne sont pas des outils
     start_index = None
     end_index = None
     for i, tool in enumerate(tools):

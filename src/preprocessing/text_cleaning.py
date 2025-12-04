@@ -1,8 +1,9 @@
 import re
 from pathlib import Path
-from typing import List, Dict
-from docx import Document
+from typing import Dict, List
+
 import pandas as pd
+from docx import Document
 from tqdm import tqdm
 
 
@@ -11,13 +12,13 @@ class InterviewCleaner:
 
     def clean_artisan_text(self, text: str) -> str:
         """Nettoyer une ligne de parole d'artisan"""
-        text = re.sub(r'\[(Interviewe|Interviewé)\]', '', text)
-        text = re.sub(r'\(\s*\d+:\d+\s*(?:–|-|‐)\s*\d+:\d+\s*\)', '', text)
-        text = re.sub(r'\(\s*\d+:\d+\s*\)', '', text)
-        text = re.sub(r'^\s*(?:–|-|‐)\s*', '', text)
-        text = re.sub(r'^\s*\)\s*$', '', text)
-        text = re.sub(r'^\s*\(\s*$', '', text)
-        text = re.sub(r'\s+', ' ', text).strip()
+        text = re.sub(r"\[(Interviewe|Interviewé)\]", "", text)
+        text = re.sub(r"\(\s*\d+:\d+\s*(?:–|-|‐)\s*\d+:\d+\s*\)", "", text)
+        text = re.sub(r"\(\s*\d+:\d+\s*\)", "", text)
+        text = re.sub(r"^\s*(?:–|-|‐)\s*", "", text)
+        text = re.sub(r"^\s*\)\s*$", "", text)
+        text = re.sub(r"^\s*\(\s*$", "", text)
+        text = re.sub(r"\s+", " ", text).strip()
         return text
 
     def process_file(self, file_path: Path) -> List[Dict]:
@@ -47,11 +48,9 @@ class InterviewCleaner:
                 continue
 
             if cleaned and len(cleaned.split()) >= 2:
-                cleaned_lines.append({
-                    "filename": filename,
-                    "text": cleaned,
-                    "word_count": len(cleaned.split())
-                })
+                cleaned_lines.append(
+                    {"filename": filename, "text": cleaned, "word_count": len(cleaned.split())}
+                )
 
         return cleaned_lines
 
@@ -62,7 +61,11 @@ class InterviewCleaner:
         - mode='sentence'   : segmenté par phrases
         - mode='full'       : tout l’entretien en un seul bloc
         """
-        assert mode in {"paragraph", "sentence", "full"}, "mode doit être 'paragraph', 'sentence' ou 'full'"
+        assert mode in {
+            "paragraph",
+            "sentence",
+            "full",
+        }, "mode doit être 'paragraph', 'sentence' ou 'full'"
 
         all_rows = []
         docx_files = sorted(list(input_dir.glob("*.docx")))
@@ -80,25 +83,29 @@ class InterviewCleaner:
                 if mode == "sentence":
                     # Découper chaque paragraphe en phrases
                     for item in utterances:
-                        parts = re.split(r'(?<=[\.\?\!])\s+', item["text"])
+                        parts = re.split(r"(?<=[\.\?\!])\s+", item["text"])
                         for part in parts:
                             part = part.strip()
                             if part:
-                                all_rows.append({
-                                    "filename": item["filename"],
-                                    "text": part,
-                                    "word_count": len(part.split())
-                                })
+                                all_rows.append(
+                                    {
+                                        "filename": item["filename"],
+                                        "text": part,
+                                        "word_count": len(part.split()),
+                                    }
+                                )
 
                 elif mode == "full":
                     # Tout concaténer dans un seul texte
                     full_text = " ".join(item["text"] for item in utterances)
-                    full_text = re.sub(r'\s+', ' ', full_text).strip()
-                    all_rows.append({
-                        "filename": file_path.stem,
-                        "text": full_text,
-                        "word_count": len(full_text.split())
-                    })
+                    full_text = re.sub(r"\s+", " ", full_text).strip()
+                    all_rows.append(
+                        {
+                            "filename": file_path.stem,
+                            "text": full_text,
+                            "word_count": len(full_text.split()),
+                        }
+                    )
 
                 else:  # paragraph
                     all_rows.extend(utterances)
@@ -108,7 +115,7 @@ class InterviewCleaner:
 
         df = pd.DataFrame(all_rows)
         output_csv.parent.mkdir(parents=True, exist_ok=True)
-        df.to_csv(output_csv, index=False, encoding='utf-8')
+        df.to_csv(output_csv, index=False, encoding="utf-8")
 
         print(f"\n{'='*70}")
         print("NETTOYAGE TERMINÉ")
@@ -116,7 +123,11 @@ class InterviewCleaner:
         print(f"   - Mode: {mode}")
         print(f"   - Lignes nettoyées: {len(df)}")
         print(f"   - Fichiers traités: {df['filename'].nunique() if not df.empty else 0}")
-        print(f"   - Mots/ligne (moy): {df['word_count'].mean():.1f}" if not df.empty else "   - Mots/ligne (moy): 0")
+        print(
+            f"   - Mots/ligne (moy): {df['word_count'].mean():.1f}"
+            if not df.empty
+            else "   - Mots/ligne (moy): 0"
+        )
         print(f"   - Fichier de sortie: {output_csv}\n")
 
         return df

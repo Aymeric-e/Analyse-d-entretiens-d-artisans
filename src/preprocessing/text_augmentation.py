@@ -1,15 +1,17 @@
-import pandas as pd
-import nlpaug.augmenter.word as naw
 import argparse
 import os
+
+import nlpaug.augmenter.word as naw
+import pandas as pd
 from tqdm import tqdm
+
 tqdm.pandas()
 
 # Désactiver le parallélisme des tokenizers pour éviter les avertissements
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
-def augment_text(text, augmenter_type,num_aug):
+def augment_text(text, augmenter_type, num_aug):
     """
     Genère du texte similaire pour data augmentation en utilisant le type spécifié
 
@@ -22,20 +24,26 @@ def augment_text(text, augmenter_type,num_aug):
     list: liste des versions de texte augmenté.
     """
     match augmenter_type:
-        case 'contextual':
-            augmenter = naw.ContextualWordEmbsAug(model_path='camembert-base', action="substitute")
-        case 'translation':
-            augmenter = naw.BackTranslationAug(from_model_name='Helsinki-NLP/opus-mt-fr-de', to_model_name='Helsinki-NLP/opus-mt-de-fr')
-        case 'swap':
+        case "contextual":
+            augmenter = naw.ContextualWordEmbsAug(model_path="camembert-base", action="substitute")
+        case "translation":
+            augmenter = naw.BackTranslationAug(
+                from_model_name="Helsinki-NLP/opus-mt-fr-de",
+                to_model_name="Helsinki-NLP/opus-mt-de-fr",
+            )
+        case "swap":
             augmenter = naw.RandomWordAug(action="swap")
         case _:
             raise ValueError("Augmenter non supporté: {}".format(augmenter_type))
 
     augmented_texts = []
     for _ in range(num_aug):
-        text_augmented = augmenter.augment(text)[0].replace("[", "").replace("]", "").replace('"','')
+        text_augmented = (
+            augmenter.augment(text)[0].replace("[", "").replace("]", "").replace('"', "")
+        )
         augmented_texts.append(text_augmented)
     return augmented_texts
+
 
 def augment_dataframe(df, text_column, augmenter_type, num_aug):
     """
@@ -50,6 +58,7 @@ def augment_dataframe(df, text_column, augmenter_type, num_aug):
     Returns:
     pd.DataFrame: Df avec les versions augmentées.
     """
+
     # Fonction appliquée à chaque ligne
     def process_row(row):
         original_text = row[text_column]
@@ -71,6 +80,7 @@ def augment_dataframe(df, text_column, augmenter_type, num_aug):
 
     return df_exploded
 
+
 def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
     """
     Lit un CSV, augmente le texte dans la colonne spécifiée et sauvegarde le résultat dans un nouveau CSV.
@@ -82,47 +92,68 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
     augmenter_type (str): Type d augmenter.
     num_aug (int): Nombre d augmentation à faire par type.
     """
-    df = pd.read_csv(input_csv, sep=';')
+    df = pd.read_csv(input_csv, sep=";")
     augmented_df_complete = df.copy()
-    augmented_df_complete["id"]= augmented_df_complete["id"].astype(str)
+    augmented_df_complete["id"] = augmented_df_complete["id"].astype(str)
     for augmenter_type in augmenter_types:
         print("Applying augmenter type:", augmenter_type)
         augmented_df = augment_dataframe(df, text_column, augmenter_type, num_aug)
         augmented_df_complete = pd.concat([augmented_df_complete, augmented_df], ignore_index=True)
-        
-    #trie par id alphabétique et nouvelle colonne id
-    old_id_col = augmented_df_complete.columns[0]       # colonne 0 du df
+
+    # trie par id alphabétique et nouvelle colonne id
+    old_id_col = augmented_df_complete.columns[0]  # colonne 0 du df
     augmented_df_complete["id"] = (
-        augmented_df_complete[old_id_col].astype(str) 
-        + "_" 
+        augmented_df_complete[old_id_col].astype(str)
+        + "_"
         + augmented_df_complete["augmentation_type"]
     )
-    augmented_df_complete = augmented_df_complete.sort_values(by='id')
+    augmented_df_complete = augmented_df_complete.sort_values(by="id")
 
-    #Si le dossier n'existe pas, le créer
+    # Si le dossier n'existe pas, le créer
     if not os.path.exists(output_csv):
         print("Creating output directory:", output_csv)
         os.makedirs(output_csv, exist_ok=True)
-    
+
     # Si le output_csv est un dossier, créer le chemin complet
     if os.path.isdir(output_csv):
-
         filename = os.path.basename(input_csv).replace(".csv", "_augmented.csv")
         output_csv = os.path.join(output_csv, filename)
 
     print("Saving augmented data to:", output_csv)
-    augmented_df_complete.to_csv(output_csv, index=False, sep=';')
+    augmented_df_complete.to_csv(output_csv, index=False, sep=";")
+
 
 if __name__ == "__main__":
-
-    #Configuration des paramètres si spécifiés en argument
-    #Soit on demande pour un csv particulier ou tous les csv d un dossier
-    parser = argparse.ArgumentParser(description="Augmente le texte dans un CSV pour data augmentation.")
-    parser.add_argument("--input", type=str, required=True, help="Chemin vers le fichier CSV d entrée ou dossier contenant des CSV.")
-    parser.add_argument("--output", type=str, required=True, help="Chemin vers le fichier CSV de sortie ou dossier pour sauvegarder les CSV augmentés.")
-    parser.add_argument("--text_column", type=str, default="text", help="Nom de la colonne où se trouve le texte.")
-    parser.add_argument("--augmenter_types", type=str, nargs='*', default = ["contextual","translation","swap"],help="Liste des types d augmenter ( 'contextual', 'translation', 'swap').")
-    parser.add_argument("--num_aug", type=int, default=1, help="Nombre d augmentation à faire par type.")
+    # Configuration des paramètres si spécifiés en argument
+    # Soit on demande pour un csv particulier ou tous les csv d un dossier
+    parser = argparse.ArgumentParser(
+        description="Augmente le texte dans un CSV pour data augmentation."
+    )
+    parser.add_argument(
+        "--input",
+        type=str,
+        required=True,
+        help="Chemin vers le fichier CSV d entrée ou dossier contenant des CSV.",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        required=True,
+        help="Chemin vers le fichier CSV de sortie ou dossier pour sauvegarder les CSV augmentés.",
+    )
+    parser.add_argument(
+        "--text_column", type=str, default="text", help="Nom de la colonne où se trouve le texte."
+    )
+    parser.add_argument(
+        "--augmenter_types",
+        type=str,
+        nargs="*",
+        default=["contextual", "translation", "swap"],
+        help="Liste des types d augmenter ( 'contextual', 'translation', 'swap').",
+    )
+    parser.add_argument(
+        "--num_aug", type=int, default=1, help="Nombre d augmentation à faire par type."
+    )
     args = parser.parse_args()
 
     if os.path.isdir(args.input):
@@ -130,7 +161,8 @@ if __name__ == "__main__":
             if filename.endswith(".csv"):
                 input_csv = os.path.join(args.input, filename)
                 print("Processing file:", input_csv)
-                process_csv(input_csv, args.output, args.text_column, args.augmenter_types, args.num_aug)
+                process_csv(
+                    input_csv, args.output, args.text_column, args.augmenter_types, args.num_aug
+                )
     else:
         process_csv(args.input, args.output, args.text_column, args.augmenter_types, args.num_aug)
-    
