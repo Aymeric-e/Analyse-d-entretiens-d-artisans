@@ -59,7 +59,6 @@ accelerate = ">=0.26.0"
 logging = "^0.4.9.6"
 
 
-
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
@@ -67,12 +66,7 @@ black = "^23.11.0"
 isort = "^5.12.0"
 pylint = "^3.0.0"
 pre-commit = "^3.5.0"  # Pour les hooks git
-
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "^7.2.0"
-sphinx-rtd-theme = "^2.0.0"
-sphinx-autodoc-typehints = "^1.25.0"
+pdoc = "^0.10.0"  # Pour la génération de documentation
 
 [build-system]
 requires = ["poetry-core"]
