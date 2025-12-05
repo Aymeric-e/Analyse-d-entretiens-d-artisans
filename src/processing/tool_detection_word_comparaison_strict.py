@@ -110,7 +110,15 @@ def process_single_csv(tool_csv, input_csv, output_dir):
     logger.info("  Dictionnaire : %s", dict_csv_path)
 
 
-def process_all_csvs():
+def process_all_csvs(  # pylint: disable=dangerous-default-value
+    input_csvs=[
+        Path("data/processed") / "cleaned_paragraph.csv",
+        Path("data/processed") / "cleaned_sentence.csv",
+        Path("data/processed") / "cleaned_full.csv",
+    ],
+    output_dir=Path("data/processed_tool_comparaison_strict"),
+    tool_csv="list_tool.csv",
+):
     """
     Traite tous les CSV de textes nettoyés : paragraphe, phrase et full.
 

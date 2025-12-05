@@ -2,7 +2,6 @@
 # Permet d'éviter les faux positifs sur les modules compilés ou dynamiques (torch, transformers, numpy…)
 extension-pkg-whitelist=torch,transformers,pandas,numpy,sklearn
 
-
 [MESSAGES CONTROL]
 # Désactivation de règles jugées trop strictes ou non pertinentes
 disable=
