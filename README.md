@@ -1,111 +1,156 @@
 **EN COURS DE CONSTRUCTION**
 
-# Projet bert-artisan-nlp
+# Projet Analyse d'entretien d'artisans
 
-Ceci est un projet réalisé dans le cadre de mes études qui a pour objectif de concevoir et expérimenter une méthode d’analyse automatique des entretiens d’artisans, en s’appuyant sur BERT et  des  techniques  de  NLP  et  NER. L’objectif est d’extraire des thèmes et entités pertinentes pour qualifier la relation  artisan/matière.
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
----
 
-## Contexte du projet
+Ceci est un projet réalisé dans le cadre de mes études qui a pour objectif de concevoir et expérimenter une méthode d’analyse automatique des entretiens d’artisans en utilisant des techniques classiques de comaparaisons et des techniques de nlp. Ce projet vise à identifier des indices linguistiques caractérisant la relation entre l'artisan et la matière.
 
-Ce projet s’inscrit dans une exploration des relations entre **l’artisan** et **la matière**, en s’appuyant notamment sur les travaux décrits dans la thèse suivante : https://theses.fr/s394689  
-L’objectif général est de mieux comprendre les différents **degrés d’intimité** entre l’artisan et la matière, afin de contribuer à la conception de nouveaux outils ou méthodes de **formation**.
 
-Dans ce cadre, plusieurs types d’indices linguistiques ou conceptuels peuvent permettre de caractériser cette relation. Le projet vise donc à identifier, structurer et analyser ces indices dans des corpus d’entretiens avec des artisans.
+## Contexte
+
+Ce projet s'inscrit dans une exploration des relations entre **l'artisan** et **la matière**, en s'appuyant sur les travaux de recherche concernant les degrés d'intimité entre l'artisan et ses matériaux. L'objectif est de mieux comprendre ces relations afin de contribuer à la conception de nouveaux outils ou méthodes de formation.
+
+Référence : https://theses.fr/s394689
 
 ---
 
 ## Axes de travail
 
-### 1. Détection de la présence d’outils
-- Construire un **dictionnaire d’outils** mentionnés par les artisans.  
-- Possibilité d’organiser ce dictionnaire **par métiers**.
+### 1. Détection de la présence d'outils
+- Construction d'un **dictionnaire d'outils** mentionnés par les artisans
+- Organisation optionnelle **par métiers**
+- Extraction automatique depuis Wikipedia
 
 ### 2. Détection de la difficulté de verbalisation
+Repérage des moments où l'artisan exprime une difficulté à expliquer un geste ou un savoir-faire (indicateur d'intimité matière-artisan).
 
-**Objectif** : repérer les moments où l’artisan exprime une difficulté à expliquer un geste ou un savoir-faire, ce qui constitue un indicateur important d’intimité matière-artisan.
+Techniques :
+- Processus d'annotation manuelle sur corpus cible
+- Augmentation de données (traduction aller/retour, reformulation)
+- Fine-tuning BERT sur tâche de classification
 
-- Passera probablement par des techniques **NLP**, avec nécessité d’un **processus d’annotation manuelle** préalable.
-- En cas de données insuffisantes, envisager des méthodes d’augmentation :
-  - traduction aller/retour,
-  - reformulation automatique.
-
-**Exemples de formulations à détecter :**
-- "C’est difficile à expliquer"
+Formulations détectées :
+- "C'est difficile à expliquer"
 - "Il faut le faire pour le comprendre"
-- "C’est mieux si je vous montre"
+- "C'est mieux si je vous montre"
 
 ### 3. Distance physique artisan / matière
-- Identifier des indices verbaux décrivant la proximité ou l’éloignement physique entre l’artisan et la matière.
+Identification d'indices verbaux décrivant la proximité ou l'éloignement physique.
 
-### 4. Temps d’attente
-- Repérer les passages où l’artisan évoque des **temps d’attente sans intervention directe**, révélateurs de phases particulières dans la relation à la matière.
+### 4. Temps d'attente
+Repérage des passages évoquant des **temps d'attente sans intervention directe** (révélateurs de phases particulières).
 
 ### 5. État physique de la matière
-- Détecter les termes décrivant les transformations, propriétés ou conditions de la matière (texture, température, réaction, etc.).
+Détection des termes décrivant transformations, propriétés et conditions (texture, température, réaction, etc.).
 
 ---
 
+## Installation
 
-## Prérequis
+### Prérequis
+- **Python 3.10+** 
+- **Poetry** pour la gestion des dépendances et de l'environnement
 
-- Python 3.9+ (idéalement géré avec pyenv)
-- Poetry pour gérer dépendances, environnement virtuel et build
+### Installation locale
 
----
-
-## Installation des dépendances
-
-```bash
-poetry install
-```
-
-Active l'environnement virtuel :
-
-```bash
-poetry env activate
-```
-
-Ou lance une commande sans activer manuellement :
-
-```bash
-poetry run python scripts/1_clean.py
-```
-
----
-
-## Compilation et packaging
-
-Pour construire les packages installables (.whl et .tar.gz) :
-
-```bash
-poetry build
-```
-
-Les fichiers sont générés dans `dist/` :
-
-- bert_artisan_nlp-0.1.0-py3-none-any.whl
-- bert_artisan_nlp-0.1.0.tar.gz
-
-Installation locale possible via :
-
-```bash
-pip install dist/bert_artisan_nlp-0.1.0-py3-none-any.whl
-```
-
----
-
-## Build complet réplicable
-
-Pour cloner et utiliser ce projet reproduisible :
-
+1. Cloner le dépôt :
 ```bash
 git clone https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans.git
-cd bert-artisan-nlp
-poetry install
-poetry build
-pip install dist/bert_artisan_nlp-0.1.0-py3-none-any.whl
+
+cd Analyse-d-entretiens-d-artisans
 ```
 
----
+2. Installer les dépendances :
+```bash
+poetry install
+```
+
+## Usage
+
+Voir ``docs/tutorials/tutorial.md``
+
+## Tests
+
+Exécuter la suite de tests :
+```bash
+poetry run pytest -q
+```
+
+Exécuter les tests avec couverture de code :
+```bash
+poetry run pytest --cov=src --cov-report=html
+```
+
+Fichiers de test disponibles :
+- `test_text_cleaning.py` — Tests du nettoyage de texte
+- `test_csv_highlight.py` — Tests de mise en évidence d'outils dans CSV
+- `test_merge_predictions.py` — Tests de fusion de prédictions
+- `test_bert.py` — Tests du pipeline BERT
+
+
+
+## Logging
+
+Le projet utilise une **configuration centralisée du logging** via `src/utils/logger_config.py`.
+
+### Fichiers de log
+
+- `logs/bert_artisan.log` — Logs détaillés (INFO et supérieur, rotation)
+- `logs/errors.log` — Erreurs uniquement (ERROR et supérieur)
+- Console — INFO seulement
+
+
+## Configuration
+
+### Poetry
+
+Extrait important du `pyproject.toml` :
+
+    [tool.poetry]
+    name = "bert-artisan-nlp"
+    version = "0.3.0"
+    python = "^3.10"
+
+    [tool.poetry.dependencies]
+    transformers = "^4.35.0"
+    torch = "^2.2.0"
+    pandas = "^2.1.0"
+    scikit-learn = "^1.4.0"
+
+### Black (formatage)
+
+    [tool.black]
+    line-length = 130
+    target-version = ['py310', 'py311']
+
+### isort (organisation des imports)
+
+    [tool.isort]
+    profile = "black"
+    line_length = 130
+    src_paths = ["src"]
+
+### Pytest
+
+    [tool.pytest.ini_options]
+    testpaths = ["tests"]
+    addopts = "--cov=src --cov-report=html"
+
+### Pylint
+
+La configuration est fournie dans `.pylintrc` pour éviter les faux positifs sur PyTorch/Transformers.
+
+
+
+## License
+
+Ce projet est sous licence **MIT**. Voir `LICENCE.md` pour les détails.
+
+## Auteur
+
+Aymeric Eyer  
+https://github.com/Aymeric-e
 
