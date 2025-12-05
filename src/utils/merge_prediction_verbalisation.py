@@ -15,6 +15,10 @@ from pathlib import Path
 
 import pandas as pd
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class PredictionsMerger:
     """Merge regression and BERT predictions"""
@@ -26,10 +30,9 @@ class PredictionsMerger:
 
     def load_predictions(self, regression_csv: Path, bert_csv: Path) -> None:
         """Load both prediction CSV files"""
-        print(f"Chargement des prédictions regression depuis {regression_csv}...")
+        logger.info("Chargement des prédictions regression depuis %s...", regression_csv)
         self.regression_df = pd.read_csv(regression_csv, sep=";")
-
-        print(f"Chargement des prédictions BERT depuis {bert_csv}...")
+        logger.info("Chargement des prédictions BERT depuis %s...", bert_csv)
         self.bert_df = pd.read_csv(bert_csv, sep=";")
 
         required_cols_reg = ["filename", "text", "note_regression"]
@@ -43,12 +46,12 @@ class PredictionsMerger:
         if missing_bert:
             raise ValueError(f"Colonnes manquantes dans CSV BERT: {missing_bert}")
 
-        print(f"Regression: {len(self.regression_df)} prédictions")
-        print(f"BERT: {len(self.bert_df)} prédictions")
+        logger.info("Regression: %d prédictions", len(self.regression_df))
+        logger.info("BERT: %d prédictions", len(self.bert_df))
 
     def merge_predictions(self) -> None:
         """Merge predictions from both models"""
-        print("\nMerge des prédictions...")
+        logger.info("Merge des prédictions...")
 
         self.merged_df = pd.merge(
             self.regression_df[["filename", "text", "note_regression"]],
@@ -61,38 +64,42 @@ class PredictionsMerger:
 
         self.merged_df["difference_abs"] = abs(self.merged_df["note_regression"] - self.merged_df["note_bert"])
 
-        print(f"Prédictions mergées: {len(self.merged_df)} phrases")
+        logger.info("Prédictions mergées: %d phrases", len(self.merged_df))
 
         self._display_statistics()
 
     def _display_statistics(self) -> None:
         """Display comparison statistics"""
-        print("\nStatistiques de comparaison:")
-        print(f"  - Prédictions en commun: {len(self.merged_df)}")
-        print("\n  Regression:")
-        print(f"    - Moyenne: {self.merged_df['note_regression'].mean():.2f}")
-        print(f"    - Std dev: {self.merged_df['note_regression'].std():.2f}")
-        print(f"    - Min: {self.merged_df['note_regression'].min():.2f}")
-        print(f"    - Max: {self.merged_df['note_regression'].max():.2f}")
-
-        print("\n  BERT:")
-        print(f"    - Moyenne: {self.merged_df['note_bert'].mean():.2f}")
-        print(f"    - Std dev: {self.merged_df['note_bert'].std():.2f}")
-        print(f"    - Min: {self.merged_df['note_bert'].min():.2f}")
-        print(f"    - Max: {self.merged_df['note_bert'].max():.2f}")
-
-        print("\n  Différences absolues:")
-        print(f"    - Moyenne: {self.merged_df['difference_abs'].mean():.2f}")
-        print(f"    - Std dev: {self.merged_df['difference_abs'].std():.2f}")
-        print(f"    - Min: {self.merged_df['difference_abs'].min():.2f}")
-        print(f"    - Max: {self.merged_df['difference_abs'].max():.2f}")
+        logger.info("Statistiques de comparaison:")
+        logger.info("  - Prédictions en commun: %d", len(self.merged_df))
+        logger.info(
+            "  Regression: Moyenne=%.2f, Std=%.2f, Min=%.2f, Max=%.2f",
+            self.merged_df["note_regression"].mean(),
+            self.merged_df["note_regression"].std(),
+            self.merged_df["note_regression"].min(),
+            self.merged_df["note_regression"].max(),
+        )
+        logger.info(
+            "  BERT: Moyenne=%.2f, Std=%.2f, Min=%.2f, Max=%.2f",
+            self.merged_df["note_bert"].mean(),
+            self.merged_df["note_bert"].std(),
+            self.merged_df["note_bert"].min(),
+            self.merged_df["note_bert"].max(),
+        )
+        logger.info(
+            "  Différences absolues: Moyenne=%.2f, Std=%.2f, Min=%.2f, Max=%.2f",
+            self.merged_df["difference_abs"].mean(),
+            self.merged_df["difference_abs"].std(),
+            self.merged_df["difference_abs"].min(),
+            self.merged_df["difference_abs"].max(),
+        )
 
         correlation = self.merged_df["note_regression"].corr(self.merged_df["note_bert"])
-        print(f"\n  Corrélation Pearson: {correlation:.4f}")
+        logger.info("  Corrélation Pearson: %.4f", correlation)
 
     def save_merged(self, output_path: Path) -> None:
         """Save merged predictions"""
-        print("\nSauvegarde du fichier merged...")
+        logger.info("Sauvegarde du fichier merged...")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -100,17 +107,17 @@ class PredictionsMerger:
 
         self.merged_df.to_csv(output_path, index=False, sep=";")
 
-        print(f"Fichier sauvegardé: {output_path}")
+        logger.info("Fichier sauvegardé: %s", output_path)
 
     def run(self, regression_csv: Path, bert_csv: Path, output_csv: Path) -> None:
         """Complete pipeline"""
-        print("Fusion: Prédictions Regression + BERT")
+        logger.info("Fusion: Prédictions Regression + BERT")
 
         self.load_predictions(regression_csv, bert_csv)
         self.merge_predictions()
         self.save_merged(output_csv)
 
-        print("Fusion terminée!")
+        logger.info("Fusion terminée")
 
 
 def main():
@@ -123,11 +130,11 @@ def main():
     args = parser.parse_args()
 
     if not args.regression.exists():
-        print(f"ERREUR: Fichier introuvable: {args.regression}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.regression)
         sys.exit(1)
 
     if not args.bert.exists():
-        print(f"ERREUR: Fichier introuvable: {args.bert}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.bert)
         sys.exit(1)
 
     merger = PredictionsMerger()

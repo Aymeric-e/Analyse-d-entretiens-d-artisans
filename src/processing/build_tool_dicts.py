@@ -22,6 +22,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 def load_entretien_file(path):
     """
@@ -134,7 +138,7 @@ def main():
     Si aucun argument n'est fourni, utilise les chemins par défaut définis à la fin du script.
     """
     if len(sys.argv) != 4:
-        print("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
+        logger.error("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
         sys.exit(1)
 
     entretien_csv = Path(sys.argv[1])
@@ -142,10 +146,10 @@ def main():
     output_dir = Path(sys.argv[3])
 
     if not entretien_csv.exists():
-        print(f"Erreur : fichier introuvable : {entretien_csv}")
+        logger.error("Fichier introuvable: %s", entretien_csv)
         sys.exit(1)
     if not tools_csv.exists():
-        print(f"Erreur : fichier introuvable : {tools_csv}")
+        logger.error("Fichier introuvable: %s", tools_csv)
         sys.exit(1)
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -162,8 +166,8 @@ def main():
     write_output_csv(out_materiau, "materiau", dict_materiau)
     write_output_csv(out_artisanat, "artisanat", dict_artisanat)
 
-    print(f"Fichier créé : {out_materiau}")
-    print(f"Fichier créé : {out_artisanat}")
+    logger.info("Fichier créé : %s", out_materiau)
+    logger.info("Fichier créé : %s", out_artisanat)
 
 
 if __name__ == "__main__":

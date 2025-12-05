@@ -29,6 +29,10 @@ import pandas as pd
 from docx import Document
 from tqdm import tqdm
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class InterviewCleaner:
     """Nettoie les entretiens (3 niveaux de segmentation possibles)"""
@@ -91,9 +95,9 @@ class InterviewCleaner:
         all_rows = []
         docx_files = sorted(list(input_dir.glob("*.docx")))
 
-        print(f"\n{'='*70}")
-        print(f"NETTOYAGE DE {len(docx_files)} FICHIERS (mode: {mode})")
-        print(f"{'='*70}\n")
+        logger.info("%s", "=" * 70)
+        logger.info("NETTOYAGE DE %d FICHIERS (mode: %s)", len(docx_files), mode)
+        logger.info("%s\n", "=" * 70)
 
         for file_path in tqdm(docx_files, desc="Nettoyage"):
             try:
@@ -131,21 +135,24 @@ class InterviewCleaner:
                 else:  # paragraph
                     all_rows.extend(utterances)
 
-            except Exception as e:  # pylint: disable=broad-except
-                print(f"Erreur avec {file_path.name}: {e}")
+            except Exception:  # pylint: disable=broad-except
+                logger.exception("Erreur avec %s", file_path.name)
 
         df = pd.DataFrame(all_rows)
         output_csv.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(output_csv, index=False, encoding="utf-8")
 
-        print(f"\n{'='*70}")
-        print("NETTOYAGE TERMINÉ")
-        print(f"{'='*70}")
-        print(f"   - Mode: {mode}")
-        print(f"   - Lignes nettoyées: {len(df)}")
-        print(f"   - Fichiers traités: {df['filename'].nunique() if not df.empty else 0}")
-        print(f"   - Mots/ligne (moy): {df['word_count'].mean():.1f}" if not df.empty else "   - Mots/ligne (moy): 0")
-        print(f"   - Fichier de sortie: {output_csv}\n")
+        logger.info("%s", "=" * 70)
+        logger.info("NETTOYAGE TERMINÉ")
+        logger.info("%s", "=" * 70)
+        logger.info("   - Mode: %s", mode)
+        logger.info("   - Lignes nettoyées: %d", len(df))
+        logger.info("   - Fichiers traités: %d", df["filename"].nunique() if not df.empty else 0)
+        if not df.empty:
+            logger.info("   - Mots/ligne (moy): %.1f", df["word_count"].mean())
+        else:
+            logger.info("   - Mots/ligne (moy): 0")
+        logger.info("   - Fichier de sortie: %s\n", output_csv)
 
         return df
 
@@ -155,11 +162,11 @@ if __name__ == "__main__":
     input_dir_path = Path("data/raw")
     out_dir_path = Path("data/processed")
 
-    print("\n=== NETTOYAGE : VERSION NON SEGMENTÉE ===")
+    logger.info("NETTOYAGE : VERSION NON SEGMENTÉE")
     cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_full.csv", mode="full")
 
-    print("\n=== NETTOYAGE : VERSION PARAGRAPHE ===")
+    logger.info("NETTOYAGE : VERSION PARAGRAPHE")
     cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_paragraph.csv", mode="paragraph")
 
-    print("\n=== NETTOYAGE : VERSION PAR PHRASE ===")
+    logger.info("NETTOYAGE : VERSION PAR PHRASE")
     cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_sentence.csv", mode="sentence")

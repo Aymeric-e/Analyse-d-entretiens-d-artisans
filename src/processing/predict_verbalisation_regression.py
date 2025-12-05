@@ -11,6 +11,10 @@ from pathlib import Path
 import joblib
 import pandas as pd
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class VerbRegPredicter:
     """Load trained model and make predictions on new data"""
@@ -22,7 +26,7 @@ class VerbRegPredicter:
 
     def load_model(self) -> None:
         """Load trained model and vectorizer"""
-        print("Chargement du modèle entraîné...")
+        logger.info("Chargement du modèle entraîné...")
 
         model_path = self.model_dir / "verbalisation_regressor.pkl"
         vectorizer_path = self.model_dir / "verbalisation_vectorizer.pkl"
@@ -30,18 +34,18 @@ class VerbRegPredicter:
         if not model_path.exists() or not vectorizer_path.exists():
             raise FileNotFoundError(
                 f"Modèle non trouvé dans {self.model_dir}.\n"
-                f"Veuillez d'abord entraîner le modèle avec train_verbalisation_regression.py"
+                "Veuillez d'abord entraîner le modèle avec train_verbalisation_regression.py"
             )
 
         self.model = joblib.load(model_path)
         self.vectorizer = joblib.load(vectorizer_path)
 
-        print(f"Modèle chargé depuis: {model_path}")
-        print(f"Vectorizer chargé depuis: {vectorizer_path}")
+        logger.info("Modèle chargé depuis: %s", model_path)
+        logger.info("Vectorizer chargé depuis: %s", vectorizer_path)
 
     def load_data(self, csv_path: Path) -> pd.DataFrame:
         """Load test data with comma separator"""
-        print(f"\nChargement des données depuis {csv_path}...")
+        logger.info("Chargement des données depuis %s...", csv_path)
 
         # Try comma first, then semicolon
         try:
@@ -55,13 +59,13 @@ class VerbRegPredicter:
         if missing:
             raise ValueError(f"Colonnes manquantes dans CSV: {missing}")
 
-        print(f"Données chargées: {len(df)} phrases")
+        logger.info("Données chargées: %d phrases", len(df))
 
         return df
 
     def predict(self, texts: pd.Series) -> pd.Series:
         """Predict difficulty scores and scale to 0-10"""
-        print("\nPrédiction des difficultés de verbalisation...")
+        logger.info("Prédiction des difficultés de verbalisation...")
 
         # Vectorize
         X_vec = self.vectorizer.transform(texts)  # pylint: disable=invalid-name
@@ -76,26 +80,25 @@ class VerbRegPredicter:
         y_pred_0_10 = y_pred_0_10.clip(0, 10)
         y_pred_0_10 = pd.Series(y_pred_0_10).round(2).values
 
-        print(f"Prédictions complétées: {len(y_pred_0_10)} phrases")
-        print(f"Plage des scores: [{y_pred_0_10.min():.2f}, {y_pred_0_10.max():.2f}]")
+        logger.info("Prédictions complétées: %d phrases", len(y_pred_0_10))
+        logger.info("Plage des scores: [%.2f, %.2f]", float(y_pred_0_10.min()), float(y_pred_0_10.max()))
 
         return y_pred_0_10
 
     def save_predictions(self, df: pd.DataFrame, output_path: Path) -> None:
         """Save dataframe with predictions to CSV"""
-        print("\nSauvegarde des prédictions...")
+        logger.info("Sauvegarde des prédictions...")
 
         # Use semicolon separator as specified
         df.to_csv(output_path, sep=";", index=False)
 
-        print(f"Résultats sauvegardés: {output_path}")
-        print("\nAperçu des premières lignes:")
-        print(df.head(10))
+        logger.info("Résultats sauvegardés: %s", output_path)
+        logger.debug("Aperçu des premières lignes:\n%s", df.head(10).to_string())
 
     def run(self, input_csv: Path, output_csv: Path) -> None:
         """Complete prediction pipeline"""
 
-        print("PRÉDICTION: Difficulté de verbalisation sur nouvelles données")
+        logger.info("PRÉDICTION: Difficulté de verbalisation sur nouvelles données")
 
         # Load model
         self.load_model()
@@ -116,7 +119,7 @@ class VerbRegPredicter:
         # Save
         self.save_predictions(df_output, output_csv)
 
-        print("Prédiction terminée avec succès!")
+        logger.info("Prédiction terminée avec succès")
 
 
 def main():
@@ -145,7 +148,7 @@ def main():
 
     # Validate input file
     if not args.input.exists():
-        print(f"ERREUR: Fichier introuvable: {args.input}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
     # Create output directory if needed

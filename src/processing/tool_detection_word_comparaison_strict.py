@@ -14,6 +14,10 @@ import re
 from collections import Counter
 from pathlib import Path
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 def load_tool_list(tool_csv_path):
     """
@@ -101,9 +105,9 @@ def process_single_csv(tool_csv, input_csv, output_dir):
         for tool, count in global_counter.items():
             writer.writerow([tool, count])
 
-    print(f" Fichier traité : {input_csv.name}")
-    print(f"   Résultat : {output_csv_path}")
-    print(f"   Dictionnaire : {dict_csv_path}")
+    logger.info("Fichier traité : %s", input_csv.name)
+    logger.info("  Résultat : %s", output_csv_path)
+    logger.info("  Dictionnaire : %s", dict_csv_path)
 
 
 def process_all_csvs():
@@ -125,6 +129,7 @@ def process_all_csvs():
     output_dir = Path("data/processed_tool_comparaison_strict")
 
     for csv_file in input_csvs:
+        logger.info("Processing input CSV: %s", csv_file)
         process_single_csv(tool_csv, csv_file, output_dir)
 
 

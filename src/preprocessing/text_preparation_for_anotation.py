@@ -11,6 +11,10 @@ import os
 
 import pandas as pd
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 def prepare_text_for_annotation(input_csv, output_csv, label_columns):
     """
@@ -39,7 +43,7 @@ def prepare_text_for_annotation(input_csv, output_csv, label_columns):
 
     # Si le dossier n'existe pas, le créer
     if not os.path.exists(output_csv):
-        print("Creating output directory:", output_csv)
+        logger.info("Creating output directory: %s", output_csv)
         os.makedirs(output_csv, exist_ok=True)
 
     # Si le output_csv est un dossier, créer le chemin complet
@@ -79,7 +83,7 @@ if __name__ == "__main__":
         for file_name in os.listdir(args.input):
             if file_name.endswith(".csv"):
                 input_path = os.path.join(args.input, file_name)
-                print("Processing file:", input_path)
+                logger.info("Processing file: %s", input_path)
                 prepare_text_for_annotation(input_path, args.output, args.labels)
     else:
         # Traiter un seul fichier CSV

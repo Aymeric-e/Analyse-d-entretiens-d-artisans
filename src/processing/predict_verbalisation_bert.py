@@ -20,7 +20,12 @@ import torch
 from datasets import Dataset
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
+from utils.logger_config import setup_logger
+
 warnings.filterwarnings("ignore")
+
+
+logger = setup_logger(__name__, level="INFO")
 
 
 class BertPredictor:
@@ -31,13 +36,13 @@ class BertPredictor:
         self.tokenizer = None
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"Utilisation du device: {self.device}")
+        logger.info("Utilisation du device: %s", self.device)
 
         self._load_model()
 
     def _load_model(self) -> None:
         """Load saved model and tokenizer"""
-        print(f"Chargement du modèle depuis {self.model_dir}...")
+        logger.info("Chargement du modèle depuis %s...", self.model_dir)
 
         model_path = self.model_dir / "model"
         tokenizer_path = self.model_dir / "tokenizer"
@@ -48,11 +53,11 @@ class BertPredictor:
         self.tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
         self.model = AutoModelForSequenceClassification.from_pretrained(str(model_path)).to(self.device)
 
-        print("Modèle et tokenizer chargés avec succès")
+        logger.info("Modèle et tokenizer chargés avec succès")
 
     def load_data(self, csv_path: Path) -> tuple:
         """Load data to predict on"""
-        print(f"Chargement des données depuis {csv_path}...")
+        logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=",")
 
         if "text" not in df.columns:
@@ -64,13 +69,13 @@ class BertPredictor:
         X = df["text"].astype(str)  # pylint: disable=invalid-name
         filenames = df["filename"].astype(str)
 
-        print(f"Données chargées: {len(df)} phrases")
+        logger.info("Données chargées: %d phrases", len(df))
 
         return X, filenames
 
     def tokenize_data(self, texts: pd.Series, max_length: int = 128) -> Dataset:
         """Tokenize texts for prediction"""
-        print(f"Tokenisation des textes (max_length={max_length})...")
+        logger.info("Tokenisation des textes (max_length=%d)...", max_length)
 
         encodings = self.tokenizer(
             texts.tolist(),
@@ -89,7 +94,7 @@ class BertPredictor:
 
     def predict(self, texts: pd.Series, max_length: int = 128) -> np.ndarray:
         """Generate predictions"""
-        print("Génération des prédictions...")
+        logger.info("Génération des prédictions...")
 
         dataset = self.tokenize_data(texts, max_length)
 
@@ -110,25 +115,25 @@ class BertPredictor:
 
     def save_predictions(self, filenames: pd.Series, texts: pd.Series, predictions: np.ndarray, output_path: Path) -> None:
         """Save predictions to CSV"""
-        print("Sauvegarde des prédictions...")
+        logger.info("Sauvegarde des prédictions...")
 
         results_df = pd.DataFrame({"filename": filenames.values, "text": texts.values, "note_bert": predictions})
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         results_df.to_csv(output_path, index=False, sep=";")
 
-        print(f"Prédictions sauvegardées: {output_path}")
-        print(f"Nombre de prédictions: {len(results_df)}")
+        logger.info("Prédictions sauvegardées: %s", output_path)
+        logger.info("Nombre de prédictions: %d", len(results_df))
 
     def run(self, csv_path: Path, output_csv: Path, max_length: int = 128) -> None:
         """Complete prediction pipeline"""
-        print("Prédiction: BERT pour Difficulté de Verbalisation")
+        logger.info("Prédiction: BERT pour Difficulté de Verbalisation")
 
         X, filenames = self.load_data(csv_path)  # pylint: disable=invalid-name
         predictions = self.predict(X, max_length)
         self.save_predictions(filenames, X, predictions, output_csv)
 
-        print("Prédictions terminées!")
+        logger.info("Prédictions terminées")
 
 
 def main():
@@ -147,11 +152,11 @@ def main():
     args = parser.parse_args()
 
     if not args.input.exists():
-        print(f"ERREUR: Fichier introuvable: {args.input}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
     if not args.model_dir.exists():
-        print(f"ERREUR: Dossier modèle introuvable: {args.model_dir}")
+        logger.error("ERREUR: Dossier modèle introuvable: %s", args.model_dir)
         sys.exit(1)
 
     predictor = BertPredictor(model_dir=args.model_dir)

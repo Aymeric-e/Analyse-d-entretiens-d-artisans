@@ -17,6 +17,10 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class VerbRegTrainer:
     """Train model with best hyperparameters found by tuning"""
@@ -31,7 +35,7 @@ class VerbRegTrainer:
 
     def load_data(self, csv_path: Path) -> tuple:
         """Load annotated CSV with semicolon separator"""
-        print(f"Chargement des données depuis {csv_path}...")
+        logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=";")
 
         # Validate required columns
@@ -43,14 +47,14 @@ class VerbRegTrainer:
         X = df["text"]  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
-        print(f"Données chargées: {len(df)} phrases")
-        print(f"Distribution des difficultés:\n{y.value_counts().sort_index()}")
+        logger.info("Données chargées: %d phrases", len(df))
+        logger.debug("Distribution des difficultés:\n%s", y.value_counts().sort_index().to_string())
 
         return X, y
 
     def load_best_params(self, params_path: Path) -> dict:
         """Load best hyperparameters from tuning"""
-        print(f"\nChargement des meilleurs paramètres depuis {params_path}...")
+        logger.info("Chargement des meilleurs paramètres depuis %s...", params_path)
 
         if not params_path.exists():
             raise FileNotFoundError(
@@ -60,9 +64,9 @@ class VerbRegTrainer:
 
         best_params = joblib.load(params_path)
 
-        print("Meilleurs paramètres chargés:")
+        logger.info("Meilleurs paramètres chargés:")
         for param, value in best_params.items():
-            print(f"  - {param}: {value}")
+            logger.info("  - %s: %s", param, value)
 
         return best_params
 
@@ -92,7 +96,7 @@ class VerbRegTrainer:
 
     def prepare_features(self, X_train: pd.Series, X_test: pd.Series = None) -> tuple:  # pylint: disable=invalid-name
         """Vectorize text using TF-IDF with best parameters"""
-        print("\nVectorisation TF-IDF avec paramètres optimaux...")
+        logger.info("Vectorisation TF-IDF avec paramètres optimaux...")
 
         tfidf_params = self.extract_tfidf_params()
 
@@ -102,26 +106,26 @@ class VerbRegTrainer:
 
         if X_test is not None:
             X_test_vec = self.vectorizer.transform(X_test)  # pylint: disable=invalid-name
-            print(f"Nombre de features TF-IDF: {X_train_vec.shape[1]}")
+            logger.info("Nombre de features TF-IDF: %d", X_train_vec.shape[1])
             return X_train_vec, X_test_vec
 
-        print(f"Nombre de features TF-IDF: {X_train_vec.shape[1]}")
+        logger.info("Nombre de features TF-IDF: %d", X_train_vec.shape[1])
         return X_train_vec, None
 
     def train(self, X_train_vec, y_train) -> None:  # pylint: disable=invalid-name
         """Train Ridge regression model with best parameters"""
-        print("\nEntraînement du modèle de régression avec paramètres optimaux...")
+        logger.info("Entraînement du modèle de régression avec paramètres optimaux...")
 
         ridge_params = self.extract_ridge_params()
 
         self.model = Ridge(**ridge_params)
         self.model.fit(X_train_vec, y_train)
 
-        print("Modèle entraîné avec succès.")
+        logger.info("Modèle entraîné avec succès.")
 
     def evaluate(self, X_test_vec, y_test) -> dict:  # pylint: disable=invalid-name
         """Evaluate model performance on test set"""
-        print("\nÉvaluation du modèle...")
+        logger.info("Évaluation du modèle...")
 
         y_pred = self.model.predict(X_test_vec)
 
@@ -131,16 +135,16 @@ class VerbRegTrainer:
         rmse = np.sqrt(mse)
         r2 = r2_score(y_test, y_pred)
 
-        print("Résultats sur l'ensemble de test:")
-        print(f"  - R² score: {r2:.4f}")
-        print(f"  - MAE: {mae:.4f}")
-        print(f"  - RMSE: {rmse:.4f}")
+        logger.info("Résultats sur l'ensemble de test:")
+        logger.info("  - R² score: %.4f", r2)
+        logger.info("  - MAE: %.4f", mae)
+        logger.info("  - RMSE: %.4f", rmse)
 
         return {"r2": r2, "mae": mae, "rmse": rmse, "mse": mse}
 
     def save_model(self) -> None:
         """Save trained model and vectorizer"""
-        print("\nSauvegarde du modèle...")
+        logger.info("Sauvegarde du modèle...")
 
         model_path = self.model_dir / "verbalisation_regressor.pkl"
         vectorizer_path = self.model_dir / "verbalisation_vectorizer.pkl"
@@ -148,13 +152,13 @@ class VerbRegTrainer:
         joblib.dump(self.model, model_path)
         joblib.dump(self.vectorizer, vectorizer_path)
 
-        print(f"Modèle sauvegardé: {model_path}")
-        print(f"Vectorizer sauvegardé: {vectorizer_path}")
+        logger.info("Modèle sauvegardé: %s", model_path)
+        logger.info("Vectorizer sauvegardé: %s", vectorizer_path)
 
     def run(self, csv_path: Path, best_params_path: Path, with_eval: bool = True) -> None:
         """Complete training pipeline with best hyperparameters"""
 
-        print("ENTRAINEMENT : Avec hyperparamètres optimaux")
+        logger.info("ENTRAINEMENT : Avec hyperparamètres optimaux")
 
         # Load best params
         self.best_params = self.load_best_params(best_params_path)
@@ -164,11 +168,11 @@ class VerbRegTrainer:
 
         if with_eval:
             # Split pour évaluation
-            print("\nSéparation train/test (80/20) pour évaluation...")
+            logger.info("Séparation train/test (80/20) pour évaluation...")
             X_train, X_test, y_train, y_test = train_test_split(  # pylint: disable=invalid-name
                 X, y, test_size=0.2, random_state=42  # pylint: disable=invalid-name
             )
-            print(f"Train: {len(X_train)}, Test: {len(X_test)}")
+            logger.info("Train: %d, Test: %d", len(X_train), len(X_test))
 
             # Features
             X_train_vec, X_test_vec = self.prepare_features(X_train, X_test)  # pylint: disable=invalid-name
@@ -180,7 +184,7 @@ class VerbRegTrainer:
             self.evaluate(X_test_vec, y_test)
         else:
             # Entraîner sur tout le dataset
-            print(f"\nEntraînement sur tout le dataset ({len(X)} phrases)...")
+            logger.info("Entraînement sur tout le dataset (%d phrases)...", len(X))
 
             # Features
             X_train_vec, _ = self.prepare_features(X)  # pylint: disable=invalid-name
@@ -191,7 +195,7 @@ class VerbRegTrainer:
         # Save
         self.save_model()
 
-        print("Entraînement terminé avec succès!")
+        logger.info("Entraînement terminé avec succès")
 
 
 def main():
@@ -231,11 +235,11 @@ def main():
 
     # Validate input files
     if not args.input.exists():
-        print(f"ERREUR: Fichier introuvable: {args.input}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
     if not args.best_params.exists():
-        print(f"ERREUR: Fichier de paramètres introuvable: {args.best_params}")
+        logger.error("ERREUR: Fichier de paramètres introuvable: %s", args.best_params)
         sys.exit(1)
 
     # Determine if we evaluate

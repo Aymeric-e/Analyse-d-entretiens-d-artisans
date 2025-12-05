@@ -39,10 +39,15 @@ import nlpaug.augmenter.word as naw
 import pandas as pd
 from tqdm import tqdm
 
+from utils.logger_config import setup_logger
+
 tqdm.pandas()
 
 # Désactiver le parallélisme des tokenizers pour éviter les avertissements
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+
+logger = setup_logger(__name__, level="INFO")
 
 
 def augment_text(text, augmenter_type, num_aug):
@@ -128,7 +133,7 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
     augmented_df_complete = df.copy()
     augmented_df_complete["id"] = augmented_df_complete["id"].astype(str)
     for augmenter_type in augmenter_types:
-        print("Applying augmenter type:", augmenter_type)
+        logger.info("Applying augmenter type: %s", augmenter_type)
         augmented_df = augment_dataframe(df, text_column, augmenter_type, num_aug)
         augmented_df_complete = pd.concat([augmented_df_complete, augmented_df], ignore_index=True)
 
@@ -139,7 +144,7 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
 
     # Si le dossier n'existe pas, le créer
     if not os.path.exists(output_csv):
-        print("Creating output directory:", output_csv)
+        logger.info("Creating output directory: %s", output_csv)
         os.makedirs(output_csv, exist_ok=True)
 
     # Si le output_csv est un dossier, créer le chemin complet
@@ -147,7 +152,7 @@ def process_csv(input_csv, output_csv, text_column, augmenter_types, num_aug):
         filename = os.path.basename(input_csv).replace(".csv", "_augmented.csv")
         output_csv = os.path.join(output_csv, filename)
 
-    print("Saving augmented data to:", output_csv)
+    logger.info("Saving augmented data to: %s", output_csv)
     augmented_df_complete.to_csv(output_csv, index=False, sep=";")
 
 
@@ -182,7 +187,7 @@ if __name__ == "__main__":
         for file_name in os.listdir(args.input):
             if file_name.endswith(".csv"):
                 input_path = os.path.join(args.input, file_name)
-                print("Processing file:", input_path)
+                logger.info("Processing file: %s", input_path)
                 process_csv(input_path, args.output, args.text_column, args.augmenter_types, args.num_aug)
     else:
         process_csv(args.input, args.output, args.text_column, args.augmenter_types, args.num_aug)

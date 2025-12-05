@@ -12,6 +12,10 @@ from typing import Tuple
 
 import pandas as pd
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class DifficultyReportGenerator:
     """Generate HTML report with color-coded verbalization difficulty"""
@@ -24,10 +28,9 @@ class DifficultyReportGenerator:
 
     def load_data(self, phrases_csv: Path, interviews_csv: Path, difficulty_col: str) -> None:
         """Load both CSV files"""
-        print(f"Chargement des phrases annotées depuis {phrases_csv}...")
+        logger.info("Chargement des phrases annotées depuis %s...", phrases_csv)
         self.phrases_df = pd.read_csv(phrases_csv, sep=";")
-
-        print(f"Chargement des transcriptions d'entretiens depuis {interviews_csv}...")
+        logger.info("Chargement des transcriptions d'entretiens depuis %s...", interviews_csv)
         self.interviews_df = pd.read_csv(interviews_csv, sep=",")
 
         # Validate columns
@@ -42,8 +45,8 @@ class DifficultyReportGenerator:
 
         self.difficulty_col = difficulty_col
 
-        print(f"Phrases chargées: {len(self.phrases_df)}")
-        print(f"Entretiens chargés: {len(self.interviews_df)}")
+        logger.info("Phrases chargées: %d", len(self.phrases_df))
+        logger.info("Entretiens chargés: %d", len(self.interviews_df))
 
     def difficulty_to_rgb(self, difficulty: float) -> Tuple[int, int, int]:
         """Convert difficulty score (0-10) to RGB color (green to red)"""
@@ -61,7 +64,7 @@ class DifficultyReportGenerator:
 
     def merge_data(self) -> None:
         """Merge phrases with interview metadata"""
-        print("\nMerge des données...")
+        logger.info("Merge des données...")
 
         self.merged_data = {}
 
@@ -79,7 +82,7 @@ class DifficultyReportGenerator:
             if filename in self.merged_data:
                 self.merged_data[filename]["phrases"].append({"text": row["text"], "difficulty": float(row[self.difficulty_col])})
 
-        print(f"Données mergées: {len(self.merged_data)} entretiens")
+        logger.info("Données mergées: %d entretiens", len(self.merged_data))
 
     def colorize_text_with_tooltip(self, text: str, difficulty: float) -> str:
         """Wrap text with color span and tooltip on hover"""
@@ -261,7 +264,7 @@ class DifficultyReportGenerator:
 
     def save_html(self, output_path: Path) -> None:
         """Save HTML report to file"""
-        print("Génération du rapport HTML...")
+        logger.info("Génération du rapport HTML...")
 
         html_content = self.generate_html()
 
@@ -270,7 +273,7 @@ class DifficultyReportGenerator:
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        print(f"Rapport sauvegardé: {output_path}")
+        logger.info("Rapport sauvegardé: %s", output_path)
 
     def run(
         self,
@@ -280,13 +283,13 @@ class DifficultyReportGenerator:
         difficulty_col: str = "difficulté_verbalisation",
     ) -> None:
         """Complete pipeline"""
-        print("Génération: Rapport HTML Difficulté de Verbalisation")
+        logger.info("Génération: Rapport HTML Difficulté de Verbalisation")
 
         self.load_data(phrases_csv, interviews_csv, difficulty_col)
         self.merge_data()
         self.save_html(output_html)
 
-        print("Rapport généré avec succès!")
+        logger.info("Rapport généré avec succès")
 
 
 def main():
@@ -315,11 +318,11 @@ def main():
     args = parser.parse_args()
 
     if not args.phrases.exists():
-        print(f"ERREUR: Fichier introuvable: {args.phrases}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.phrases)
         sys.exit(1)
 
     if not args.interviews.exists():
-        print(f"ERREUR: Fichier introuvable: {args.interviews}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.interviews)
         sys.exit(1)
 
     generator = DifficultyReportGenerator()

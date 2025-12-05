@@ -23,7 +23,11 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
 
+from utils.logger_config import setup_logger
+
 warnings.filterwarnings("ignore")
+
+logger = setup_logger(__name__, level="INFO")
 
 
 class BertFinalTrainer:
@@ -40,11 +44,11 @@ class BertFinalTrainer:
         self.tokenizer = None
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"Utilisation du device: {self.device}")
+        logger.info("Utilisation du device: %s", self.device)
 
     def load_best_hyperparams(self, tuning_results_path: Path) -> Dict:
         """Load best hyperparameters from tuning results CSV"""
-        print("Chargement des meilleurs hyperparamètres...")
+        logger.info("Chargement des meilleurs hyperparamètres...")
 
         # Default hyperparameters
         default_params = {
@@ -55,8 +59,8 @@ class BertFinalTrainer:
         }
 
         if not tuning_results_path.exists():
-            print(f" Fichier de tuning non trouvé: {tuning_results_path}")
-            print(f"Utilisation des hyperparamètres par défaut: {default_params}")
+            logger.warning("Fichier de tuning non trouvé: %s", tuning_results_path)
+            logger.info("Utilisation des hyperparamètres par défaut: %s", default_params)
             return default_params
 
         try:
@@ -64,7 +68,7 @@ class BertFinalTrainer:
             df = pd.read_csv(tuning_results_path, sep=";")
 
             if df.empty:
-                print(" Fichier de tuning vide, utilisation des défauts")
+                logger.warning("Fichier de tuning vide, utilisation des hyperparamètres par défaut")
                 return default_params
 
             # Get row with best R2
@@ -77,23 +81,23 @@ class BertFinalTrainer:
                 "num_epochs": int(best_row["num_epochs"]),
             }
 
-            print("Meilleurs hyperparamètres trouvés:")
-            print(f"  - Learning rate: {best_params['learning_rate']}")
-            print(f"  - Batch size: {best_params['batch_size']}")
-            print(f"  - Max length: {best_params['max_length']}")
-            print(f"  - Num epochs: {best_params['num_epochs']}")
-            print(f"  - R² score: {best_row['r2']:.4f}")
+            logger.info("Meilleurs hyperparamètres trouvés:")
+            logger.info("  - Learning rate: %s", best_params["learning_rate"])
+            logger.info("  - Batch size: %s", best_params["batch_size"])
+            logger.info("  - Max length: %s", best_params["max_length"])
+            logger.info("  - Num epochs: %s", best_params["num_epochs"])
+            logger.info("  - R² score: %.4f", best_row["r2"])
 
             return best_params
 
-        except Exception as e:  # pylint: disable=broad-exception-caught
-            print(f" Erreur lors du chargement du tuning: {str(e)}")
-            print(f"Utilisation des hyperparamètres par défaut: {default_params}")
+        except Exception:  # pylint: disable=broad-exception-caught
+            logger.exception("Erreur lors du chargement du tuning")
+            logger.info("Utilisation des hyperparamètres par défaut: %s", default_params)
             return default_params
 
     def save_hyperparams(self, hyperparams: Dict) -> None:
         """Save hyperparameters to JSON file"""
-        print("\nSauvegarde des hyperparamètres...")
+        logger.info("Sauvegarde des hyperparamètres...")
 
         params_path = self.model_dir / "bert_final" / "hyperparams.json"
         params_path.parent.mkdir(parents=True, exist_ok=True)
@@ -101,11 +105,11 @@ class BertFinalTrainer:
         with open(params_path, "w", encoding="utf-8") as f:
             json.dump(hyperparams, f, indent=2)
 
-        print(f"Hyperparamètres sauvegardés: {params_path}")
+        logger.info("Hyperparamètres sauvegardés: %s", params_path)
 
     def load_data(self, csv_path: Path) -> Tuple[pd.Series, pd.Series]:
         """Load annotated CSV"""
-        print(f"Chargement des données depuis {csv_path}...")
+        logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=";")
 
         required_cols = ["text", "difficulté_verbalisation"]
@@ -116,17 +120,17 @@ class BertFinalTrainer:
         X = df["text"].astype(str)  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
-        print(f"Données chargées: {len(df)} phrases")
+        logger.info("Données chargées: %d phrases", len(df))
         return X, y
 
     def prepare_tokenizer(self) -> None:
         """Load tokenizer"""
-        print(f"Chargement du tokenizer: {self.model_name}...")
+        logger.info("Chargement du tokenizer: %s...", self.model_name)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
     def tokenize_data(self, texts: pd.Series, labels: pd.Series, max_length: int = 128) -> Dataset:
         """Tokenize texts"""
-        print(f"Tokenisation des textes (max_length={max_length})...")
+        logger.info("Tokenisation des textes (max_length=%d)...", max_length)
 
         encodings = self.tokenizer(
             texts.tolist(),
@@ -167,7 +171,7 @@ class BertFinalTrainer:
         best_params: Dict,
     ) -> dict:
         """Train BERT model"""
-        print("\nEntraînement du modèle BERT...")
+        logger.info("Entraînement du modèle BERT...")
 
         X_train, y_train, X_test, y_test = data  # pylint: disable=invalid-name
 
@@ -210,16 +214,16 @@ class BertFinalTrainer:
         trainer.train()
         eval_results = trainer.evaluate()
 
-        print("\nRésultats d'évaluation:")
-        print(f"  - R² score: {eval_results.get('eval_r2', 0):.4f}")
-        print(f"  - MAE: {eval_results.get('eval_mae', 0):.4f}")
-        print(f"  - RMSE: {eval_results.get('eval_rmse', 0):.4f}")
+        logger.info("Résultats d'évaluation:")
+        logger.info("  - R² score: %.4f", eval_results.get("eval_r2", 0))
+        logger.info("  - MAE: %.4f", eval_results.get("eval_mae", 0))
+        logger.info("  - RMSE: %.4f", eval_results.get("eval_rmse", 0))
 
         return eval_results
 
     def save_model(self) -> None:
         """Save model and tokenizer"""
-        print("\nSauvegarde du modèle...")
+        logger.info("Sauvegarde du modèle...")
 
         model_output = self.model_dir / "bert_final"
         model_output.mkdir(parents=True, exist_ok=True)
@@ -227,11 +231,11 @@ class BertFinalTrainer:
         self.model.save_pretrained(str(model_output / "model"))
         self.tokenizer.save_pretrained(str(model_output / "tokenizer"))
 
-        print(f"Modèle sauvegardé dans: {model_output}")
+        logger.info("Modèle sauvegardé dans: %s", model_output)
 
     def run(self, csv_path: Path, tuning_results_path: Path = None) -> None:
         """Complete training pipeline"""
-        print("Entraînement final: BERT pour Difficulté de Verbalisation")
+        logger.info("Entraînement final: BERT pour Difficulté de Verbalisation")
 
         # Load best hyperparameters
         if tuning_results_path is None:
@@ -243,9 +247,9 @@ class BertFinalTrainer:
         X, y = self.load_data(csv_path)  # pylint: disable=invalid-name
 
         # Split
-        print("\nSéparation train/test (80/20)...")
+        logger.info("Séparation train/test (80/20)...")
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  # pylint: disable=invalid-name
-        print(f"Train: {len(X_train)}, Test: {len(X_test)}")
+        logger.info("Train: %d, Test: %d", len(X_train), len(X_test))
 
         # Train with loaded hyperparameters
         Data_X_y = X_train, y_train, X_test, y_test  # pylint: disable=invalid-name
@@ -255,7 +259,7 @@ class BertFinalTrainer:
         self.save_model()
         self.save_hyperparams(best_params)
 
-        print("Entraînement BERT terminé!")
+        logger.info("Entraînement BERT terminé")
 
 
 def main():
@@ -287,7 +291,7 @@ def main():
     args = parser.parse_args()
 
     if not args.input.exists():
-        print(f"ERREUR: Fichier introuvable: {args.input}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
     trainer = BertFinalTrainer(model_name=args.model_name, model_dir=args.model_dir)

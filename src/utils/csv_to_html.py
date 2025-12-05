@@ -28,6 +28,10 @@ import sys
 
 import pandas as pd
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 def csv_to_html(csv_path, output_dir, separator):
     """
@@ -49,7 +53,7 @@ def csv_to_html(csv_path, output_dir, separator):
     """
     # Vérification CSV
     if not os.path.isfile(csv_path):
-        print(f"Erreur : le fichier '{csv_path}' est introuvable.")
+        logger.error("Erreur : le fichier '%s' est introuvable.", csv_path)
         sys.exit(1)
 
     # Récupère juste le nom sans extension
@@ -59,8 +63,8 @@ def csv_to_html(csv_path, output_dir, separator):
     # Lit le CSV avec pandas
     try:
         df = pd.read_csv(csv_path, sep=separator)
-    except Exception as e:  # pylint: disable=broad-except
-        print(f"Impossible de lire le CSV : {e}")
+    except Exception:  # pylint: disable=broad-except
+        logger.exception("Impossible de lire le CSV: %s", csv_path)
         sys.exit(1)
 
     # Nouveau style HTML (reprend le style du premier script)
@@ -100,7 +104,7 @@ def csv_to_html(csv_path, output_dir, separator):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"Fichier HTML généré : {output_path}")
+    logger.info("Fichier HTML généré : %s", output_path)
 
 
 if __name__ == "__main__":
@@ -120,8 +124,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print("CONVERSION CSV -> HTML")
-    print(f"Fichier d'entrée : {args.input}")
+    logger.info("CONVERSION CSV -> HTML")
+    logger.info("Fichier d'entrée : %s", args.input)
 
     output_folder = args.output_dir if args.output_dir else args.input.rsplit("/", 1)[0]
 

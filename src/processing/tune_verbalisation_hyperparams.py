@@ -15,6 +15,10 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class VerbRegHyperparameterTuner:
     """Find optimal hyperparameters for verbalization difficulty model"""
@@ -30,7 +34,7 @@ class VerbRegHyperparameterTuner:
 
     def load_data(self, csv_path: Path) -> tuple:
         """Load annotated CSV with semicolon separator"""
-        print(f"Chargement des données depuis {csv_path}...")
+        logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=";")
 
         # Validate required columns
@@ -42,8 +46,8 @@ class VerbRegHyperparameterTuner:
         X = df["text"]  # pylint: disable=invalid-name
         y = df["difficulté_verbalisation"].astype(float)
 
-        print(f"Données chargées: {len(df)} phrases")
-        print(f"Distribution des difficultés:\n{y.value_counts().sort_index()}")
+        logger.info("Données chargées: %d phrases", len(df))
+        logger.debug("Distribution des difficultés:\n%s", y.value_counts().sort_index().to_string())
 
         return X, y
 
@@ -70,7 +74,7 @@ class VerbRegHyperparameterTuner:
 
     def tune_hyperparameters(self, X: pd.Series, y: pd.Series, cv: int = 5) -> dict:  # pylint: disable=invalid-name
         """Use GridSearchCV to find best hyperparameters"""
-        print(f"\nTUNING: Recherche des meilleurs hyperparamètres ({cv}-fold cross-validation)")
+        logger.info("TUNING: Recherche des meilleurs hyperparamètres (%d-fold cross-validation)", cv)
 
         # Create pipeline and grid
         pipeline = self.create_pipeline()
@@ -86,12 +90,12 @@ class VerbRegHyperparameterTuner:
             verbose=1,
         )
 
-        print("\nEntraînement en cours...")
+        logger.info("Entraînement en cours...")
 
         # Fit
         grid_search.fit(X, y)
 
-        print(f"\nNombre total de combinaisons à tester: {len(list(grid_search.cv_results_['params']))}")
+        logger.info("Nombre total de combinaisons à tester: %d", len(list(grid_search.cv_results_["params"])))
 
         # Store results
         self.best_model = grid_search.best_estimator_
@@ -106,24 +110,24 @@ class VerbRegHyperparameterTuner:
 
     def display_results(self) -> None:
         """Display tuning results"""
-        print("\nRÉSULTATS: Meilleurs hyperparamètres")
+        logger.info("RÉSULTATS: Meilleurs hyperparamètres")
 
-        print("\nMeilleurs paramètres trouvés:")
+        logger.info("Meilleurs paramètres trouvés:")
         for param, value in self.best_params.items():
-            print(f"  - {param}: {value}")
+            logger.info("  - %s: %s", param, value)
 
-        print(f"\nMeilleur score MAE (5-fold CV): {-self.results['mean_test_score'].min():.4f}")
+        logger.info("Meilleur score MAE: %.4f", -self.results["mean_test_score"].min())
 
         # Top 5 results
-        print("\nTop 5 des meilleures combinaisons:")
+        logger.info("Top 5 des meilleures combinaisons:")
         top_5 = self.results.nsmallest(5, "rank_test_score")[["params", "mean_test_score", "std_test_score", "rank_test_score"]]
         for idx, (_, row) in enumerate(top_5.iterrows()):
-            print(f"\n  {idx+1}. MAE: {-row['mean_test_score']:.4f} (±{row['std_test_score']:.4f})")
-            print(f"     Params: {row['params']}")
+            logger.info("%d. MAE: %.4f (±%.4f)", idx + 1, -row["mean_test_score"], row["std_test_score"])
+            logger.debug("   Params: %s", row["params"])
 
     def save_results(self, output_path: Path) -> None:
         """Save tuning results to CSV"""
-        print("\nSauvegarde des résultats du tuning...")
+        logger.info("Sauvegarde des résultats du tuning...")
 
         # Create simplified results dataframe
         results_simplified = self.results[
@@ -143,21 +147,21 @@ class VerbRegHyperparameterTuner:
         results_simplified = results_simplified.sort_values("rank_test_score")
 
         results_simplified.to_csv(output_path, index=False, sep=";")
-        print(f"Résultats sauvegardés: {output_path}")
+        logger.info("Résultats sauvegardés: %s", output_path)
 
     def save_best_model(self) -> None:
         """Save best model from tuning"""
-        print("\nSauvegarde du meilleur modèle...")
+        logger.info("Sauvegarde du meilleur modèle...")
 
         params_path = self.model_dir / "verbalisation_best_params.pkl"
 
         joblib.dump(self.best_params, params_path)
 
-        print(f"Paramètres sauvegardés: {params_path}")
+        logger.info("Paramètres sauvegardés: %s", params_path)
 
     def run(self, csv_path: Path, output_path: Path, cv: int = 5) -> None:
         """Complete hyperparameter tuning pipeline"""
-        print("HYPERPARAMETER TUNING: Verbalization Difficulty Regression")
+        logger.info("HYPERPARAMETER TUNING: Verbalization Difficulty Regression")
 
         # Load
         X, y = self.load_data(csv_path)  # pylint: disable=invalid-name
@@ -175,7 +179,7 @@ class VerbRegHyperparameterTuner:
         # Save best model
         self.save_best_model()
 
-        print("Tuning terminé avec succès!")
+        logger.info("Tuning terminé avec succès")
 
 
 def main():
@@ -207,7 +211,7 @@ def main():
 
     # Validate input file
     if not args.input.exists():
-        print(f"ERREUR: Fichier introuvable: {args.input}")
+        logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
     # Run tuning

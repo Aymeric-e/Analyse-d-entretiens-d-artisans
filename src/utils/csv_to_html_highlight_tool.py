@@ -18,6 +18,10 @@ import re
 import sys
 from pathlib import Path
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 HIGHLIGHT_TEMPLATE = '<mark style="background:#fff59d;padding:0 2px;border-radius:3px;"><strong>{}</strong></mark>'
 
 HTML_PAGE_TEMPLATE = """<!doctype html>
@@ -127,7 +131,7 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
             rows.append(row)
 
     if not rows:
-        print(" Aucun contenu dans le CSV.")
+        logger.warning("Aucun contenu dans le CSV: %s", input_csv_path)
         return
 
     expected_cols = ["filename", "text", "word_count", "tools_found", "tools_found_unique"]
@@ -163,7 +167,7 @@ def process_csv_to_html(input_csv_path: Path, output_folder: Path):
     with output_html_path.open("w", encoding="utf-8") as f:
         f.write(html_page)
 
-    print(f" Fichier HTML généré : {output_html_path}")
+    logger.info("Fichier HTML généré : %s", output_html_path)
 
 
 def main():
@@ -177,14 +181,14 @@ def main():
         None
     """
     if len(sys.argv) != 3:
-        print("Usage : python csv_to_html_highlight_tool.py <fichier.csv> <dossier_output>")
+        logger.error("Usage : python csv_to_html_highlight_tool.py <fichier.csv> <dossier_output>")
         sys.exit(1)
 
     input_csv = Path(sys.argv[1])
     output_dir = Path(sys.argv[2])
 
     if not input_csv.exists():
-        print(f" Erreur : fichier introuvable : {input_csv}")
+        logger.error("Erreur : fichier introuvable : %s", input_csv)
         sys.exit(1)
 
     process_csv_to_html(input_csv, output_dir)

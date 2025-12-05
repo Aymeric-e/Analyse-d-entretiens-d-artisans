@@ -14,15 +14,19 @@ import pandas as pd
 from tqdm import tqdm
 from transformers import pipeline
 
+from utils.logger_config import setup_logger
+
+logger = setup_logger(__name__, level="INFO")
+
 
 class ToolDetector:
     """Détecte les outils dans les textes d'artisans"""
 
     def __init__(self):
         """Initialiser le modèle NER"""
-        print("Chargement du modele NER CamemBERT...")
+        logger.info("Chargement du modele NER CamemBERT...")
         self.ner_pipeline = pipeline("ner", model="cmarkea/distilcamembert-base-ner", aggregation_strategy="simple")
-        print("Modele charge avec succes.\n")
+        logger.info("Modele charge avec succes")
 
     def detect_tools_in_text(self, text: str) -> List[str]:
         """
@@ -53,8 +57,8 @@ class ToolDetector:
 
             return tools
 
-        except Exception as e:  # pylint: disable=broad-except
-            print(f"Erreur lors de la detection: {e}")
+        except Exception:  # pylint: disable=broad-except
+            logger.exception("Erreur lors de la detection")
             return []
 
     def process_csv(self, input_csv: Path, output_csv: Path) -> Tuple[pd.DataFrame, Counter]:
@@ -82,7 +86,7 @@ class ToolDetector:
         all_tools_counter = Counter()
 
         # Traiter chaque ligne
-        print(f"Traitement de {len(df)} lignes de {input_csv.name}...")
+        logger.info("Traitement de %d lignes de %s...", len(df), input_csv.name)
 
         for _, row in tqdm(df.iterrows(), total=len(df), desc="Detection"):
             text = row["text"]
@@ -114,9 +118,9 @@ class ToolDetector:
         output_csv.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(output_csv, index=False, encoding="utf-8")
 
-        print(f"CSV sauvegarde: {output_csv}")
-        print(f"Lignes avec outils: {(df['tool_number'] > 0).sum()}/{len(df)}")
-        print(f"Total d'outils detectes: {sum(tool_numbers)}\n")
+        logger.info("CSV sauvegarde: %s", output_csv)
+        logger.info("Lignes avec outils: %d/%d", (df["tool_number"] > 0).sum(), len(df))
+        logger.info("Total d'outils detectes: %d", sum(tool_numbers))
 
         return df, all_tools_counter
 
@@ -142,9 +146,9 @@ class ToolDetector:
         # Sauvegarder
         df_dict.to_csv(output_path, index=False, encoding="utf-8")
 
-        print(f"\nDictionnaire des outils cree: {output_path}")
-        print(f"Nombre d'outils uniques: {len(df_dict)}")
-        print(f"Total de mentions: {df_dict['number_of_time_mentioned'].sum()}")
+        logger.info("Dictionnaire des outils cree: %s", output_path)
+        logger.info("Nombre d'outils uniques: %d", len(df_dict))
+        logger.info("Total de mentions: %d", int(df_dict["number_of_time_mentioned"].sum()))
 
         return df_dict
 
@@ -157,16 +161,16 @@ class ToolDetector:
             output_dir: Dossier de sortie pour les CSV traites
             dict_filename: Nom du fichier dictionnaire
         """
-        print("=" * 70)
-        print("DETECTION D'OUTILS - TRAITEMENT DE PLUSIEURS CSV")
-        print("=" * 70 + "\n")
+        logger.info("%s", "=" * 70)
+        logger.info("DETECTION D'OUTILS - TRAITEMENT DE PLUSIEURS CSV")
+        logger.info("%s\n", "=" * 70)
 
         counters = []
 
         # Traiter chaque CSV
         for input_csv in input_csvs:
             if not input_csv.exists():
-                print(f"ATTENTION: Le fichier {input_csv} n'existe pas. Passe.\n")
+                logger.warning("Le fichier %s n'existe pas. Passe.", input_csv)
                 continue
 
             # Generer le nom de sortie (meme nom dans le nouveau dossier)
@@ -181,14 +185,14 @@ class ToolDetector:
             dict_path = output_dir / dict_filename
             df_dict = self.create_tool_dictionary(counters[0], dict_path)
 
-            # Afficher les 10 outils les plus mentionnes
-            print("\nTop 10 des outils les plus mentionnes:")
+            # Log the top 10 most mentioned tools
+            logger.info("Top 10 des outils les plus mentionnes:")
             for idx, row in df_dict.head(10).iterrows():
-                print(f"  {idx+1}. {row['tool']}: {row['number_of_time_mentioned']} mentions")
+                logger.info("  %d. %s: %d mentions", idx + 1, row["tool"], row["number_of_time_mentioned"])
 
-        print("\n" + "=" * 70)
-        print("TRAITEMENT TERMINE")
-        print("=" * 70)
+        logger.info("%s", "=" * 70)
+        logger.info("TRAITEMENT TERMINE")
+        logger.info("%s", "=" * 70)
 
 
 if __name__ == "__main__":
