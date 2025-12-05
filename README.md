@@ -70,7 +70,7 @@ poetry install
 
 ## Usage
 
-Voir ``docs/tutorials/tutorial.md``
+Voir le [tutoriel](docs/tutorials/tutorial.md)
 
 ## Tests
 
@@ -141,7 +141,7 @@ Extrait important du `pyproject.toml` :
 
 ### Pylint
 
-La configuration est fournie dans `.pylintrc` pour éviter les faux positifs sur PyTorch/Transformers.
+La configuration est fournie dans le [.pylintrc](.pylintrc)
 
 
 
