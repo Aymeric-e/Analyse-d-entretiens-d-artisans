@@ -77,63 +77,62 @@ python scripts/bert_artisan_cli.py clean --input data/raw --output data/processe
 
 Pipeline complet pour détecter les outils mentionnés dans les textes par comparaison avec la liste Wikipedia.
 
+Ce processus produit deux zones de sortie :
+- `--tool-output-dir` (par défaut `data/tool_detection`) : contient tous les CSV intermédiaires générés (liste Wikipedia, `*_with_tools.csv`, `*_tool_dict.csv`, et `dict_outils_*.csv` si générés).
+- `--results-dir` (par défaut `results/tool_detection`) : contient les résultats finaux organisés sous `csv/` (les CSV listés plus haut) et `html/` (versions HTML des CSV et fichiers highlight pour les fichiers `*_with_tools.csv`).
+
 **Syntaxe simple (détection uniquement) :**
 ```bash
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection
 ```
 
 **Syntaxe complète (avec tous les optionnels) :**
 ```bash
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools \
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection \
   --generate-html \
   --build-dicts \
   --recap-entretien data/recap_entretien.csv
 ```
 
 **Étapes exécutées automatiquement :**
-1. Extraction de la liste Wikipedia (si absent ou forcée)
-2. Détection par comparaison stricte sur les CSV nettoyés
-3. Génération de fichiers HTML (si --generate-html)
-4. Création de dictionnaires par artisanat/matériau (si --build-dicts ET recap_entretien.csv présent)
+1. Extraction de la liste Wikipedia (dans `--tool-output-dir/list_tool_wiki.csv`) (si absent ou forcée)
+2. Détection par comparaison stricte sur les CSV nettoyés (écrit `*_with_tools.csv` et `*_tool_dict.csv` dans `--tool-output-dir`)
+3. Copie des fichiers utiles dans `--results-dir/csv`
+4. (optionnel) Conversion CSV→HTML dans `--results-dir/html/csv` et génération des highlight HTML (avec surlignage des outils) dans `--results-dir/html/highlight` pour chaque `*_with_tools.csv` (si `--generate-html`)
+5. (optionnel) Création de dictionnaires par artisanat/matériau (si `--build-dicts` and `--recap-entretien` fourni). Les dictionnaires sont copiés dans `--results-dir/csv`.
 
 **Arguments :**
-- `--processed-dir` : Dossier avec les CSV nettoyés (défaut: `data/processed`)
-- `--output-dir` : Dossier de sortie pour CSV détectés (défaut: `data/processed_tools`)
-- `--generate-html` : (optionnel) Générer fichiers HTML de visualisation
-- `--html-output-dir` : Dossier pour les fichiers HTML (défaut: `results/tool_highlight_html`)
-- `--build-dicts` : (optionnel) Créer dictionnaires par artisanat/matériau
-- `--recap-entretien` : CSV de métadonnées (Nom Fichier, Matériau, Artisanat)
-- `--dict-output-dir` : Dossier pour les dictionnaires (défaut: `results/tool_comparaison`)
+- `--processed-dir` : Dossier contenant les CSV nettoyés (défaut: `data/processed`)
+- `--tool-output-dir` : Dossier pour tous les CSV produits (défaut: `data/tool_detection`)
+- `--results-dir` : Dossier final de résultats (contient `csv/` et `html/`) (défaut: `results/tool_detection`)
+- `--generate-html` : (optionnel) Générer les fichiers HTML (CSV→HTML et highlights)
+- `--build-dicts` : (optionnel) Créer dictionnaires par artisanat/matériau (nécessite `--recap-entretien`)
+- `--recap-entretien` : CSV de métadonnées (Nom Fichier, Matériau, Artisanat) (défaut: `data/recap_entretien.csv`)
 - `--force-extract` : Force le re-téléchargement de Wikipedia même si le fichier existe
 
 **Résultat (minimal) :**
-- CSV avec colonne `tools_detected` remplie
+- `--tool-output-dir/` : CSV intermédiaires (`list_tool_wiki.csv`, `*_with_tools.csv`, `*_tool_dict.csv`)
+- `--results-dir/csv/` : Copie des fichiers utiles
 
 **Résultat (avec --generate-html) :**
-- CSV avec outils détectés
-- Fichiers HTML pour visualisation
-
-**Résultat (avec --build-dicts) :**
-- CSV avec outils détectés
-- Fichiers HTML (si --generate-html)
-- Dictionnaires `dict_outils_materiau.csv` et `dict_outils_artisanat.csv`
+- `--results-dir/html/csv/` : versions HTML des CSV
+- `--results-dir/html/highlight/` : versions HTML avec texte surligné pour chaque `*_with_tools.csv`
 
 **Exemples :**
 ```bash
-# Détection simple (juste extraire les outils)
+# Détection simple
 python scripts/bert_artisan_cli.py tools --processed-dir data/processed
 
-# Avec visualisation HTML
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed --generate-html
+# Avec HTML et dictionnaires (nécessite data/recap_entretien.csv)
+python scripts/bert_artisan_cli.py tools --processed-dir data/processed --generate-html --build-dicts
 
-# Avec dictionnaires par catégorie (nécessite recap_entretien.csv)
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed --build-dicts --generate-html
-
-# Force la réextraction de Wikipedia
+# Forcer la réextraction de Wikipedia
 python scripts/bert_artisan_cli.py tools --force-extract
 ```
 
@@ -176,47 +175,57 @@ python scripts/bert_artisan_cli.py augment \
 
 ### 4. `verbalisation` - Pipeline de difficulté de verbalisation
 
-Pipeline complet pour détecter et prédire la difficulté de verbalisation d'un texte.
+Workflow complet pour l'entraînement, le tuning, la prédiction et la génération de rapports.
+
+Principes clés :
+- Le fichier d'entrée annoté (par défaut `data/annotation/sentences_annoted_verb.csv`) est utilisé pour l'augmentation/tuning/entraînement.
+- Les prédictions sont exécutées sur le fichier de *phrases* nettoyées (par défaut `data/processed/cleaned_sentence.csv`).
+- Les hyperparamètres et fichiers de prédiction sont écrits dans `--verb-data` (défaut `data/verbalisation`).
+- Les résultats finaux et HTML sont copiés dans `--results-dir` (défaut `results/verbalisation`) avec sous-dossiers `csv/` et `html/`.
 
 **Syntaxe :**
 ```bash
 python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
+  --input data/annotation/sentences_annoted_verb.csv \
   --mode bert \
-  --run full
+  --run full \
+  --verb-data data/verbalisation \
+  --results-dir results/verbalisation
 ```
 
 **Arguments principaux :**
-- `--input` : CSV annoté d'entrée (OBLIGATOIRE)
-- `--mode` : Modèle à utiliser
-  - `bert` : Modèle BERT multilingue (plus précis)
-  - `regression` : TF-IDF + Ridge (plus rapide)
-  - `both` : Les deux modèles
-- `--run` : Action à effectuer
-  - `augment` : Seulement augmentation
-  - `tune` : Seulement tuning des hyperparamètres
-  - `train` : Seulement entraînement
-  - `predict` : Seulement prédiction
-  - `full` : Toutes les étapes (défaut)
+- `--input` : CSV annoté d'entrée (défaut: `data/annotation/sentences_annoted_verb.csv`)
+- `--augmented-csv` : CSV annoté augmenté (défaut: `data/annotation/sentences_annoted_verb_augmented.csv`)
+- `--clean-sentences` : Fichier des phrases (prédiction) (défaut: `data/processed/cleaned_sentence.csv`)
+- `--clean-full` : Fichier des entretiens complets (pour rapports) (défaut: `data/processed/cleaned_full.csv`)
+- `--mode` : `bert` | `reg` | `both` (défaut: `bert`)
+- `--run` : `augment` | `tune` | `train` | `predict` | `full` (défaut: `full`)
+- `--verb-data` : Dossier pour hyperparams & prédictions (défaut: `data/verbalisation`)
+- `--results-dir` : Dossier final de résultats (défaut: `results/verbalisation`)
 
-**Arguments optionnels pour augmentation :**
-- `--do-augment` : Effectuer augmentation avant les autres étapes
-- `--augment-output` : Chemin de sortie pour augmentation
-- `--num-aug` : Nombre d'augmentations
+**Options importantes :**
+- `--text-column` : Colonne texte (défaut: `text`)
+- `--cv` : folds CV pour tuning (défaut: 5)
+- `--max-length` : Longueur tokens BERT (défaut: 128)
+- `--num-aug` : Nombre d'augment par type (défaut: 1)
+- `--augmenter-types` : Types d'augmentation (défaut: contextual translation swap)
+- `--model-reg-dir` : Dossier modèles regression (défaut: `models/verbalisation/regression`)
+- `--model-bert-dir` : Dossier modèles BERT (défaut: `models/verbalisation/bert`)
 
-**Arguments optionnels pour tuning :**
-- `--cv` : Nombre de folds pour validation croisée (défaut: 5)
+**Résultat attendu :**
+- `--verb-data/` : hyperparams CSV et fichiers de prédictions (`verbalisation_bert_predictions.csv`, `verbalisation_reg_predictions.csv`, `verbalisation_merged.csv`)
+- `--results-dir/csv/` : copies des CSV de prédiction
+- `--results-dir/html/csv/` : versions HTML des CSV
+- `--results-dir/html/reports/` : deux versions de rapports HTML (`verbalisation_report_v1.html` et `_v2.html`) générées par les deux programmes de rapport
 
-**Arguments optionnels pour prédiction :**
-- `--max-length` : Longueur max des tokens BERT (défaut: 128)
-- `--report-on` : Sur quel modèle générer le rapport (`bert` ou `merged`, défaut: `bert`)
-
-**Résultat :**
-- `verbalisation_bert.csv` : Prédictions BERT
-- `verbalisation_reg.csv` : Prédictions Regression
-- `verbalisation_merged.csv` : Fusion des deux (si mode=both)
-- `verbalisation_report.html` : Rapport HTML
-
+**Exemple - Pipeline complet avec BERT :**
+```bash
+python scripts/bert_artisan_cli.py verbalisation \
+  --mode bert \
+  --run full \
+  --verb-data data/verbalisation \
+  --results-dir results/verbalisation
+```
 **Exemple - Pipeline complet avec BERT :**
 ```bash
 python scripts/bert_artisan_cli.py verbalisation \
@@ -273,26 +282,30 @@ Cela crée `data/processed/cleaned_sentence.csv` avec une phrase par ligne.
 ```bash
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection
 ```
 
 Cela crée :
-- `data/processed_tools/` : CSV avec outils détectés
-- `data/list_tool.csv` : Liste Wikipedia (téléchargée si absent)
+- `data/tool_detection/` : CSV intermédiaires (par ex. `list_tool_wiki.csv`, `*_with_tools.csv`, `*_tool_dict.csv`)
+- `results/tool_detection/csv/` : copies des CSV utiles
+- `results/tool_detection/html/` : versions HTML (si `--generate-html`)
 
 #### Étape 3b : Détection des outils (avec options avancées)
 ```bash
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools \
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection \
   --generate-html \
   --build-dicts \
   --recap-entretien data/recap_entretien.csv
 ```
 
 Cela crée en plus :
-- `results/tool_highlight_html/` : Visualisations HTML
-- `results/tool_comparaison/` : Dictionnaires par catégorie
+- `results/tool_detection/html/csv/` : Visualisations HTML pour les CSV de résultats
+- `results/tool_detection/html/highlight/` : fichiers highlight (texte avec outils surlignés) pour chaque `*_with_tools.csv`
+- `results/tool_detection/csv/` : dictionnaires par catégorie (si `--build-dicts` et `recap_entretien.csv` fourni)
 
 #### Étape 4 : Annotation (MANUEL)
 Vous devez manuellement annoter le fichier CSV pour indiquer la difficulté de verbalisation :
@@ -332,7 +345,7 @@ Cela :
 # Supposant les .docx sont dans data/raw/
 python scripts/bert_artisan_cli.py clean --input data/raw --mode paragraph
 
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed
+python scripts/bert_artisan_cli.py tools --processed-dir data/processed --tool-output-dir data/tool_detection --results-dir results/tool_detection
 
 # Ouvrez les résultats générés
 ```
@@ -342,7 +355,8 @@ python scripts/bert_artisan_cli.py tools --processed-dir data/processed
 # Juste extraire les outils sans rien d'autre
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection
 ```
 
 **Résultat :** CSV avec colonne `tools_detected` remplie
@@ -352,7 +366,8 @@ python scripts/bert_artisan_cli.py tools \
 # Outils + HTML + dictionnaires
 python scripts/bert_artisan_cli.py tools \
   --processed-dir data/processed \
-  --output-dir data/processed_tools \
+  --tool-output-dir data/tool_detection \
+  --results-dir results/tool_detection \
   --generate-html \
   --build-dicts \
   --recap-entretien data/recap_entretien.csv

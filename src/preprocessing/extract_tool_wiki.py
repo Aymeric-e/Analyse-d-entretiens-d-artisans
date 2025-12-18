@@ -9,7 +9,6 @@ Usage :
 """
 
 import csv
-from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -22,7 +21,7 @@ EXCEPTION = ["verre", "chaîne", "tour", "coin", "bol", "plane", "niveau"]
 logger = setup_logger(__name__, level="INFO")
 
 
-def extract_tools():
+def extract_tools(output_dir):
     """
     Extrait la liste des outils depuis la page Wikipedia "Liste d'outils" et génère un CSV.
     """
@@ -78,10 +77,9 @@ def extract_tools():
     logger.info(" Nombre d' outils conservés après filtrage alphabétique : %d", len(tools))
 
     # Emplacement du dossier data/
-    output_dir = Path(__file__).resolve().parents[2] / "data"
     output_dir.mkdir(exist_ok=True)
 
-    output_file = output_dir / "list_tool.csv"
+    output_file = output_dir / "list_tool_wiki.csv"
 
     # Écriture du fichier CSV
     try:
@@ -96,4 +94,4 @@ def extract_tools():
 
 
 if __name__ == "__main__":
-    extract_tools()
+    extract_tools("data")

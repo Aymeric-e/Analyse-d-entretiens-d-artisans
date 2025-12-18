@@ -128,29 +128,30 @@ def write_output_csv(path, category_name, data_dict):
                 writer.writerow([category, tool, count])
 
 
-def main():
+def generate_tool_dicts(entretien_csv, tools_csv, output_dir):
     """
-    Fonction principale pour générer les CSV de comptage d'outils par catégorie.
+    Génère les fichiers CSV de comptage d'outils par catégorie et retourne leurs chemins.
 
-    Utilisation :
-        python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>
+    Args:
+        entretien_csv (str | Path): Chemin vers le CSV d'entretien (recap_entretien)
+        tools_csv (str | Path): Chemin vers le CSV des outils
+        output_dir (str | Path): Dossier de sortie où écrire les CSV
 
-    Si aucun argument n'est fourni, utilise les chemins par défaut définis à la fin du script.
+    Returns:
+        tuple[Path, Path]: (out_materiau, out_artisanat)
+
+    Raises:
+        FileNotFoundError: si l'un des fichiers d'entrée est introuvable
+        Exception: pour autres erreurs inattendues
     """
-    if len(sys.argv) != 4:
-        logger.error("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
-        sys.exit(1)
-
-    entretien_csv = Path(sys.argv[1])
-    tools_csv = Path(sys.argv[2])
-    output_dir = Path(sys.argv[3])
+    entretien_csv = Path(entretien_csv)
+    tools_csv = Path(tools_csv)
+    output_dir = Path(output_dir)
 
     if not entretien_csv.exists():
-        logger.error("Fichier introuvable: %s", entretien_csv)
-        sys.exit(1)
+        raise FileNotFoundError(f"Fichier introuvable: {entretien_csv}")
     if not tools_csv.exists():
-        logger.error("Fichier introuvable: %s", tools_csv)
-        sys.exit(1)
+        raise FileNotFoundError(f"Fichier introuvable: {tools_csv}")
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -168,6 +169,24 @@ def main():
 
     logger.info("Fichier créé : %s", out_materiau)
     logger.info("Fichier créé : %s", out_artisanat)
+
+    return out_materiau, out_artisanat
+
+
+def main():
+    """Entry point CLI qui appelle `generate_tool_dicts`.
+
+    Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>
+    """
+    if len(sys.argv) != 4:
+        logger.error("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
+        sys.exit(1)
+
+    try:
+        generate_tool_dicts(sys.argv[1], sys.argv[2], sys.argv[3])
+    except Exception as e:  # pylint: disable=broad-except
+        logger.exception("Erreur lors de la génération des fichiers : %s", e)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -111,30 +111,27 @@ def process_single_csv(tool_csv, input_csv, output_dir):
 
 
 def process_all_csvs(  # pylint: disable=dangerous-default-value
-    input_csvs=[
-        Path("data/processed") / "cleaned_paragraph.csv",
-        Path("data/processed") / "cleaned_sentence.csv",
-        Path("data/processed") / "cleaned_full.csv",
-    ],
-    output_dir=Path("data/processed_tool_comparaison_strict"),
-    tool_csv="list_tool.csv",
+    input_csvs=None,
+    output_dir=Path("data/tool_detection"),
+    tool_csv=None,
 ):
     """
     Traite tous les CSV de textes nettoyés : paragraphe, phrase et full.
 
-    Lit les fichiers depuis data/processed et écrit les résultats dans
-    data/processed_tool_comparaison_strict.
+    Par défaut, les fichiers lus sont dans `data/processed` et les résultats
+    sont écrits dans `data/tool_detection`.
     """
-    tool_csv = Path("data/list_tool.csv")
 
-    base_dir = Path("data/processed")
-    input_csvs = [
-        base_dir / "cleaned_paragraph.csv",
-        base_dir / "cleaned_sentence.csv",
-        base_dir / "cleaned_full.csv",
-    ]
+    # Defaults set here to avoid mutable/default-eval issues
+    if input_csvs is None:
+        input_csvs = [
+            Path("data/processed") / "cleaned_paragraph.csv",
+            Path("data/processed") / "cleaned_sentence.csv",
+            Path("data/processed") / "cleaned_full.csv",
+        ]
 
-    output_dir = Path("data/processed_tool_comparaison_strict")
+    if tool_csv is None:
+        tool_csv = Path(output_dir) / "list_tool_wiki.csv"
 
     for csv_file in input_csvs:
         logger.info("Processing input CSV: %s", csv_file)

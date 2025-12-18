@@ -65,6 +65,7 @@ class BertHyperparameterTuner:
 
     def tokenize_data(self, texts: pd.Series, labels: pd.Series, max_length: int = 128) -> Dataset:
         """Tokenize texts"""
+        max_length = int(max_length)
         encodings = self.tokenizer(
             texts.tolist(),
             truncation=True,
@@ -123,6 +124,9 @@ class BertHyperparameterTuner:
 
         for permutation in np.array(np.meshgrid(*combo_hyperparams)).T.reshape(-1, 4):
             lr, batch_size, max_length, num_epochs = permutation
+            batch_size = int(batch_size)
+            max_length = int(max_length)
+            num_epochs = int(num_epochs)
             combo_idx += 1
             logger.info(
                 "[%d/%d] lr=%s, bs=%s, ml=%s, epochs=%s", combo_idx, total_combinations, lr, batch_size, max_length, num_epochs
