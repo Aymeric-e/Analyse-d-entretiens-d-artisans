@@ -31,8 +31,10 @@ logger = setup_logger(__name__, level="INFO")
 class BertPredictor:
     """Generate predictions using trained BERT model"""
 
-    def __init__(self, model_dir: Path):
+    def __init__(self, model_dir: Path, score_col: str = "difficulté_verbalisation", score_scale: float = 10.0):
         self.model_dir = model_dir
+        self.score_col = score_col
+        self.score_scale = float(score_scale)
         self.tokenizer = None
         self.model = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -41,14 +43,16 @@ class BertPredictor:
         self._load_model()
 
     def _load_model(self) -> None:
-        """Load saved model and tokenizer"""
-        logger.info("Chargement du modèle depuis %s...", self.model_dir)
+        """Load saved model and tokenizer from models/<score_col>/bert_final"""
+        logger.info("Chargement du modèle depuis %s (col=%s)...", self.model_dir, self.score_col)
 
-        model_path = self.model_dir / "model"
-        tokenizer_path = self.model_dir / "tokenizer"
+        model_path = self.model_dir / self.score_col / "bert_final" / "model"
+        tokenizer_path = self.model_dir / self.score_col / "bert_final" / "tokenizer"
 
         if not model_path.exists() or not tokenizer_path.exists():
-            raise FileNotFoundError(f"Modèle non trouvé dans {self.model_dir}. " f"Veuillez d'abord entraîner avec train_bert.py")
+            raise FileNotFoundError(
+                f"Modèle non trouvé dans {self.model_dir}/{self.score_col}. Veuillez d'abord entraîner"
+            )
 
         self.tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
         self.model = AutoModelForSequenceClassification.from_pretrained(str(model_path)).to(self.device)
@@ -108,8 +112,8 @@ class BertPredictor:
 
         predictions = trainer.predict(dataset)
 
-        predictions = predictions.predictions.squeeze() * 10.0
-        predictions = np.clip(predictions, 0, 10).round(2)
+        predictions = predictions.predictions.squeeze() * self.score_scale
+        predictions = np.clip(predictions, 0, self.score_scale).round(2)
 
         return predictions
 
@@ -117,7 +121,8 @@ class BertPredictor:
         """Save predictions to CSV"""
         logger.info("Sauvegarde des prédictions...")
 
-        results_df = pd.DataFrame({"filename": filenames.values, "text": texts.values, "note_bert": predictions})
+        col_name = f"note_bert_{self.score_col}"
+        results_df = pd.DataFrame({"filename": filenames.values, "text": texts.values, col_name: predictions})
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
         results_df.to_csv(output_path, index=False, sep=";")
@@ -143,8 +148,20 @@ def main():
     parser.add_argument(
         "--model-dir",
         type=Path,
-        default=Path("models/bert_final"),
-        help="Dossier contenant le modèle BERT",
+        default=Path("models"),
+        help="Dossier contenant les modèles BERT (ex: models/<score_col>/bert_final)",
+    )
+    parser.add_argument(
+        "--target-col",
+        type=str,
+        default="difficulté_verbalisation",
+        help="Nom de la colonne cible (utilisé pour trouver le modèle et nommer la colonne de sortie)",
+    )
+    parser.add_argument(
+        "--score-scale",
+        type=float,
+        default=10.0,
+        help="Échelle maximale du score annoté (utilisé pour rescaling des prédictions)",
     )
     parser.add_argument("--max-length", type=int, default=128, help="Max token length")
     parser.add_argument("--output", type=Path, required=True, help="Chemin du CSV de sortie")
@@ -159,7 +176,7 @@ def main():
         logger.error("ERREUR: Dossier modèle introuvable: %s", args.model_dir)
         sys.exit(1)
 
-    predictor = BertPredictor(model_dir=args.model_dir)
+    predictor = BertPredictor(model_dir=args.model_dir, score_col=args.target_col, score_scale=args.score_scale)
     predictor.run(args.input, args.output, args.max_length)
 
 

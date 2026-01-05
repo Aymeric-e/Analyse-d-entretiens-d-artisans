@@ -33,8 +33,15 @@ logger = setup_logger(__name__, level="INFO")
 class BertHyperparameterTuner:
     """Tune BERT model for verbalization difficulty prediction"""
 
-    def __init__(self, model_name: str = "distilbert-base-multilingual-cased"):
+    def __init__(
+        self,
+        model_name: str = "distilbert-base-multilingual-cased",
+        score_col: str = "difficulté_verbalisation",
+        score_scale: float = 10.0,
+    ):
         self.model_name = model_name
+        self.score_col = score_col
+        self.score_scale = float(score_scale)
         self.tokenizer = None
         self.model = None
         self.results = []
@@ -43,17 +50,17 @@ class BertHyperparameterTuner:
         logger.info("Utilisation du device: %s", self.device)
 
     def load_data(self, csv_path: Path) -> Tuple[pd.Series, pd.Series]:
-        """Load annotated CSV"""
+        """Load annotated CSV (returns raw scores, normalization happens in tokenize_data)"""
         logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=";")
 
-        required_cols = ["text", "difficulté_verbalisation"]
+        required_cols = ["text", self.score_col]
         missing = [col for col in required_cols if col not in df.columns]
         if missing:
             raise ValueError(f"Colonnes manquantes: {missing}")
 
         X = df["text"].astype(str)  # pylint: disable=invalid-name
-        y = df["difficulté_verbalisation"].astype(float) / 3.0
+        y = df[self.score_col].astype(float)
 
         logger.info("Données chargées: %d phrases", len(df))
         return X, y
@@ -64,7 +71,7 @@ class BertHyperparameterTuner:
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
     def tokenize_data(self, texts: pd.Series, labels: pd.Series, max_length: int = 128) -> Dataset:
-        """Tokenize texts"""
+        """Tokenize texts and normalize labels by the configured scale"""
         max_length = int(max_length)
         encodings = self.tokenizer(
             texts.tolist(),
@@ -74,7 +81,7 @@ class BertHyperparameterTuner:
             return_tensors=None,
         )
 
-        labels_normalized = (labels / 1.0).tolist()
+        labels_normalized = (labels / self.score_scale).tolist()
 
         dataset_dict = {
             "input_ids": encodings["input_ids"],
@@ -85,12 +92,12 @@ class BertHyperparameterTuner:
         return Dataset.from_dict(dataset_dict)
 
     def compute_metrics(self, eval_pred) -> dict:
-        """Compute evaluation metrics"""
+        """Compute evaluation metrics (rescale to original range)"""
         predictions, labels = eval_pred
         predictions = predictions.squeeze()
 
-        predictions = predictions * 3.0
-        labels = labels * 3.0
+        predictions = predictions * self.score_scale
+        labels = labels * self.score_scale
 
         mse = mean_squared_error(labels, predictions)
         mae = mean_absolute_error(labels, predictions)
@@ -243,13 +250,27 @@ def main():
         help="Nom du modèle Hugging Face",
     )
 
+    parser.add_argument(
+        "--target-col",
+        type=str,
+        default="difficulté_verbalisation",
+        help="Nom de la colonne cible contenant le score annoté",
+    )
+
+    parser.add_argument(
+        "--score-scale",
+        type=float,
+        default=10.0,
+        help="Échelle maximale du score annoté (utilisé pour normalisation)",
+    )
+
     args = parser.parse_args()
 
     if not args.input.exists():
         logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
-    tuner = BertHyperparameterTuner(model_name=args.model_name)
+    tuner = BertHyperparameterTuner(model_name=args.model_name, score_col=args.target_col, score_scale=args.score_scale)
     tuner.run(args.input, args.output)
 
 

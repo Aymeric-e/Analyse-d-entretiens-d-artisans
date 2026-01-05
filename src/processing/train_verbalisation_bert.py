@@ -37,9 +37,13 @@ class BertFinalTrainer:
         self,
         model_name: str = "distilbert-base-multilingual-cased",
         model_dir: Path = Path("models"),
+        score_col: str = "difficulté_verbalisation",
+        score_scale: float = 10.0,
     ):
         self.model_name = model_name
         self.model_dir = model_dir
+        self.score_col = score_col
+        self.score_scale = float(score_scale)
         self.model_dir.mkdir(parents=True, exist_ok=True)
         self.tokenizer = None
         self.model = None
@@ -96,29 +100,41 @@ class BertFinalTrainer:
             return default_params
 
     def save_hyperparams(self, hyperparams: Dict) -> None:
-        """Save hyperparameters to JSON file"""
+        """Save hyperparameters to JSON file and CSV in data/hyperparamètres"""
         logger.info("Sauvegarde des hyperparamètres...")
 
-        params_path = self.model_dir / "bert_final" / "hyperparams.json"
+        params_path = self.model_dir / self.score_col / "bert_final" / "hyperparams.json"
         params_path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(params_path, "w", encoding="utf-8") as f:
             json.dump(hyperparams, f, indent=2)
 
+        # Also save a CSV copy in data/hyperparamètres/<score_col>_bert_hyperparam.csv
+        hyper_dir = Path("data") / "hyperparamètres"
+        hyper_dir.mkdir(parents=True, exist_ok=True)
+
+        try:
+            df = pd.DataFrame([hyperparams])
+            csv_path = hyper_dir / f"{self.score_col}_bert_hyperparam.csv"
+            df.to_csv(csv_path, index=False, sep=";")
+            logger.info("Hyperparamètres CSV sauvegardés: %s", csv_path)
+        except Exception: # pylint: disable=broad-exception-caught
+            logger.exception("Impossible de sauvegarder le CSV des hyperparamètres")
+
         logger.info("Hyperparamètres sauvegardés: %s", params_path)
 
     def load_data(self, csv_path: Path) -> Tuple[pd.Series, pd.Series]:
-        """Load annotated CSV"""
+        """Load annotated CSV (returns raw scores)"""
         logger.info("Chargement des données depuis %s...", csv_path)
         df = pd.read_csv(csv_path, sep=";")
 
-        required_cols = ["text", "difficulté_verbalisation"]
+        required_cols = ["text", self.score_col]
         missing = [col for col in required_cols if col not in df.columns]
         if missing:
             raise ValueError(f"Colonnes manquantes: {missing}")
 
         X = df["text"].astype(str)  # pylint: disable=invalid-name
-        y = df["difficulté_verbalisation"].astype(float)
+        y = df[self.score_col].astype(float)
 
         logger.info("Données chargées: %d phrases", len(df))
         return X, y
@@ -129,7 +145,7 @@ class BertFinalTrainer:
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
     def tokenize_data(self, texts: pd.Series, labels: pd.Series, max_length: int = 128) -> Dataset:
-        """Tokenize texts"""
+        """Tokenize texts and normalize labels by the configured scale"""
         logger.info("Tokenisation des textes (max_length=%d)...", max_length)
 
         encodings = self.tokenizer(
@@ -140,7 +156,7 @@ class BertFinalTrainer:
             return_tensors=None,
         )
 
-        labels_normalized = (labels / 3.0).tolist()
+        labels_normalized = (labels / self.score_scale).tolist()
 
         dataset_dict = {
             "input_ids": encodings["input_ids"],
@@ -151,12 +167,12 @@ class BertFinalTrainer:
         return Dataset.from_dict(dataset_dict)
 
     def compute_metrics(self, eval_pred) -> dict:
-        """Compute evaluation metrics"""
+        """Compute evaluation metrics (rescale to original range)"""
         predictions, labels = eval_pred
         predictions = predictions.squeeze()
 
-        predictions = predictions * 3.0
-        labels = labels * 3.0
+        predictions = predictions * self.score_scale
+        labels = labels * self.score_scale
 
         mse = mean_squared_error(labels, predictions)
         mae = mean_absolute_error(labels, predictions)
@@ -175,10 +191,10 @@ class BertFinalTrainer:
 
         X_train, y_train, X_test, y_test = data  # pylint: disable=invalid-name
 
-        learning_rate = (best_params["learning_rate"],)
-        batch_size = (best_params["batch_size"],)
-        max_length = (best_params["max_length"],)
-        num_epochs = (best_params["num_epochs"],)
+        learning_rate = float(best_params["learning_rate"])
+        batch_size = int(best_params["batch_size"])
+        max_length = int(best_params["max_length"])
+        num_epochs = int(best_params["num_epochs"])
 
         self.prepare_tokenizer()
 
@@ -225,7 +241,7 @@ class BertFinalTrainer:
         """Save model and tokenizer"""
         logger.info("Sauvegarde du modèle...")
 
-        model_output = self.model_dir / "bert_final"
+        model_output = self.model_dir / self.score_col / "bert_final"
         model_output.mkdir(parents=True, exist_ok=True)
 
         self.model.save_pretrained(str(model_output / "model"))
@@ -288,13 +304,29 @@ def main():
     )
     parser.add_argument("--model-dir", type=Path, default=Path("models"), help="Dossier de sauvegarde")
 
+    parser.add_argument(
+        "--target-col",
+        type=str,
+        default="difficulté_verbalisation",
+        help="Nom de la colonne cible contenant le score annoté",
+    )
+
+    parser.add_argument(
+        "--score-scale",
+        type=float,
+        default=10.0,
+        help="Échelle maximale du score annoté (utilisé pour normalisation)",
+    )
+
     args = parser.parse_args()
 
     if not args.input.exists():
         logger.error("ERREUR: Fichier introuvable: %s", args.input)
         sys.exit(1)
 
-    trainer = BertFinalTrainer(model_name=args.model_name, model_dir=args.model_dir)
+    trainer = BertFinalTrainer(
+        model_name=args.model_name, model_dir=args.model_dir, score_col=args.target_col, score_scale=args.score_scale
+    )
     trainer.run(args.input, args.tuning_results)
 
 

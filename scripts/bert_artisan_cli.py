@@ -250,11 +250,13 @@ def cmd_verbalisation(args: argparse.Namespace) -> None:
     # 1) Tuning
     if action in ("tune", "full"):
         if mode in ("bert", "both"):
-            logger.info("Tuning hyperparamètres pour BERT...")
+            logger.info("Tuning hyperparamètres pour BERT... (col=%s)", args.target_col)
             from processing.tune_verbalisation_bert import BertHyperparameterTuner
 
-            bert_tune_out = verb_data / "bert_tuning_results.csv"
-            tuner = BertHyperparameterTuner(model_name=args.model_bert_dir)
+            bert_tune_out = verb_data / f"{args.target_col}_bert_tuning_results.csv"
+            tuner = BertHyperparameterTuner(
+                model_name=args.bert_model_name, score_col=args.target_col, score_scale=args.score_scale
+            )
             tuner.run(augmented_csv, bert_tune_out)
 
         if mode in ("reg", "both"):
@@ -268,11 +270,16 @@ def cmd_verbalisation(args: argparse.Namespace) -> None:
     # 2) Train
     if action in ("train", "full"):
         if mode in ("bert", "both"):
-            logger.info("Entraînement final BERT...")
+            logger.info("Entraînement final BERT... (col=%s)", args.target_col)
             from processing.train_verbalisation_bert import BertFinalTrainer
 
-            trainer = BertFinalTrainer(model_name=args.model_bert_dir, model_dir=Path(args.model_bert_dir))
-            trainer.run(augmented_csv, Path(verb_data / "bert_tuning_results.csv"))
+            trainer = BertFinalTrainer(
+                model_name=args.bert_model_name,
+                model_dir=Path(args.model_bert_dir),
+                score_col=args.target_col,
+                score_scale=args.score_scale,
+            )
+            trainer.run(augmented_csv, Path(verb_data / f"{args.target_col}_bert_tuning_results.csv"))
 
         if mode in ("reg", "both"):
             logger.info("Entraînement modèle de régression...")
@@ -287,10 +294,13 @@ def cmd_verbalisation(args: argparse.Namespace) -> None:
 
     if action in ("predict", "full"):
         if mode in ("bert", "both"):
-            logger.info("Prédiction BERT sur le fichier de phrases : %s", clean_sentences)
+            logger.info("Prédiction BERT sur le fichier de phrases : %s (col=%s)", clean_sentences, args.target_col)
             from processing.predict_verbalisation_bert import BertPredictor
 
-            predictor = BertPredictor(model_dir=Path(args.model_bert_dir))
+            pred_bert_out = verb_data / f"{args.target_col}_verbalisation_bert_predictions.csv"
+            predictor = BertPredictor(
+                model_dir=Path(args.model_bert_dir), score_col=args.target_col, score_scale=args.score_scale
+            )
             predictor.run(clean_sentences, pred_bert_out, max_length=int(args.max_length))
 
         if mode in ("reg", "both"):
@@ -347,7 +357,7 @@ def cmd_verbalisation(args: argparse.Namespace) -> None:
 
             if interviews_csv.exists():
                 try:
-                    difficulty_col = "note_bert" if args.report_on == "bert" else "moyenne"
+                    difficulty_col = f"note_bert_{args.target_col}" if args.report_on == "bert" else "moyenne"
                     report_v1.run(report_phrases, interviews_csv, report_out_v1, difficulty_col=difficulty_col)
                     report_v2.run(report_phrases, interviews_csv, report_out_v2, difficulty_col=difficulty_col)
                     logger.info("Rapports générés: %s , %s", report_out_v1, report_out_v2)
@@ -484,7 +494,30 @@ def build_parser() -> argparse.ArgumentParser:
         help="Types d'augmentation (défaut: contextual translation swap)",
     )
     p_verb.add_argument("--model-reg-dir", type=str, default="models/verbalisation/regression", help="Dossier modèles regression")
-    p_verb.add_argument("--model-bert-dir", type=str, default="models/verbalisation/bert", help="Dossier modèles bert")
+    p_verb.add_argument(
+        "--model-bert-dir",
+        type=str,
+        default="models",
+        help="Dossier racine pour stocker les modèles bert par colonne (défaut: models)",
+    )
+    p_verb.add_argument(
+        "--bert-model-name",
+        type=str,
+        default="distilbert-base-multilingual-cased",
+        help="Nom du modèle Hugging Face à utiliser pour BERT",
+    )
+    p_verb.add_argument(
+        "--target-col",
+        type=str,
+        default="difficulté_verbalisation",
+        help="Nom de la colonne cible (ex: 'intimité')",
+    )
+    p_verb.add_argument(
+        "--score-scale",
+        type=float,
+        default=10.0,
+        help="Échelle maximale du score annoté (utilisé pour normalisation)",
+    )
     p_verb.add_argument(
         "--report-on",
         type=str,
