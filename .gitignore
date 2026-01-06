@@ -28,7 +28,7 @@ poetry.lock
 htmlcov/
 
 # Data
-data/*
+#data/*
 !data/raw/
 !data/raw/**
 !data/annotation/**

@@ -5,10 +5,9 @@ Run tune -> train -> predict for multiple target score columns and aggregate pre
 
 Usage:
   python scripts/multiple_bert_models.py \
-    --annotated-csv data/annotation/sentences_annoted_verb.csv \
-    --predict-csv data/processed/cleaned_sentence.csv \
-    --output-csv data/verbalisation/all_scores_predictions.csv \
-    --columns intimité "fertilité du language" fluidité ...
+    --annotated-csv data/annotation/annoted_score_intimite_augmented.csv \
+    --predict-csv data/processed/cleaned_paragraph.csv \
+    --output-csv results/intimite/all_scores_predictions.csv
 
 If --columns is not provided the script will infer score columns by taking N columns 
 starting at index 4 where N is --n-scores (default 7).
@@ -44,7 +43,7 @@ def infer_columns(annotated_csv: Path, start_index: int = 4, n_scores: int = 7):
 
 
 def main():
-    """ Main function to run the pipeline for multiple columns """
+    """Main function to run the pipeline for multiple columns"""
     parser = argparse.ArgumentParser(description="Run BERT pipeline for multiple score columns")
     parser.add_argument("--annotated-csv", type=Path, required=True, help="CSV annoté avec colonnes de scores (séparateur ';')")
     parser.add_argument(
@@ -58,7 +57,7 @@ def main():
     parser.add_argument(
         "--start-index", type=int, default=4, help="Index de départ (0-based) pour inférer les colonnes (défaut:4)"
     )
-    parser.add_argument("--verb-data", type=Path, default=Path("data/verbalisation"), help="Dossier pour stocker tuning/preds")
+    parser.add_argument("--tun-dir", type=Path, default=Path("data/hyperparamètres"), help="Dossier pour stocker tuning/preds")
     parser.add_argument(
         "--model-dir", type=Path, default=Path("models"), help="Dossier racine pour stocker les modèles par colonne"
     )
@@ -83,8 +82,8 @@ def main():
 
     logger.info("Colonnes à traiter: %s", columns)
 
-    verb_data = Path(args.verb_data)
-    verb_data.mkdir(parents=True, exist_ok=True)
+    tun_dir = Path(args.tun_dir)
+    tun_dir.mkdir(parents=True, exist_ok=True)
 
     # Load predict CSV (we will append columns to it)
     df_pred = pd.read_csv(args.predict_csv)
@@ -98,7 +97,7 @@ def main():
 
         try:
             # 1) Tuning
-            tuning_out = verb_data / f"{col}_bert_tuning_results.csv"
+            tuning_out = tun_dir / f"{col}_bert_tuning_results.csv"
             tuner = BertHyperparameterTuner(model_name=args.bert_model_name, score_col=col, score_scale=args.score_scale)
             logger.info("Lancement du tuning pour %s -> %s", col, tuning_out)
             tuner.run(args.annotated_csv, tuning_out)
@@ -120,7 +119,7 @@ def main():
 
             logger.info("Terminé pour %s. Colonne ajoutée: %s", col, col_name)
 
-        except Exception: # pylint: disable=broad-exception-caught
+        except Exception:  # pylint: disable=broad-exception-caught
             logger.exception("Erreur lors du pipeline pour la colonne %s", col)
 
     # Save final aggregated CSV

@@ -5,7 +5,8 @@ extension-pkg-whitelist=torch,transformers,pandas,numpy,sklearn
 [MESSAGES CONTROL]
 # Désactivation de règles jugées trop strictes ou non pertinentes
 disable=
-    logging-too-many-args  # Désactive l'avertissement sur trop d'arguments dans les fonctions de logging
+    E1205  # Désactive l'avertissement sur trop d'arguments dans les fonctions de logging
+    R0801        # Désactive la détection de code dupliqué
 #    missing-docstring,          # N'exige pas une docstring pour chaque fonction/classe
 #    too-many-arguments,         # Autorise les fonctions avec de nombreux arguments
 #    too-many-locals,            # Autorise beaucoup de variables locales

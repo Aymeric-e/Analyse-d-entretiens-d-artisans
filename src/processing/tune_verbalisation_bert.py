@@ -59,11 +59,28 @@ class BertHyperparameterTuner:
         if missing:
             raise ValueError(f"Colonnes manquantes: {missing}")
 
+        # Filtrage défensif des lignes avec valeurs manquantes dans 'text' ou la colonne cible
+        orig_len = len(df)
+        df = df.dropna(subset=["text", self.score_col])
+        dropped = orig_len - len(df)
+        if dropped > 0:
+            logger.warning("Suppression de %d lignes avec valeurs manquantes dans 'text' ou '%s'", dropped, self.score_col)
+
+        if len(df) == 0:
+            raise ValueError("Aucune donnée restante après suppression des lignes manquantes")
+
+        # Assurer que la colonne cible est numérique, et supprimer les lignes non convertibles
+        df[self.score_col] = pd.to_numeric(df[self.score_col], errors="coerce")
+        nan_after_convert = int(df[self.score_col].isna().sum())
+        if nan_after_convert > 0:
+            logger.warning("La colonne cible contient %d valeurs non convertibles en float; suppression", nan_after_convert)
+            df = df.dropna(subset=[self.score_col])
+
         X = df["text"].astype(str)  # pylint: disable=invalid-name
         y = df[self.score_col].astype(float)
 
-        logger.info("Données chargées: %d phrases", len(df))
-        return X, y
+        logger.info("Données chargées: %d phrases (après filtrage)", len(df))
+        return X.reset_index(drop=True), y.reset_index(drop=True)
 
     def prepare_tokenizer(self) -> None:
         """Load tokenizer"""

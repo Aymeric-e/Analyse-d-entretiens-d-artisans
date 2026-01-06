@@ -118,7 +118,7 @@ class BertFinalTrainer:
             csv_path = hyper_dir / f"{self.score_col}_bert_hyperparam.csv"
             df.to_csv(csv_path, index=False, sep=";")
             logger.info("Hyperparamètres CSV sauvegardés: %s", csv_path)
-        except Exception: # pylint: disable=broad-exception-caught
+        except Exception:  # pylint: disable=broad-exception-caught
             logger.exception("Impossible de sauvegarder le CSV des hyperparamètres")
 
         logger.info("Hyperparamètres sauvegardés: %s", params_path)
@@ -133,11 +133,28 @@ class BertFinalTrainer:
         if missing:
             raise ValueError(f"Colonnes manquantes: {missing}")
 
+        # Filtrage des lignes avec valeurs manquantes dans 'text' ou la colonne cible
+        orig_len = len(df)
+        df = df.dropna(subset=["text", self.score_col])
+        dropped = orig_len - len(df)
+        if dropped > 0:
+            logger.warning("Suppression de %d lignes avec valeurs manquantes dans 'text' ou '%s'", dropped, self.score_col)
+
+        if len(df) == 0:
+            raise ValueError("Aucune donnée restante après suppression des lignes manquantes")
+
+        # Assurer que la colonne cible est numérique, et supprimer les lignes non convertibles
+        df[self.score_col] = pd.to_numeric(df[self.score_col], errors="coerce")
+        nan_after_convert = int(df[self.score_col].isna().sum())
+        if nan_after_convert > 0:
+            logger.warning("La colonne cible contient %d valeurs non convertibles en float; suppression", nan_after_convert)
+            df = df.dropna(subset=[self.score_col])
+
         X = df["text"].astype(str)  # pylint: disable=invalid-name
         y = df[self.score_col].astype(float)
 
-        logger.info("Données chargées: %d phrases", len(df))
-        return X, y
+        logger.info("Données chargées: %d phrases (après filtrage)", len(df))
+        return X.reset_index(drop=True), y.reset_index(drop=True)
 
     def prepare_tokenizer(self) -> None:
         """Load tokenizer"""
@@ -230,6 +247,21 @@ class BertFinalTrainer:
         trainer.train()
         eval_results = trainer.evaluate()
 
+        # Sauvegarde des métriques d'évaluation pour l'entraînement final
+        try:
+            loss_dir = Path("results") / "intimite"
+            loss_dir.mkdir(parents=True, exist_ok=True)
+            loss_file = loss_dir / f"{self.score_col}_loss.txt"
+            with open(loss_file, "a", encoding="utf-8") as f:
+                f.write(
+                    f"{pd.Timestamp.now().isoformat()} | final_train | lr={learning_rate},\
+                        nbs={batch_size}, ml={max_length}, epochs={num_epochs} | "
+                    f"r2={eval_results.get('eval_r2')}, mae={eval_results.get('eval_mae')},\
+                        rmse={eval_results.get('eval_rmse')}, mse={eval_results.get('eval_mse')}\n"
+                )
+        except Exception:  # pylint: disable=broad-exception-caught
+            logger.exception("Impossible de sauvegarder les métriques d'évaluation pour l'entraînement final")
+
         logger.info("Résultats d'évaluation:")
         logger.info("  - R² score: %.4f", eval_results.get("eval_r2", 0))
         logger.info("  - MAE: %.4f", eval_results.get("eval_mae", 0))
@@ -251,7 +283,7 @@ class BertFinalTrainer:
 
     def run(self, csv_path: Path, tuning_results_path: Path = None) -> None:
         """Complete training pipeline"""
-        logger.info("Entraînement final: BERT pour Difficulté de Verbalisation")
+        logger.info("Entraînement final: BERT")
 
         # Load best hyperparameters
         if tuning_results_path is None:

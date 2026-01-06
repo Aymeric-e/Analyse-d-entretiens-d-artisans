@@ -1,0 +1,99 @@
+artisanat,outil,nombre_apparition
+Vitrail,coupe-verre,3
+Vitrail,couteau,1
+Vitrail,fer à souder,1
+Vitrail,pinceau,2
+Vitrail,serpette,1
+Vitrail,équerre,1
+Vitrail,établi,1
+Vitrail,masse,2
+Vitrail,règle,1
+Vitrail,chalumeau,1
+Vitrail,chasse,1
+Vitrail,faux,1
+Vitrail,ordinateur,1
+Vitrail,mètre,1
+Chalumeau,chalumeau,2
+Chalumeau,pointe,1
+Passementerie,filière,1
+Passementerie,tas,1
+Passementerie,élastique,1
+Ferronerie d'Art,enclume,1
+Ferronerie d'Art,marteau,1
+Ferronerie d'Art,masse,1
+Ferronerie d'Art,pointe,1
+Chaudronnerie,chalumeau,1
+Chaudronnerie,craie,1
+Chaudronnerie,crayon,1
+Chaudronnerie,lime,1
+Chaudronnerie,marteau,1
+Soierie,ciseau,1
+Soierie,fiche,1
+Soierie,pince,1
+Soierie,roule,1
+Mecanique,cliquet,1
+Mecanique,clé,1
+Mecanique,clé plate,1
+Mecanique,écrou,1
+Carrosserie,chalumeau,1
+Carrosserie,maillet,1
+Carrosserie,marteau,1
+Carrosserie,pointe,1
+Carrosserie,tas,1
+Vannerie,serpette,1
+Vannerie,batte,1
+Vannerie,poinçon,1
+Vannerie,sécateur,1
+Canne,chalumeau,2
+Canne,ciseau,1
+Canne,compas,1
+Canne,masse,4
+Canne,moule,3
+Canne,pointe,1
+Canne,fiche,1
+Canne,règle,1
+Canne,établi,1
+Canne,ordinateur,1
+Gravure,burin,1
+Gravure,couteau,1
+Gravure,crayon,1
+Gravure,marteau,1
+Gravure,pointe,1
+Gravure,pointe à tracer,1
+Gravure,règle,1
+Gravure,étau,1
+Reliure,couteau,1
+Reliure,lame,1
+Maroquinerie,machine à coudre,2
+Maroquinerie,ordinateur,1
+Maroquinerie,poinçon,1
+Maroquinerie,filière,1
+Pate de verre,moule,2
+Pate de verre,masse,1
+Decoration,coupe-verre,1
+Decoration,pince,1
+Decoration,équerre,1
+Dessin,craie,1
+Dessin,crayon,2
+Dessin,fiche,1
+Dessin,filière,1
+Dessin,règle,1
+Dessin,tas,1
+Dessin,échelle,1
+Dessin,ordinateur,1
+Dentelle,fiche,1
+Dentelle,élastique,1
+Armurerie,pince,1
+Couture,faux,2
+Couture,clé,2
+Couture,machine à coudre,1
+Couture,crayon,1
+Couture,fiche,1
+Couture,mètre,1
+Couture,mètre ruban,1
+Couture,pince,1
+Couture,règle,1
+Couture,tas,1
+Bijouterie,lame,1
+Bijouterie,scie,1
+Bijouterie,tas,1
