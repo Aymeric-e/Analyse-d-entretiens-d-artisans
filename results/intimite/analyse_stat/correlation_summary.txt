@@ -1,0 +1,16 @@
+Correlation and Analysis Summary
+Target: note_bert_intimité
+
+--- Correlations ---
+note_bert_fertilité du language: r=0.651, rho=0.651
+note_bert_fluidité: r=0.686, rho=0.711
+note_bert_émotions: r=0.656, rho=0.646
+note_bert_imaginaire: r=0.485, rho=0.540
+note_bert_ expert: r=0.515, rho=0.523
+note_bert_Vulnerable: r=0.452, rho=0.465
+
+--- Generated Files ---
+- vif_analysis.csv: Check for multicollinearity (VIF > 5 is high)
+- residuals_analysis.png: Check model errors
+- shap_clustering_profiles.png: Segmentation of intimacy types
+- shap_interaction.png: Interaction effects between factors

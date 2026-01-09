@@ -50,9 +50,7 @@ class BertPredictor:
         tokenizer_path = self.model_dir / self.score_col / "bert_final" / "tokenizer"
 
         if not model_path.exists() or not tokenizer_path.exists():
-            raise FileNotFoundError(
-                f"Modèle non trouvé dans {self.model_dir}/{self.score_col}. Veuillez d'abord entraîner"
-            )
+            raise FileNotFoundError(f"Modèle non trouvé dans {self.model_dir}/{self.score_col}. Veuillez d'abord entraîner")
 
         self.tokenizer = AutoTokenizer.from_pretrained(str(tokenizer_path))
         self.model = AutoModelForSequenceClassification.from_pretrained(str(model_path)).to(self.device)
@@ -132,7 +130,7 @@ class BertPredictor:
 
     def run(self, csv_path: Path, output_csv: Path, max_length: int = 128) -> None:
         """Complete prediction pipeline"""
-        logger.info("Prédiction: BERT pour Difficulté de Verbalisation")
+        logger.info("Prédiction: BERT")
 
         X, filenames = self.load_data(csv_path)  # pylint: disable=invalid-name
         predictions = self.predict(X, max_length)
