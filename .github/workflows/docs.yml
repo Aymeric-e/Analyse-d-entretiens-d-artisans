@@ -14,23 +14,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # On installe Poetry en premier
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      # on configure configure Python et le cache Poetry
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: 'poetry'
 
+      # On installe les dépendances du projet
       - name: Install dependencies
-        run: |
-          pipx install poetry
-          poetry install
+        run: poetry install --no-interaction
 
+      # On génère la doc
       - name: Generate Documentation with pdoc
         run: |
-          poetry run pdoc ./src -o docs_out ./docs/doc_api_pdoc
+          mkdir -p ./docs/doc_api_pdoc
+          poetry run pdoc ./src -o ./docs/doc_api_pdoc
 
+      # On déploie
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs_out
+          publish_dir: ./docs/doc_api_pdoc
