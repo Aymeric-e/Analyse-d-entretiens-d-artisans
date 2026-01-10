@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload JUnit result
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: junit-${{ matrix.python-version }}
           path: results/junit-${{ matrix.python-version }}.xml
