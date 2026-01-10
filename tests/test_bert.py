@@ -87,7 +87,7 @@ class TestBertFinalTrainer(unittest.TestCase):
 
         self.trainer.save_hyperparams(params)
 
-        json_path = self.model_dir / "bert_final" / "hyperparams.json"
+        json_path = self.model_dir / "difficulté_verbalisation" / "bert_final" / "hyperparams.json"
         self.assertTrue(json_path.exists())
 
         # Verify content

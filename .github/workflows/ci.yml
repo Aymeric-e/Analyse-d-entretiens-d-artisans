@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.10, 3.11, 3.12]  
+        python-version: [3.11, 3.12]  
     steps:
       - uses: actions/checkout@v4
 
@@ -48,3 +48,29 @@ jobs:
         with:
           name: junit-${{ matrix.python-version }}
           path: results/junit-${{ matrix.python-version }}.xml
+
+
+  code-analysis:
+    name: Code analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Ruff
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+
+      - name: Run Ruff (style & code smells)
+        run: |
+          ruff check .
+
+      - name: Scan secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+  
