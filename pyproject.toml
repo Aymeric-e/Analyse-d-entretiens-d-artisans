@@ -95,4 +95,5 @@ known_first_party = ["processing", "preprocessing", "utils"]
 testpaths = ["tests"]
 addopts = "--cov=src/bert_artisan_nlp --cov-report=html"
 
-[tool.poetry.scripts]
+[tool.ruff.lint]
+ignore = ["E402"]
