@@ -60,7 +60,7 @@ from utils.logger_config import setup_logger
 logger = setup_logger(__name__, level="INFO")
 
 
-def infer_default_columns(df: pd.DataFrame, target_hint: Optional[str] = None) -> (str, List[str]):
+def infer_default_columns(df: pd.DataFrame, target_hint: Optional[str] = None):
     """Infer a default target and factor columns from the dataframe columns if not provided."""
     cols = list(df.columns)
     if target_hint and target_hint in cols:
