@@ -207,7 +207,7 @@ def analyze_shap_clustering(shap_values, factors, out_dir: Path):
         # k=3 is often a good start for Low/Med/High or distinct styles
         k = 3
         kmeans = KMeans(n_clusters=k, random_state=42)
-        labels = kmeans.fit_predict(shap_values.values)
+        _ = kmeans.fit_predict(shap_values.values)
 
         # Create a DataFrame for the cluster centers (Mean SHAP impact per cluster)
         cluster_centers = pd.DataFrame(kmeans.cluster_centers_, columns=factors)
