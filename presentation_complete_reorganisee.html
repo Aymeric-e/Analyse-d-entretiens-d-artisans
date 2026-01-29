@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse d'Entretiens d'Artisans - BERT et NLP</title>
+    <style>
+        :root {
+            --color-bg-base: #f5f1ed;
+            --color-bg-surface: #efe9e4;
+            --color-text-dark: #3d2817;
+            --color-text-secondary: #5a4a3a;
+            --color-accent-green: #2d5016;
+            --color-accent-brown: #8b6f47;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            width: 960px;
+            height: 540px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--color-bg-base);
+            color: var(--color-text-dark);
+        }
+
+        .slide.col {
+            flex-direction: column;
+        }
+
+        .slide.center {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.row {
+            flex-direction: row;
+        }
+
+        .slide.p-16 {
+            padding: 4rem;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--color-accent-green);
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+        h2 {
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        h3 {
+            font-size: 1.75rem;
+        }
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: var(--color-text-dark);
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+            line-height: 1.8;
+            font-size: 1.125rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .text-2xl { font-size: 1.5rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-base { font-size: 1rem; }
+        .text-sm { font-size: 0.875rem; }
+
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .fill-width { flex: 1; }
+
+        .card-rect {
+            background-color: var(--color-bg-surface);
+            padding: 1.5rem;
+            border-radius: 0;
+            box-shadow: 0 4px 8px rgba(61, 40, 23, 0.1);
+            border-left: 4px solid var(--color-accent-green);
+        }
+
+        .card-brown {
+            background-color: var(--color-bg-surface);
+            padding: 1.5rem;
+            border-radius: 0;
+            box-shadow: 0 4px 8px rgba(61, 40, 23, 0.1);
+            border-left: 4px solid var(--color-accent-brown);
+        }
+
+        .card-alert {
+            background-color: rgba(139, 111, 71, 0.08);
+            padding: 1.5rem;
+            border-left: 4px solid var(--color-accent-brown);
+            border-radius: 0;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-accent-green);
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .formula {
+            background-color: rgba(45, 80, 22, 0.08);
+            padding: 1.5rem;
+            border-left: 4px solid var(--color-accent-green);
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+        }
+
+        .highlight {
+            color: var(--color-accent-green);
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        td, th {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(61, 40, 23, 0.1);
+        }
+
+        th {
+            background-color: var(--color-bg-surface);
+            color: var(--color-accent-green);
+            font-weight: 700;
+        }
+
+        .img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(239, 233, 228, 0.5);
+        }
+
+        .img-container img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITRE -->
+<section class="slide p-16 col center" style="background: linear-gradient(135deg, #8b6f47 0%, #6b5a3a 100%); color: #f5f1ed;">
+    <h1 style="color: #f5f1ed; margin-bottom: 1rem;">Analyse d'Entretiens<br>d'Artisans</h1>
+    <p style="font-size: 1.5rem; color: #e8ddd4; margin-bottom: 3rem;">BERT et NLP pour qualifier la difficulté de verbalisation</p>
+    <p style="font-size: 1rem; color: #e8ddd4;">Aymeric Eyer • École des Mines de Saint-Étienne</p>
+    <p style="font-size: 0.875rem; color: #d4cac0; margin-top: 3rem;">Centre SMS • Janvier 2026</p>
+</section>
+
+<!-- SLIDE 2: CONTEXTE & ENJEU -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 2rem;">Contexte & Enjeu</h2>
+    <div style="display: flex; gap: 2rem; height: 100%; flex-direction: column; justify-content: space-around;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 0.5rem;">Thèse</h4>
+            <p style="color: #5a4a3a;">Transmission des connaissances implicites des artisans et leur relation avec la matière</p>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 0.5rem;">Données</h4>
+            <p style="color: #5a4a3a;"><span style="color: #2d5016; font-weight: 700;">50+ entretiens</span> transcris avec professionnels de l'artisanat • Corpus riche et hétérogène</p>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 0.5rem;">Problème</h4>
+            <p style="color: #5a4a3a;">Annotation manuelle <span style="font-style: italic;">chronophage</span> et <span style="font-style: italic;">incohérente</span> → Besoin d'automation intelligente</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 3: OUTILS & INFRASTRUCTURE -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Outils & Infrastructure</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Stack Technique</h4>
+            <ul style="margin-left: 2rem; color: #5a4a3a; font-size: 1rem;">
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Python 3.11</span> - Runtime</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Poetry</span> - Gestion dépendances & virtualenv</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Transformers</span> (HuggingFace) - BERT multilingue</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">PyTorch</span> - Deep learning framework</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">scikit-learn</span> - ML classiques (Ridge, metrics)</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">SHAP</span> - Explainability & feature importance</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Bonnes Pratiques</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">📦 Poetry + Monorepo</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Isolement environnement, versioning, reproducibilité</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">🔄 GitHub CI/CD</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Pre-commit hooks, tests automatisés (pytest), linting (pylint, black)</p>
+            </div>
+            <div class="card-rect">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">📋 Architecture modulaire</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">src/ (code), scripts/, tests/, docs/</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: OBJECTIFS & APPROCHE -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 2rem;">Objectifs & Approche</h2>
+    <div style="display: flex; flex-direction: column; gap: 2rem; height: auto; justify-content: space-around;">
+        <div>
+            <h3 style="color: #2d5016; font-size: 1.5rem; margin-bottom: 1rem;">4 Phases principales</h3>
+            <ol style="margin-left: 2rem; color: #5a4a3a; font-size: 1.125rem; line-height: 2;">
+                <li><span class="highlight">Phase 0 : Nettoyage</span> - Prétraitement & segmentation des entretiens</li>
+                <li><span class="highlight">Phase 1 : Détection d'outils</span> - Identifier présence/absence outils par phrase</li>
+                <li><span class="highlight">Phase 2 : Verbalisation</span> - Prédiction difficulté verbalisation (score 0-10) avec BERT vs Ridge</li>
+                <li><span class="highlight">Phase 3 : 6 Facteurs</span> - Modèles supplémentaires + analyse SHAP & corrélations</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5: PHASE 0 - NETTOYAGE & PRÉTRAITEMENT -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 0 : Nettoyage & Prétraitement</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Pipeline Nettoyage</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">1️⃣ Extraction Artisans</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Supprimer interventions interviewer, garder parole artisans uniquement</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">2️⃣ Segmentation</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Diviser en paragraphes (existants) → puis en phrases (regex.split)</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">3️⃣ Nettoyage Texte</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Supprimer accents, ponctuation extraneous, normaliser espaces</p>
+            </div>
+            <div class="card-rect">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">4️⃣ CSV Structurés</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Générer 3 niveaux : fiche, paragraphe, phrase</p>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Résultats & Défis</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #2d5016; font-weight: 600; margin-bottom: 0.5rem;">✓ Obtenu</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">50+ entretiens nettoyés = <span class="highlight">~3500 phrases</span></p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">Corpus homogène & versioning GitHub</p>
+            </div>
+            <div class="card-alert">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Défis</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">• Qualité transcription inégale (accents régionaux)</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">• Phrases chevauchantes (oral ≠ écrit)</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">• Ambiguïtés segmentation (où couper?)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 6: PHASE 1 - DÉTECTION D'OUTILS -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 1 : Détection d'Outils</h2>
+    <div style="display: flex; gap: 2rem; flex: 1; align-items: flex-start;">
+        <div style="flex: 1;">
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Démarche</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">❌ NER Pré-entraîné</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">CamemBERT, FlauBERT → Inefficace : types limités (personne, org, lieu)</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">✓ Solution : Dictionary Matching</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">1. Extraction liste d'outils depuis Wikipedia</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">2. Comparaison stricte texte/dictionnaire</p>
+                <p style="color: #5a4a3a; font-size: 0.95rem;">3. Score binaire par phrase</p>
+            </div>
+        </div>
+        <div class="card-brown">
+            <p style="color: #8b6f47; font-weight: 600; margin-bottom: 1rem;">Exemple</p>
+            <p style="color: #5a4a3a; font-style: italic; margin-bottom: 1rem; font-size: 0.95rem;"><span style="font-weight: 600;">"J'utilise le marteau pour taper sur le métal"</span></p>
+            <div style="background-color: #f5f1ed; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <p style="color: #2d5016; font-weight: 600; font-size: 1rem;">✓ Outil trouvé</p>
+                <p style="color: #5a4a3a; font-size: 0.85rem;">marteau ∈ dictionnaire</p>
+            </div>
+            <p style="color: #5a4a3a; font-size: 0.85rem;"><span class="highlight">Résultat:</span> Phrase = [1, "marteau"]</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 7: PHASE 2a - VERBALISATION AVEC BERT & RIDGE -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 2a : Prédiction Verbalisation</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Pipeline & Méthodologie</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">1. Annotation Manuelle</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">~500 phrases annotées (score difficulté verbalisation 0-10)</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">2. Data Augmentation</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Back-translation, contextual embedding (nlpaug)</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">3. Fine-tuning BERT</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">BERT multilingue → Tête régression [0, 10]</p>
+            </div>
+            <div class="card-rect">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">4. Baseline (Régression Ridge)</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">TF-IDF → Ridge → Comparaison BERT vs classique</p>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Résultats & Performance</h4>
+            <div style="background-color: #efe9e4; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #2d5016;">
+                <table>
+                    <tr>
+                        <th style="color: #2d5016; font-size: 0.95rem;">Métrique</th>
+                        <th style="color: #2d5016; font-size: 0.95rem;">BERT</th>
+                        <th style="color: #8b6f47; font-size: 0.95rem;">Ridge</th>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a; font-size: 0.9rem;">R² Score</td>
+                        <td style="color: #2d5016; font-weight: 600; font-size: 0.9rem;">0.818</td>
+                        <td style="color: #8b6f47; font-weight: 600; font-size: 0.9rem;">0.635</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a; font-size: 0.9rem;">MAE</td>
+                        <td style="color: #2d5016; font-weight: 600; font-size: 0.9rem;">0.176</td>
+                        <td style="color: #8b6f47; font-weight: 600; font-size: 0.9rem;">0.321</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a; font-size: 0.9rem;">RMSE</td>
+                        <td style="color: #2d5016; font-weight: 600; font-size: 0.9rem;">0.321</td>
+                        <td style="color: #8b6f47; font-weight: 600; font-size: 0.9rem;">0.454</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="background-color: #efe9e4; padding: 1.5rem; border-left: 4px solid #2d5016;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">💡 Insight</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">BERT <span class="highlight">+28%</span> meilleur R² que Ridge → Capture contexte sémantique</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 8: PHASE 2b - HYPERPARAMÈTRES & DÉFIS -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 2b : Fine-tuning & Défis</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Hyperparamètres Optimisés</h4>
+            <div style="background-color: #efe9e4; padding: 1.5rem; border-left: 4px solid #2d5016;">
+                <table style="font-size: 0.88rem;">
+                    <tr>
+                        <th style="color: #2d5016;">Paramètre</th>
+                        <th style="color: #2d5016;">Valeur</th>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Learning Rate</td>
+                        <td style="color: #2d5016; font-weight: 600;">2e-5</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Batch Size</td>
+                        <td style="color: #2d5016; font-weight: 600;">16</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Epochs</td>
+                        <td style="color: #2d5016; font-weight: 600;">10</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Max Length</td>
+                        <td style="color: #2d5016; font-weight: 600;">128</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Dropout</td>
+                        <td style="color: #2d5016; font-weight: 600;">0.3</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Weight Decay</td>
+                        <td style="color: #2d5016; font-weight: 600;">0.01</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="color: #5a4a3a; font-size: 0.85rem; margin-top: 1rem;"><span class="highlight">Optimizer:</span> AdamW + linear warmup/decay</p>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Défis & Solutions</h4>
+            <div class="card-alert" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Overfitting Dataset</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Petit corpus (~500 phrases) → Dropout 0.3 + Early stopping validation loss</p>
+            </div>
+            <div class="card-alert" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Subjectivité Annotation</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Accord inter-annotateurs κ = 0.65 → Data augmentation compense</p>
+            </div>
+            <div class="card-alert">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">⚠️ Déséquilibre Distribution</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Scores concentrés 5-7/10 → Weighted loss par classe</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 9: PHASE 3a - 6 FACTEURS & CORRÉLATIONS -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 3a : 6 Facteurs & Corrélations</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Les 6 Facteurs Influençants</h4>
+            <div class="card-brown" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Dimensions Exploitées</p>
+                <ul style="margin-left: 1.5rem; color: #5a4a3a; font-size: 0.95rem; line-height: 1.8;">
+                    <li>Fertilité du langage</li>
+                    <li>Fluidité du discours</li>
+                    <li>Émotions exprimées</li>
+                    <li>Imaginaire/créativité</li>
+                    <li>Expertise artisanale</li>
+                    <li>Vulnérabilité révélée</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Coefficients Pearson (r)</h4>
+            <div style="background-color: #efe9e4; padding: 1.5rem; border-left: 4px solid #2d5016;">
+                <table style="font-size: 0.9rem;">
+                    <tr style="border-bottom: 2px solid #8b6f47;">
+                        <th style="color: #2d5016;">Facteur</th>
+                        <th style="color: #2d5016; text-align: center;">r</th>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Fluidité</td>
+                        <td style="color: #2d5016; font-weight: 600; text-align: center;">0.686</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Fertilité</td>
+                        <td style="color: #2d5016; font-weight: 600; text-align: center;">0.651</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Émotions</td>
+                        <td style="color: #2d5016; font-weight: 600; text-align: center;">0.656</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Imaginaire</td>
+                        <td style="color: #8b6f47; font-weight: 600; text-align: center;">0.485</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Expertise</td>
+                        <td style="color: #8b6f47; font-weight: 600; text-align: center;">0.515</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #5a4a3a;">Vulnérabilité</td>
+                        <td style="color: #8b6f47; font-weight: 600; text-align: center;">0.452</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10: PHASE 3b - EXPLAINABILITÉ SHAP -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Phase 3b : Explainabilité (SHAP)</h2>
+    <div style="display: flex; gap: 2rem; flex-direction: column;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+                <h4 style="color: #8b6f47; margin-bottom: 1rem;">Analyse SHAP</h4>
+                <div class="card-rect" style="margin-bottom: 1rem;">
+                    <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Feature Importance</p>
+                    <p style="color: #5a4a3a; font-size: 0.9rem;">Quels tokens contribuent le plus à verbalisation difficile ?</p>
+                </div>
+                <div class="card-rect" style="margin-bottom: 1rem;">
+                    <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Interactions</p>
+                    <p style="color: #5a4a3a; font-size: 0.9rem;">Comment facteurs se renforcent mutuellement ?</p>
+                </div>
+                <div class="card-rect">
+                    <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Clustering Profiles</p>
+                    <p style="color: #5a4a3a; font-size: 0.9rem;">3-4 profils verbalisabilité identifiés</p>
+                </div>
+            </div>
+            <div>
+                <h4 style="color: #8b6f47; margin-bottom: 1rem;">Patterns Découverts</h4>
+                <div class="card-brown" style="margin-bottom: 1rem;">
+                    <p style="color: #8b6f47; font-weight: 600; margin-bottom: 1rem;">🔍 Key Insights</p>
+                    <ul style="margin-left: 1.5rem; color: #5a4a3a; font-size: 0.9rem; line-height: 1.8;">
+                        <li>Mots de difficulté = proxies de verbalisation dure</li>
+                        <li>Émotions + expertise = combinaison paradoxale</li>
+                        <li>Vulnérabilité ≠ simple inverse expertise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 11: RESIDUS & DIAGNOSTICS -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Validation : Analyse Résidus</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Tests Diagnostic</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Normalité</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Q-Q plot aligné → Résidus ~normaux ✓</p>
+            </div>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Homoscédasticité</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Variance résidus = constante ✓</p>
+            </div>
+            <div class="card-rect">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Outliers</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Cook's distance < 0.5 → Pas d'influence extrême ✓</p>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Visualisation</h4>
+            <div class="img-container" style="height: 300px; border: 2px solid #8b6f47;">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/55af020e-c2e9-4111-869d-cc558a3a8359" alt="Residuals Analysis" style="max-width: 95%; max-height: 95%;">
+            </div>
+            <p style="color: #5a4a3a; font-size: 0.85rem; margin-top: 0.5rem; text-align: center;"><span class="highlight">Graphique:</span> Résidus vs Fitted, Q-Q, Scale-Location, Leverage</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 12: RÉSUMÉ RÉSULTATS & IMPACT -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Synthèse Résultats</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #2d5016; margin-bottom: 1rem;">✓ Réalisations</h4>
+            <ul style="margin-left: 2rem; color: #5a4a3a; font-size: 1rem;">
+                <li style="margin-bottom: 0.8rem;">Pipeline complet (nettoyage → détection → verbalisation)</li>
+                <li style="margin-bottom: 0.8rem;">BERT surpasse Ridge (+28% R²) sur difficulté verbalisation</li>
+                <li style="margin-bottom: 0.8rem;">Identification quantifiée des 6 facteurs influençants</li>
+                <li style="margin-bottom: 0.8rem;">Analyse SHAP & corrélations validées statistiquement</li>
+                <li>Code documenté, testé, versionné GitHub</li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #2d5016; margin-bottom: 1rem;">💡 Impact Thèse</h4>
+            <ul style="margin-left: 2rem; color: #5a4a3a; font-size: 1rem;">
+                <li style="margin-bottom: 0.8rem;">Accélération analyse corpus : 50+ entretiens → <span class="highlight">~3.5K phrases</span></li>
+                <li style="margin-bottom: 0.8rem;">Quantification objective difficulté verbalisation (vs annotation manuelle)</li>
+                <li style="margin-bottom: 0.8rem;">Compréhension fine des facteurs d'intimité artisan/matière</li>
+                <li style="margin-bottom: 0.8rem;">Fondations pour approche multitâche future</li>
+                <li>Ressources réutilisables (scripts, pipeline, modèles)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 13: CONCLUSION & PERSPECTIVES -->
+<section class="slide p-16 col" style="background-color: #f5f1ed; color: #3d2817;">
+    <h2 style="color: #2d5016; margin-bottom: 1.5rem;">Conclusion & Perspectives</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; height: auto;">
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Conclusion</h4>
+            <div class="card-rect" style="margin-bottom: 1rem;">
+                <p style="color: #5a4a3a; font-size: 1rem; line-height: 1.7;">L'IA ne remplace pas l'analyse qualitative experte, mais l'<span class="highlight">augmente et la systématise</span>. BERT capture les nuances sémantiques inaccessibles aux approches classiques.</p>
+            </div>
+            <div class="card-brown">
+                <p style="color: #8b6f47; font-weight: 600; margin-bottom: 0.5rem;">Méthodologie Reproductible</p>
+                <p style="color: #5a4a3a; font-size: 0.9rem;">Processus complet (nettoyage → fine-tuning → SHAP) applicable à d'autres corpus SHS</p>
+            </div>
+        </div>
+        <div>
+            <h4 style="color: #8b6f47; margin-bottom: 1rem;">Prochaines Étapes</h4>
+            <ol style="margin-left: 2rem; color: #5a4a3a; font-size: 1rem;">
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Court terme</span> : Modèle multitâche (1 BERT → 7 scores simultanés)</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Moyen terme</span> : Enrichissement corpus, fine-tuning domaine</li>
+                <li style="margin-bottom: 0.8rem;"><span class="highlight">Long terme</span> : Interface annotation assistée, multimodalité (audio+texte)</li>
+                <li>Publication résultats + open-sourcing code</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 14: MERCI -->
+<section class="slide p-16 col center" style="background: linear-gradient(135deg, #8b6f47 0%, #6b5a3a 100%); color: #f5f1ed;">
+    <h2 style="color: #f5f1ed; margin-bottom: 2rem;">Merci !</h2>
+    <p style="font-size: 1.25rem; color: #e8ddd4; margin-bottom: 3rem;">Questions ?</p>
+    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(232, 221, 212, 0.3);">
+        <p style="font-size: 0.95rem; color: #e8ddd4; margin-bottom: 0.5rem;">Code Source & Documentation</p>
+        <p style="font-size: 0.9rem; color: #f5f1ed; font-family: monospace;">github.com/Aymeric-e/Analyse-d-entretiens-d-artisans</p>
+    </div>
+</section>
+
+</body>
+</html>
