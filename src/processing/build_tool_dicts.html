@@ -275,30 +275,49 @@
 </span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 </span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Entry point CLI qui appelle `generate_tool_dicts`.</span>
 </span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">    Usage : python build_tool_dicts.py &lt;csv_entretien&gt; &lt;csv_tools&gt; &lt;dossier_sortie&gt;</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">    Usage : python build_tool_dicts.py --entretien &lt;csv_entretien&gt; --tools &lt;csv_tools&gt; --output &lt;dossier_sortie&gt;</span>
 </span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Usage : python build_tool_dicts.py &lt;csv_entretien&gt; &lt;csv_tools&gt; &lt;dossier_sortie&gt;&quot;</span><span class="p">)</span>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>        <span class="n">generate_tool_dicts</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la génération des fichiers : </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="c1"># Appel automatique des chemins voulus</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="n">ENTRETIEN_PATH</span> <span class="o">=</span> <span class="s2">&quot;data/recap_entretien.csv&quot;</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>    <span class="n">TOOLS_PATH</span> <span class="o">=</span> <span class="s2">&quot;data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv&quot;</span>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>    <span class="n">OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;results/tool_comparaison&quot;</span>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="c1"># Si arguments fournis, on les utilise, sinon on prend les chemins par défaut</span>
-</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ENTRETIEN_PATH</span><span class="p">,</span> <span class="n">TOOLS_PATH</span><span class="p">,</span> <span class="n">OUTPUT_PATH</span><span class="p">]</span>
-</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>
-</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="n">main</span><span class="p">()</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Générer des dictionnaires d&#39;outils à partir d&#39;un CSV de récapitulatif d&#39;entretiens et d&#39;un CSV d&#39;outils détectés&quot;</span>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>    <span class="p">)</span>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>        <span class="s2">&quot;--entretien&quot;</span><span class="p">,</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/recap_entretien.csv&quot;</span><span class="p">),</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Chemin vers le CSV recap_entretien (défaut: data/recap_entretien.csv)&quot;</span><span class="p">,</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>    <span class="p">)</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>        <span class="s2">&quot;--tools&quot;</span><span class="p">,</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv&quot;</span><span class="p">),</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Chemin vers le CSV des outils détectés (défaut: data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv)&quot;</span><span class="p">,</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>    <span class="p">)</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;results/tool_comparaison&quot;</span><span class="p">),</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dossier de sortie pour les dictionnaires (défaut: results/tool_comparaison)&quot;</span><span class="p">,</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>    <span class="p">)</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>        <span class="s2">&quot;--dict-filename&quot;</span><span class="p">,</span>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;tool_dictionary.csv&quot;</span><span class="p">,</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Nom du fichier dictionnaire de sortie (défaut: tool_dictionary.csv)&quot;</span><span class="p">,</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>    <span class="p">)</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>        <span class="n">generate_tool_dicts</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">entretien</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">tools</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la génération des fichiers : </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>    <span class="n">main</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -604,23 +623,51 @@
             <div class="pdoc-code codehilite"><pre><span></span><span id="main-177"><a href="#main-177"><span class="linenos">177</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
 </span><span id="main-178"><a href="#main-178"><span class="linenos">178</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Entry point CLI qui appelle `generate_tool_dicts`.</span>
 </span><span id="main-179"><a href="#main-179"><span class="linenos">179</span></a>
-</span><span id="main-180"><a href="#main-180"><span class="linenos">180</span></a><span class="sd">    Usage : python build_tool_dicts.py &lt;csv_entretien&gt; &lt;csv_tools&gt; &lt;dossier_sortie&gt;</span>
+</span><span id="main-180"><a href="#main-180"><span class="linenos">180</span></a><span class="sd">    Usage : python build_tool_dicts.py --entretien &lt;csv_entretien&gt; --tools &lt;csv_tools&gt; --output &lt;dossier_sortie&gt;</span>
 </span><span id="main-181"><a href="#main-181"><span class="linenos">181</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="main-182"><a href="#main-182"><span class="linenos">182</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-</span><span id="main-183"><a href="#main-183"><span class="linenos">183</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Usage : python build_tool_dicts.py &lt;csv_entretien&gt; &lt;csv_tools&gt; &lt;dossier_sortie&gt;&quot;</span><span class="p">)</span>
-</span><span id="main-184"><a href="#main-184"><span class="linenos">184</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="main-185"><a href="#main-185"><span class="linenos">185</span></a>
-</span><span id="main-186"><a href="#main-186"><span class="linenos">186</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="main-187"><a href="#main-187"><span class="linenos">187</span></a>        <span class="n">generate_tool_dicts</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-</span><span id="main-188"><a href="#main-188"><span class="linenos">188</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
-</span><span id="main-189"><a href="#main-189"><span class="linenos">189</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la génération des fichiers : </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-</span><span id="main-190"><a href="#main-190"><span class="linenos">190</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="main-182"><a href="#main-182"><span class="linenos">182</span></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+</span><span id="main-183"><a href="#main-183"><span class="linenos">183</span></a>
+</span><span id="main-184"><a href="#main-184"><span class="linenos">184</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+</span><span id="main-185"><a href="#main-185"><span class="linenos">185</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Générer des dictionnaires d&#39;outils à partir d&#39;un CSV de récapitulatif d&#39;entretiens et d&#39;un CSV d&#39;outils détectés&quot;</span>
+</span><span id="main-186"><a href="#main-186"><span class="linenos">186</span></a>    <span class="p">)</span>
+</span><span id="main-187"><a href="#main-187"><span class="linenos">187</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="main-188"><a href="#main-188"><span class="linenos">188</span></a>        <span class="s2">&quot;--entretien&quot;</span><span class="p">,</span>
+</span><span id="main-189"><a href="#main-189"><span class="linenos">189</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="main-190"><a href="#main-190"><span class="linenos">190</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/recap_entretien.csv&quot;</span><span class="p">),</span>
+</span><span id="main-191"><a href="#main-191"><span class="linenos">191</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Chemin vers le CSV recap_entretien (défaut: data/recap_entretien.csv)&quot;</span><span class="p">,</span>
+</span><span id="main-192"><a href="#main-192"><span class="linenos">192</span></a>    <span class="p">)</span>
+</span><span id="main-193"><a href="#main-193"><span class="linenos">193</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="main-194"><a href="#main-194"><span class="linenos">194</span></a>        <span class="s2">&quot;--tools&quot;</span><span class="p">,</span>
+</span><span id="main-195"><a href="#main-195"><span class="linenos">195</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="main-196"><a href="#main-196"><span class="linenos">196</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv&quot;</span><span class="p">),</span>
+</span><span id="main-197"><a href="#main-197"><span class="linenos">197</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Chemin vers le CSV des outils détectés (défaut: data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv)&quot;</span><span class="p">,</span>
+</span><span id="main-198"><a href="#main-198"><span class="linenos">198</span></a>    <span class="p">)</span>
+</span><span id="main-199"><a href="#main-199"><span class="linenos">199</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="main-200"><a href="#main-200"><span class="linenos">200</span></a>        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+</span><span id="main-201"><a href="#main-201"><span class="linenos">201</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+</span><span id="main-202"><a href="#main-202"><span class="linenos">202</span></a>        <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;results/tool_comparaison&quot;</span><span class="p">),</span>
+</span><span id="main-203"><a href="#main-203"><span class="linenos">203</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dossier de sortie pour les dictionnaires (défaut: results/tool_comparaison)&quot;</span><span class="p">,</span>
+</span><span id="main-204"><a href="#main-204"><span class="linenos">204</span></a>    <span class="p">)</span>
+</span><span id="main-205"><a href="#main-205"><span class="linenos">205</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="main-206"><a href="#main-206"><span class="linenos">206</span></a>        <span class="s2">&quot;--dict-filename&quot;</span><span class="p">,</span>
+</span><span id="main-207"><a href="#main-207"><span class="linenos">207</span></a>        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+</span><span id="main-208"><a href="#main-208"><span class="linenos">208</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;tool_dictionary.csv&quot;</span><span class="p">,</span>
+</span><span id="main-209"><a href="#main-209"><span class="linenos">209</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Nom du fichier dictionnaire de sortie (défaut: tool_dictionary.csv)&quot;</span><span class="p">,</span>
+</span><span id="main-210"><a href="#main-210"><span class="linenos">210</span></a>    <span class="p">)</span>
+</span><span id="main-211"><a href="#main-211"><span class="linenos">211</span></a>
+</span><span id="main-212"><a href="#main-212"><span class="linenos">212</span></a>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="main-213"><a href="#main-213"><span class="linenos">213</span></a>
+</span><span id="main-214"><a href="#main-214"><span class="linenos">214</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="main-215"><a href="#main-215"><span class="linenos">215</span></a>        <span class="n">generate_tool_dicts</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">entretien</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">tools</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+</span><span id="main-216"><a href="#main-216"><span class="linenos">216</span></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+</span><span id="main-217"><a href="#main-217"><span class="linenos">217</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la génération des fichiers : </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</span><span id="main-218"><a href="#main-218"><span class="linenos">218</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Entry point CLI qui appelle <code><a href="#generate_tool_dicts">generate_tool_dicts</a></code>.</p>
 
-<p>Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie></p>
+<p>Usage : python build_tool_dicts.py --entretien <csv_entretien> --tools <csv_tools> --output <dossier_sortie></p>
 </div>
 
 
