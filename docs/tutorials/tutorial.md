@@ -1,11 +1,14 @@
-# Tutoriel Complet - Analyse d'entretiens des artisans
+# Tutoriel Complet - Analyse d'entretiens d'Artisans
 
 ## Table des matières
 1. [Installation](#installation)
-2. [Commandes disponibles](#commandes-disponibles)
-3. [Workflow complet pas à pas](#workflow-complet-pas-à-pas)
-4. [Exemples d'utilisation](#exemples-dutilisation)
-5. [Dépannage](#dépannage)
+2. [Workflow complet pas à pas](#workflow-complet-pas-à-pas)
+3. [Phase 0 : Préparation des données](#phase-0--préparation-des-données)
+4. [Phase 1 : Détection des outils](#phase-1--détection-des-outils)
+5. [Phase 2 : Difficulté de verbalisation](#phase-2--difficulté-de-verbalisation)
+6. [Phase 3 : Intimité multi-facteurs](#phase-3--intimité-multi-facteurs)
+7. [Exemples d'utilisation](#exemples-dutilisation)
+8. [Dépannage](#dépannage)
 
 ---
 
@@ -14,556 +17,606 @@
 ### Prérequis
 - **Python 3.10+** 
 - **Git** pour cloner le dépôt
-- **Poetry** pour la gestion des dépendances et de l'environnement
+- **Poetry** pour la gestion des dépendances
 
 ### Installation locale
 
-1. Cloner le dépôt :
 ```bash
+# Cloner le dépôt
 git clone https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans.git
-
 cd Analyse-d-entretiens-d-artisans
-```
 
-2. Installer les dépendances :
-```bash
+# Installer les dépendances
 poetry install
+
 ```
 
 ### Vérifier l'installation
 ```bash
-python scripts/bert_artisan_cli.py --help
-```
-
-Vous devriez voir la liste de toutes les commandes disponibles.
-
----
-
-## Commandes disponibles
-
-### 1. `clean` - Nettoyage des fichiers .docx
-
-Transforme les fichiers Word (.docx) en fichiers CSV nettoyés.
-
-**Syntaxe :**
-```bash
-python scripts/bert_artisan_cli.py clean \
-  --input data/raw \
-  --output data/processed \
-  --mode paragraph
-```
-
-**Arguments :**
-- `--input` : Dossier contenant les fichiers .docx (défaut: `data/raw`)
-- `--output` : Dossier de sortie pour les CSV nettoyés (défaut: `data/processed`)
-- `--mode` : Mode de segmentation
-  - `paragraph` : Segmente par paragraphes (recommandé)
-  - `sentence` : Segmente par phrases
-  - `full` : Pas de segmentation (garde le texte entier)
-
-**Résultat :**
-- `cleaned_paragraph.csv` : Un paragraphe = une ligne
-- `cleaned_sentence.csv` : Une phrase = une ligne
-- `cleaned_full.csv` : Un document = une ligne
-
-**Exemple :**
-```bash
-python scripts/bert_artisan_cli.py clean --input data/raw --output data/processed --mode sentence
+# Vérifier que les modules importent correctement
+python -c "from preprocessing.text_cleaning import InterviewCleaner; print(' Installation OK')"
 ```
 
 ---
 
-### 2. `tools` - Détection des outils
+## Phase 0 : Préparation des Données
 
-Pipeline complet pour détecter les outils mentionnés dans les textes par comparaison avec la liste Wikipedia.
+### Étape 1 : Nettoyage des fichiers .docx
 
-Ce processus produit deux zones de sortie :
-- `--tool-output-dir` (par défaut `data/tool_detection`) : contient tous les CSV intermédiaires générés (liste Wikipedia, `*_with_tools.csv`, `*_tool_dict.csv`, et `dict_outils_*.csv` si générés).
-- `--results-dir` (par défaut `results/tool_detection`) : contient les résultats finaux organisés sous `csv/` (les CSV listés plus haut) et `html/` (versions HTML des CSV et fichiers highlight pour les fichiers `*_with_tools.csv`).
+Le module `InterviewCleaner` extrait et nettoie les entretiens au format `.docx`.
 
-**Syntaxe simple (détection uniquement) :**
-```bash
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection
+#### Structure attendue du fichier .docx
+```
+[Chercheur] Introduction...
+[Interviewé] Réponse de l'artisan...
+[Chercheur] Nouvelle question...
+[Interviewé] Nouvelle réponse...
 ```
 
-**Syntaxe complète (avec tous les optionnels) :**
-```bash
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection \
-  --generate-html \
-  --build-dicts \
-  --recap-entretien data/recap_entretien.csv
+#### Utilisation
+```python
+from pathlib import Path
+from preprocessing.text_cleaning import InterviewCleaner
+
+# Créer une instance du nettoyeur
+cleaner = InterviewCleaner()
+
+# Traiter les fichiers (trois niveaux de segmentation possibles)
+# Mode 'full' : entretien complet = 1 ligne
+df_full = cleaner.batch_process(
+    input_dir=Path('data/raw'),
+    output_path=Path('data/processed/cleaned_full.csv'),
+    mode='full'
+)
+
+# Mode 'paragraph' : paragraphe = 1 ligne (recommandé pour la plupart des analyses)
+df_paragraph = cleaner.batch_process(
+    input_dir=Path('data/raw'),
+    output_path=Path('data/processed/cleaned_paragraph.csv'),
+    mode='paragraph'
+)
+
+# Mode 'sentence' : phrase = 1 ligne (plus granulaire)
+df_sentence = cleaner.batch_process(
+    input_dir=Path('data/raw'),
+    output_path=Path('data/processed/cleaned_sentence.csv'),
+    mode='sentence'
+)
 ```
 
-**Étapes exécutées automatiquement :**
-1. Extraction de la liste Wikipedia (dans `--tool-output-dir/list_tool_wiki.csv`) (si absent ou forcée)
-2. Détection par comparaison stricte sur les CSV nettoyés (écrit `*_with_tools.csv` et `*_tool_dict.csv` dans `--tool-output-dir`)
-3. Copie des fichiers utiles dans `--results-dir/csv`
-4. (optionnel) Conversion CSV→HTML dans `--results-dir/html/csv` et génération des highlight HTML (avec surlignage des outils) dans `--results-dir/html/highlight` pour chaque `*_with_tools.csv` (si `--generate-html`)
-5. (optionnel) Création de dictionnaires par artisanat/matériau (si `--build-dicts` and `--recap-entretien` fourni). Les dictionnaires sont copiés dans `--results-dir/csv`.
+#### Résultat
+Fichiers CSV avec colonnes :
+- `filename` : nom du fichier source
+- `text` : texte nettoyé
+- `word_count` : nombre de mots
 
-**Arguments :**
-- `--processed-dir` : Dossier contenant les CSV nettoyés (défaut: `data/processed`)
-- `--tool-output-dir` : Dossier pour tous les CSV produits (défaut: `data/tool_detection`)
-- `--results-dir` : Dossier final de résultats (contient `csv/` et `html/`) (défaut: `results/tool_detection`)
-- `--generate-html` : (optionnel) Générer les fichiers HTML (CSV→HTML et highlights)
-- `--build-dicts` : (optionnel) Créer dictionnaires par artisanat/matériau (nécessite `--recap-entretien`)
-- `--recap-entretien` : CSV de métadonnées (Nom Fichier, Matériau, Artisanat) (défaut: `data/recap_entretien.csv`)
-- `--force-extract` : Force le re-téléchargement de Wikipedia même si le fichier existe
-
-**Résultat (minimal) :**
-- `--tool-output-dir/` : CSV intermédiaires (`list_tool_wiki.csv`, `*_with_tools.csv`, `*_tool_dict.csv`)
-- `--results-dir/csv/` : Copie des fichiers utiles
-
-**Résultat (avec --generate-html) :**
-- `--results-dir/html/csv/` : versions HTML des CSV
-- `--results-dir/html/highlight/` : versions HTML avec texte surligné pour chaque `*_with_tools.csv`
-
-**Exemples :**
+**Exemple d'exécution en ligne de commande :**
 ```bash
-# Détection simple
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed
+# Nettoyage via CLI (exécuter depuis la racine du projet)
+python src/preprocessing/text_cleaning.py --input data/raw --output data/processed --mode all
 
-# Avec HTML et dictionnaires (nécessite data/recap_entretien.csv)
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed --generate-html --build-dicts
-
-# Forcer la réextraction de Wikipedia
-python scripts/bert_artisan_cli.py tools --force-extract
-```
-
----
-
-### 3. `augment` - Augmentation des données
-
-Augmente un dataset annoté pour améliorer l'entraînement des modèles.
-
-**Syntaxe :**
-```bash
-python scripts/bert_artisan_cli.py augment \
-  --input data/annotation/sentences_annotated.csv \
-  --output data/annotation_augmented
-```
-
-**Arguments :**
-- `--input` : Fichier CSV annoté d'entrée (OBLIGATOIRE)
-- `--output` : Dossier ou fichier de sortie (OBLIGATOIRE)
-- `--text-column` : Nom de la colonne texte (défaut: `text`)
-- `--augmenter-types` : Types d'augmentation
-  - `contextual` : Substitution contextuelle
-  - `translation` : Back-translation
-  - `swap` : Permutation de mots
-- `--num-aug` : Nombre d'augmentations par type (défaut: 1)
-
-**Résultat :**
-- Dataset augmenté (*nb_augmenter-types\*num-aug* plus gros que l'original)
-
-**Exemple :**
-```bash
-python scripts/bert_artisan_cli.py augment \
-  --input data/annotation/sentences_annotated.csv \
-  --output data/annotation_augmented \
-  --num-aug 2 \
-  --augmenter-types contextual translation
+# Modes individuels :
+python src/preprocessing/text_cleaning.py --input data/raw --output data/processed --mode paragraph
+python src/preprocessing/text_cleaning.py --input data/raw --output data/processed --mode sentence
+python src/preprocessing/text_cleaning.py --input data/raw --output data/processed --mode full
 ```
 
 ---
 
-### 4. `verbalisation` - Pipeline de difficulté de verbalisation
+## Phase 1 : Détection des Outils
 
-Workflow complet pour l'entraînement, le tuning, la prédiction et la génération de rapports.
+### Étape 1 : Extraction de la liste d'outils depuis Wikipedia
 
-Principes clés :
-- Le fichier d'entrée annoté (par défaut `data/annotation/sentences_annoted_verb.csv`) est utilisé pour l'augmentation/tuning/entraînement.
-- Les prédictions sont exécutées sur le fichier de *phrases* nettoyées (par défaut `data/processed/cleaned_sentence.csv`).
-- Les hyperparamètres et fichiers de prédiction sont écrits dans `--verb-data` (défaut `data/verbalisation`).
-- Les résultats finaux et HTML sont copiés dans `--results-dir` (défaut `results/verbalisation`) avec sous-dossiers `csv/` et `html/`.
+```python
+from pathlib import Path
+from preprocessing.extract_tool_wiki import extract_tools
 
-**Syntaxe :**
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annoted_verb.csv \
-  --mode bert \
-  --run full \
-  --verb-data data/verbalisation \
-  --results-dir results/verbalisation
+# Extraire automatiquement la liste des outils depuis Wikipedia
+output_dir = Path('data/tool_detection')
+extract_tools(output_dir)
+
+# Crée un fichier : data/tool_detection/list_tool_wiki.csv
+# Contenant tous les outils de la page Wikipedia "Liste d'outils"
 ```
 
-**Arguments principaux :**
-- `--input` : CSV annoté d'entrée (défaut: `data/annotation/sentences_annoted_verb.csv`)
-- `--augmented-csv` : CSV annoté augmenté (défaut: `data/annotation/sentences_annoted_verb_augmented.csv`)
-- `--clean-sentences` : Fichier des phrases (prédiction) (défaut: `data/processed/cleaned_sentence.csv`)
-- `--clean-full` : Fichier des entretiens complets (pour rapports) (défaut: `data/processed/cleaned_full.csv`)
-- `--mode` : `bert` | `reg` | `both` (défaut: `bert`)
-- `--run` : `augment` | `tune` | `train` | `predict` | `full` (défaut: `full`)
-- `--verb-data` : Dossier pour hyperparams & prédictions (défaut: `data/verbalisation`)
-- `--results-dir` : Dossier final de résultats (défaut: `results/verbalisation`)
-
-**Options importantes :**
-- `--text-column` : Colonne texte (défaut: `text`)
-- `--cv` : folds CV pour tuning (défaut: 5)
-- `--max-length` : Longueur tokens BERT (défaut: 128)
-- `--num-aug` : Nombre d'augment par type (défaut: 1)
-- `--augmenter-types` : Types d'augmentation (défaut: contextual translation swap)
-- `--model-reg-dir` : Dossier modèles regression (défaut: `models/verbalisation/regression`)
-- `--model-bert-dir` : Dossier modèles BERT (défaut: `models/verbalisation/bert`)
-
-**Résultat attendu :**
-- `--verb-data/` : hyperparams CSV et fichiers de prédictions (`verbalisation_bert_predictions.csv`, `verbalisation_reg_predictions.csv`, `verbalisation_merged.csv`)
-- `--results-dir/csv/` : copies des CSV de prédiction
-- `--results-dir/html/csv/` : versions HTML des CSV
-- `--results-dir/html/reports/` : deux versions de rapports HTML (`verbalisation_report_v1.html` et `_v2.html`) générées par les deux programmes de rapport
-
-**Exemple - Pipeline complet avec BERT :**
+Ou en ligne de commande :
 ```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --mode bert \
-  --run full \
-  --verb-data data/verbalisation \
-  --results-dir results/verbalisation
-```
-**Exemple - Pipeline complet avec BERT :**
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode bert \
-  --run full \
-  --output-dir results/verbalisation
+python src/preprocessing/extract_tool_wiki.py --output data/tool_detection
 ```
 
-**Exemple - Pipeline avec augmentation :**
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode regression \
-  --run full \
-  --do-augment \
-  --augment-output data/augmented \
-  --num-aug 2
+
+### Étape 2 : Détection des outils dans les textes
+
+```python
+from pathlib import Path
+from processing.tool_detection_word_comparaison_strict import process_directory
+
+# Détecter les outils dans les fichiers CSV nettoyés
+process_directory(
+    tool_csv=Path('data/tool_detection/list_tool_wiki.csv'),
+    input_dir=Path('data/processed'),  # Dossier contenant cleaned_*.csv
+    output_dir=Path('data/tool_detection')
+)
+
+# Résultats générés :
+# - <filename>_with_tools.csv : textes avec colonne 'tools_found'
+# - <filename>_tool_dict.csv : dictionnaire des outils par fichier
 ```
 
-**Exemple - Seulement tuning :**
+Ou en ligne de commande :
 ```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode both \
-  --run tune \
-  --cv 10
+python src/processing/tool_detection_word_comparaison_strict.py \
+  --tool-csv data/tool_detection/list_tool_wiki.csv \
+  --input-dir data/processed \
+  --output-dir data/tool_detection
+
+# Optionnel : traiter uniquement certains fichiers
+python src/processing/tool_detection_word_comparaison_strict.py --input-dir data/processed --csv-list cleaned_paragraph.csv cleaned_sentence.csv
+```
+
+
+### Étape 3 : Visualisation (optionnel)
+
+```python
+from pathlib import Path
+from utils.csv_to_html_highlight_tool import highlight_tools_in_csv
+
+# Générer des fichiers HTML avec surlignage des outils (Python API)
+highlight_tools_in_csv(
+    input_csv=Path('data/tool_detection/cleaned_paragraph_with_tools.csv'),
+    output_html=Path('results/tool_detection/highlight.html')
+)
+```
+
+Ou en ligne de commande :
+```bash
+python src/utils/csv_to_html_highlight_tool.py --input data/tool_detection/cleaned_paragraph_with_tools.csv --output-dir results/tool_detection
+```
+
+
+**Exemple complet (CLI) :**
+```bash
+# Extraire la liste depuis Wikipedia
+python src/preprocessing/extract_tool_wiki.py --output data/tool_detection
+
+# Détecter les outils dans les CSV nettoyés
+python src/processing/tool_detection_word_comparaison_strict.py \
+  --tool-csv data/tool_detection/list_tool_wiki.csv \
+  --input-dir data/processed \
+  --output-dir data/tool_detection
+
+# Générer un HTML avec surlignage (optionnel)
+python src/utils/csv_to_html_highlight_tool.py --input data/tool_detection/cleaned_paragraph_with_tools.csv --output-dir results/tool_detection
 ```
 
 ---
 
-## Workflow complet pas à pas
+## Phase 2 : Difficulté de Verbalisation
 
-### Scénario : Analyser des entretiens d'artisans
+Cette phase implémente une comparaison entre deux approches de modélisation :
 
-#### Étape 1 : Préparation des données
-1. Placez vos fichiers `.docx` dans `data/raw/`
-2. (Optionnel) Si vous voulez des dictionnaires par catégorie : préparez `data/recap_entretien.csv` avec les colonnes :
-   - `Nom Fichier` : Nom du fichier .docx (ex: `entretien_01.docx`)
-   - `Matériau` : Type de matériau (ex: `Bois`)
-   - `Artisanat` : Type d'artisanat (ex: `Menuiserie`)
+1. **Ridge Regression** : basée sur TF-IDF et régularisation L2
+2. **BERT Fine-tuned** : modèle de deep learning multilingual
 
-#### Étape 2 : Nettoyage
-```bash
-python scripts/bert_artisan_cli.py clean \
-  --input data/raw \
-  --output data/processed \
-  --mode sentence
+### Étape 1 : Préparation des données annotées
+
+Créer un fichier CSV annoté avec les colonnes suivantes :
+```
+text;difficulté_verbalisation
+"c'est difficile à expliquer";1.0
+"il faut le faire pour le comprendre";0.8
+...
 ```
 
-Cela crée `data/processed/cleaned_sentence.csv` avec une phrase par ligne.
+### Étape 2 : Augmentation des données (optionnel mais recommandé)
 
-#### Étape 3 : Détection des outils (minimal)
-```bash
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection
+```python
+from pathlib import Path
+from preprocessing.text_augmentation import augment_csv
+
+# Augmenter les données avec 3 techniques :
+# - contextual : substitutions contextuelles (CamemBERT)
+# - translation : back-translation (FR→DE→FR)
+# - swap : permutation aléatoire de mots
+
+augment_csv(
+    input_path=Path('data/annotation/sentences_annotated_verb.csv'),
+    output_path=Path('data/annotation/sentences_annotated_verb_augmented.csv'),
+    text_column='text',
+    augmenter_types=['contextual', 'translation', 'swap'],
+    num_aug=1  # 1 augmentation par type par ligne
+)
+
+# Résultat : CSV avec ~4x plus de lignes (original + 3 augmentations)
 ```
 
-Cela crée :
-- `data/tool_detection/` : CSV intermédiaires (par ex. `list_tool_wiki.csv`, `*_with_tools.csv`, `*_tool_dict.csv`)
-- `results/tool_detection/csv/` : copies des CSV utiles
-- `results/tool_detection/html/` : versions HTML (si `--generate-html`)
-
-#### Étape 3b : Détection des outils (avec options avancées)
+Ou en ligne de commande :
 ```bash
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection \
-  --generate-html \
-  --build-dicts \
-  --recap-entretien data/recap_entretien.csv
+python src/preprocessing/text_augmentation.py \
+  --input data/annotation/sentences_annotated_verb.csv \
+  --output data/annotation/sentences_annotated_verb_augmented.csv \
+  --augmenter-types contextual translation swap \
+  --num_aug 1
 ```
 
-Cela crée en plus :
-- `results/tool_detection/html/csv/` : Visualisations HTML pour les CSV de résultats
-- `results/tool_detection/html/highlight/` : fichiers highlight (texte avec outils surlignés) pour chaque `*_with_tools.csv`
-- `results/tool_detection/csv/` : dictionnaires par catégorie (si `--build-dicts` et `recap_entretien.csv` fourni)
 
-#### Étape 4 : Annotation (MANUEL)
-Vous devez manuellement annoter le fichier CSV pour indiquer la difficulté de verbalisation :
-- Ouvrez `data/processed/cleaned_sentence.csv`
-- Ajoutez une colonne `difficulte_verbalisation` avec des scores (0-10)
-- Sauvegardez sous `data/annotation/sentences_annotated.csv`
+### Étape 3 : Pipeline BERT complet (Tuning → Train → Predict)
 
-#### Étape 5 : Pipeline verbalisation complet
+Utiliser le script `scripts/multiple_bert_models.py` pour automatiser le pipeline :
+
 ```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode both \
-  --run full \
-  --do-augment \
-  --num-aug 1
+python scripts/multiple_bert_models.py \
+  --annotated-csv data/annotation/sentences_annotated_verb_augmented.csv \
+  --predict-csv data/processed/cleaned_sentence.csv \
+  --output-csv results/verbalisation/bert_predictions.csv
 ```
 
-Cela :
-1. Augmente les données (x3)
-2. Tune les hyperparamètres
-3. Entraîne BERT et Regression
-4. Fait des prédictions
-5. Fusionne les résultats
-6. Génère un rapport HTML
+Ou exécuter les étapes individuellement en CLI :
+```bash
+# 1) Tuning
+python src/processing/tune_bert.py --input data/annotation/sentences_annotated_verb_augmented.csv --output data/verbalisation/bert_tuning_results.csv
 
-#### Étape 6 : Consultation des résultats
-- Rapport : `results/verbalisation/verbalisation_report.html` (ouvrir dans un navigateur)
-- Prédictions détaillées : `results/verbalisation/verbalisation_merged.csv`
-- Logs : `logs/` (pour déboguer si erreurs)
+# 2) Train
+python src/processing/train_bert.py --input data/annotation/sentences_annotated_verb_augmented.csv --tuning-results data/verbalisation/bert_tuning_results.csv --model-dir models
+
+# 3) Predict
+python src/processing/predict_bert.py --input data/processed/cleaned_sentence.csv --model-dir models --output results/verbalisation/bert_predictions.csv
+```
+
+**Ou en Python :**
+
+```python
+from pathlib import Path
+from processing.tune_bert import BertHyperparameterTuner
+from processing.train_bert import BertFinalTrainer
+from processing.predict_bert import BertPredictor
+import pandas as pd
+
+score_col = 'difficulté_verbalisation'
+
+# 1) Tuning des hyperparamètres
+print("1. Tuning BERT...")
+tuner = BertHyperparameterTuner(
+    model_name='distilbert-base-multilingual-cased',
+    score_col=score_col,
+    score_scale=10.0
+)
+tuning_results = Path('data/verbalisation/bert_tuning_results.csv')
+tuner.run(
+    csv_path=Path('data/annotation/sentences_annotated_verb_augmented.csv'),
+    output_path=tuning_results
+)
+
+# 2) Entraînement avec les meilleurs hyperparamètres
+print("2. Entraînement BERT...")
+trainer = BertFinalTrainer(
+    model_name='distilbert-base-multilingual-cased',
+    model_dir=Path('models'),
+    score_col=score_col,
+    score_scale=10.0
+)
+trainer.run(
+    csv_path=Path('data/annotation/sentences_annotated_verb_augmented.csv'),
+    tuning_results_path=tuning_results
+)
+
+# 3) Prédictions
+print("3. Prédictions BERT...")
+predictor = BertPredictor(
+    model_dir=Path('models'),
+    score_col=score_col,
+    score_scale=10.0
+)
+
+# Charger les données à prédire
+df_pred = pd.read_csv('data/processed/cleaned_sentence.csv')
+predictions = predictor.predict(df_pred['text'].astype(str))
+
+# Sauvegarder les résultats
+df_pred['difficulté_verbalisation_bert'] = predictions
+df_pred.to_csv('results/verbalisation/bert_predictions.csv', index=False)
+
+print(" Pipeline BERT terminé")
+```
+
+### Étape 4 : Pipeline Ridge Regression (alternatif)
+
+```python
+from pathlib import Path
+from processing.train_regression import RegressionTrainer
+from processing.predict_regression import RegressionPredictor
+import pandas as pd
+
+# Entraînement Ridge
+trainer = RegressionTrainer(score_col='difficulté_verbalisation')
+trainer.run(
+    csv_path=Path('data/annotation/sentences_annotated_verb_augmented.csv'),
+    model_save_path=Path('models/verbalisation/ridge_final')
+)
+
+# Prédictions Ridge
+predictor = RegressionPredictor(model_path=Path('models/verbalisation/ridge_final'))
+df_pred = pd.read_csv('data/processed/cleaned_sentence.csv')
+predictions = predictor.predict(df_pred['text'].astype(str))
+
+df_pred['difficulté_verbalisation_ridge'] = predictions
+df_pred.to_csv('results/verbalisation/ridge_predictions.csv', index=False)
+```
 
 ---
 
-## Exemples d'utilisation
+## Phase 3 : Intimité Multi-Facteurs
 
-### Exemple 1 : Quick Start (5 minutes)
-```bash
-# Supposant les .docx sont dans data/raw/
-python scripts/bert_artisan_cli.py clean --input data/raw --mode paragraph
+Cette phase entraîne 7 modèles BERT indépendants, un pour chaque dimension d'intimité :
 
-python scripts/bert_artisan_cli.py tools --processed-dir data/processed --tool-output-dir data/tool_detection --results-dir results/tool_detection
+1. **Fertilité du langage** : richesse vocabulaire et diversité syntaxique
+2. **Fluidité** : continuité et fluidité de l'expression
+3. **État physique** : description des transformations matérielles
+4. **Distance physique** : proxémique artisan-matière
+5. **Temps d'attente** : phases d'attente sans intervention
+6. **Vulnerability** : indices de vulnérabilité
+7. **Imaginaire** : usage d'images et métaphores
 
-# Ouvrez les résultats générés
+### Préparation des données annotées
+
+Créer un fichier CSV avec les 7 colonnes de scores :
+```
+text;fertilité;fluidité;état_physique;distance;temps_attente;vulnerability;imaginaire
+"le bois devient vraiment fluide...";0.8;0.9;0.7;0.5;0.3;0.2;0.6
+...
 ```
 
-### Exemple 2 : Détection simple des outils
+### Exécution du pipeline multi-modèles
+
 ```bash
-# Juste extraire les outils sans rien d'autre
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection
+python scripts/multiple_bert_models.py \
+  --annotated-csv data/annotation/intimité_augmented.csv \
+  --predict-csv data/processed/cleaned_paragraph.csv \
+  --output-csv results/intimité/all_scores.csv \
+  --columns fertilité fluidité état_physique distance temps_attente vulnerability imaginaire \
+  --n-scores 7
 ```
 
-**Résultat :** CSV avec colonne `tools_detected` remplie
+**Ou en Python :**
+```python
+from pathlib import Path
+from processing.tune_bert import BertHyperparameterTuner
+from processing.train_bert import BertFinalTrainer
+from processing.predict_bert import BertPredictor
+import pandas as pd
 
-### Exemple 3 : Détection complète avec visualisations
-```bash
-# Outils + HTML + dictionnaires
-python scripts/bert_artisan_cli.py tools \
-  --processed-dir data/processed \
-  --tool-output-dir data/tool_detection \
-  --results-dir results/tool_detection \
-  --generate-html \
-  --build-dicts \
-  --recap-entretien data/recap_entretien.csv
+# Définir les colonnes à traiter
+columns = ['fertilité', 'fluidité', 'état_physique', 'distance', 'temps_attente', 'vulnerability', 'imaginaire']
+
+# Charger données prédiction (récurrent)
+df_pred = pd.read_csv('data/processed/cleaned_paragraph.csv')
+
+# Pour chaque colonne, run tuning → train → predict
+for col in columns:
+    print(f"\n Traitement de : {col} ")
+    
+    # 1) Tuning
+    tuner = BertHyperparameterTuner(score_col=col, score_scale=10.0)
+    tuning_file = Path(f'data/verbalisation/{col}_tuning.csv')
+    tuner.run(Path('data/annotation/intimité_augmented.csv'), tuning_file)
+    
+    # 2) Train
+    trainer = BertFinalTrainer(model_dir=Path('models'), score_col=col)
+    trainer.run(Path('data/annotation/intimité_augmented.csv'), tuning_file)
+    
+    # 3) Predict
+    predictor = BertPredictor(model_dir=Path('models'), score_col=col)
+    preds = predictor.predict(df_pred['text'].astype(str))
+    
+    col_name = f'note_bert_{col}'
+    df_pred[col_name] = preds
+    print(f" {col} prédite (colonne: {col_name})")
+
+# Sauvegarder tous les résultats
+df_pred.to_csv('results/intimité/all_scores.csv', index=False)
+print("\n Toutes les prédictions sauvegardées")
 ```
 
-**Résultat :** CSV + HTML + dictionnaires par artisanat/matériau
+---
 
-### Exemple 4 : Entraîner un modèle de régression simple
+## Exemples d'Utilisation
+
+### Exemple 1 : Pipeline complet (Phase 0 + 1 + 2)
+
 ```bash
-# Supposant data/annotation/sentences_annotated.csv existe
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode regression \
-  --run full
+# Script bash complet
+#!/bin/bash
+
+PROJECT_DIR="/usr/bert_artisan_nlp"
+cd "$PROJECT_DIR"
+
+echo " PIPELINE COMPLET "
+
+# Phase 0 : Nettoyage
+echo "Phase 0 : Nettoyage des .docx..."
+python -c "
+from pathlib import Path
+from preprocessing.text_cleaning import InterviewCleaner
+cleaner = InterviewCleaner()
+cleaner.batch_process(Path('data/raw'), Path('data/processed/cleaned_full.csv'), mode='full')
+cleaner.batch_process(Path('data/raw'), Path('data/processed/cleaned_paragraph.csv'), mode='paragraph')
+cleaner.batch_process(Path('data/raw'), Path('data/processed/cleaned_sentence.csv'), mode='sentence')
+print(' Phase 0 terminée')
+"
+
+# Phase 1 : Détection outils
+echo "Phase 1 : Détection des outils..."
+python -c "
+from pathlib import Path
+from preprocessing.extract_tool_wiki import extract_tools
+from processing.tool_detection_word_comparaison_strict import process_directory
+extract_tools(Path('data/tool_detection'))
+process_directory(
+    Path('data/tool_detection/list_tool_wiki.csv'),
+    Path('data/processed'),
+    Path('data/tool_detection')
+)
+print(' Phase 1 terminée')
+"
+
+# Phase 2 : Verbalisation
+echo "Phase 2 : Verbalisation BERT..."
+python scripts/multiple_bert_models.py \
+  --annotated-csv data/annotation/sentences_annotated_verb_augmented.csv \
+  --predict-csv data/processed/cleaned_sentence.csv \
+  --output-csv results/verbalisation/predictions.csv
+
+echo " Pipeline complet terminé"
 ```
 
-**Temps estimé :** 2-5 minutes
+### Exemple 2 : Focus sur une seule phase
 
-### Exemple 5 : Entraîner BERT avec augmentation
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode bert \
-  --run full \
-  --do-augment \
-  --augment-output data/augmented \
-  --num-aug 3 \
-  --bert-model-name "distilbert-base-multilingual-cased"
+```python
+# Script Python pour tester une phase spécifique
+from pathlib import Path
+from preprocessing.extract_tool_wiki import extract_tools
+from processing.tool_detection_word_comparaison_strict import process_directory
+
+# Télécharger et détecter les outils uniquement
+extract_tools(Path('data/tool_detection'))
+process_directory(
+    Path('data/tool_detection/list_tool_wiki.csv'),
+    Path('data/processed'),
+    Path('data/tool_detection')
+)
+
+# Vérifier les résultats
+import pandas as pd
+results = pd.read_csv('data/tool_detection/cleaned_paragraph_tool_dict.csv')
+print(f"Total outils détectés: {len(results)}")
+print(results.head())
 ```
 
-**Temps estimé :** 30 minutes à 2 heures (dépend du GPU)
+### Exemple 3 : Personnalisation des hyperparamètres
 
-### Exemple 6 : Seulement faire des prédictions (modèle déjà entraîné)
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/new_sentences.csv \
-  --mode bert \
-  --run predict
+```python
+from pathlib import Path
+from processing.tune_bert import BertHyperparameterTuner
+
+# Tuning avec modèle différent
+tuner = BertHyperparameterTuner(
+    model_name='bert-base-multilingual-cased',  # Plus lourd mais potentiellement meilleur
+    score_col='difficulté_verbalisation',
+    score_scale=10.0
+)
+
+tuner.run(
+    Path('data/annotation/sentences_annotated_verb_augmented.csv'),
+    Path('data/verbalisation/bert_tuning_results.csv')
+)
+
+# Afficher les meilleurs hyperparamètres
+import pandas as pd
+results = pd.read_csv('data/verbalisation/bert_tuning_results.csv', sep=';')
+best = results.loc[results['r2'].idxmax()]
+print("Meilleurs hyperparamètres:")
+print(f"  LR: {best['learning_rate']}")
+print(f"  Batch: {best['batch_size']}")
+print(f"  Max Length: {best['max_length']}")
+print(f"  Epochs: {best['num_epochs']}")
+print(f"  R²: {best['r2']:.4f}")
 ```
-
-**Temps estimé :** 5-10 minutes
-
-### Exemple 7 : Comparaison BERT vs Regression
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode both \
-  --run full \
-  --do-augment \
-  --num-aug 2 \
-  --report-on merged
-```
-
-Génère un rapport qui compare les deux modèles.
-
-### Exemple 8 : Pipeline personnalisé - seulement tuning
-```bash
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode both \
-  --run tune \
-  --cv 10
-```
-
-Génère :
-- `results/bert_tuning_results.csv`
-- `results/hyperparams_tuning.csv`
 
 ---
 
 ## Dépannage
 
-### Erreur : "Fichier introuvable"
-**Message :** `Le dossier d'entrée n'existe pas`
+### Issue 1 : "ModuleNotFoundError: No module named 'preprocessing'"
 
 **Solution :**
 ```bash
-# Vérifiez le chemin
-ls data/raw/
+# Vérifier que vous êtes dans le bon répertoire
+cd Analyse-d-entretiens-d-artisans
 
-# Si vide, créez le dossier
-mkdir -p data/raw
+# Vérifier que Poetry a bien installé les packages
+poetry install
+
+# Si le problème persiste, régénérer l'environnement
+poetry env remove <env_name>
+poetry install
 ```
 
-### Erreur : "ModuleNotFoundError: No module named 'src'"
-**Message :** `ModuleNotFoundError: No module named 'src'`
+### Issue 2 : CUDA Out of Memory
 
 **Solution :**
-```bash
-# Assurez-vous d'exécuter depuis la racine du projet
-cd /chemin/vers/Analyse-entretiens-artisans
+```python
+# Réduire la taille du batch
+tuner = BertHyperparameterTuner(...)
+# Les hyperparamètres incluent batch_size
+# ou modifier dans le tuning
+
+# Alternative : utiliser CPU
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
 ```
 
-### Erreur : "Modèle BERT non trouvé"
-**Message :** `ConnectionError: Unable to download model from Hugging Face`
+### Issue 3 : Fichiers Wikipedia non téléchargés
 
 **Solution :**
-```bash
-# Vérifiez votre connexion internet
-ping huggingface.co
+```python
+from preprocessing.extract_tool_wiki import extract_tools
+from pathlib import Path
 
-# Ou téléchargez le modèle manuellement :
-python -c "from transformers import AutoTokenizer; AutoTokenizer.from_pretrained('distilbert-base-multilingual-cased')"
+# Forcer le téléchargement avec retry
+try:
+    extract_tools(Path('data/tool_detection'))
+except Exception as e:
+    print(f"Erreur: {e}")
+    print("Vérifier la connexion internet et réessayer")
 ```
 
-### Erreur : "Out of memory" (GPU/RAM)
-**Message :** `CUDA out of memory` ou `MemoryError`
-
-**Solutions :**
-```bash
-# Réduisez la taille des batches
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode bert \
-  --run full \
-  --max-length 64  # Au lieu de 128
-
-# Ou utilisez regression au lieu de BERT
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --mode regression \
-  --run full
-```
-
-### Erreur : "Colonne manquante dans CSV"
-**Message :** `KeyError: 'colonne_attendue'`
+### Issue 4 : Logs trop verbeux
 
 **Solution :**
-```bash
-# Vérifiez les colonnes de votre CSV
-head -1 data/annotation/sentences_annotated.csv
+```python
+# Configurer le niveau de log
+from utils.logger_config import setup_logger
 
-# Assurez-vous d'avoir les colonnes obligatoires :
-# - 'text' ou autre nom spécifié avec --text-column
-# - 'difficulte_verbalisation' (pour verbalisation)
-
-# Renommez si nécessaire
-python scripts/bert_artisan_cli.py verbalisation \
-  --input data/annotation/sentences_annotated.csv \
-  --text-column mon_nom_de_colonne
+logger = setup_logger(__name__, level="WARNING")  # Au lieu de INFO
 ```
 
-### Erreur : "Fichier .docx corrompu"
-**Message :** `FileNotFoundError` ou erreur lors du nettoyage
+### Issue 5 : Modèle pas trouvé après entraînement
 
-**Solution :**
+**Vérifier :**
 ```bash
-# Vérifiez le fichier
-file data/raw/mon_fichier.docx
+# Vérifier la structure des dossiers
+find models/ -type d -name "bert_final"
 
-# Essayez de le convertir manuellement avec LibreOffice
-libreoffice --headless --convert-to csv data/raw/mon_fichier.docx
-
-# Ou recréez-le proprement dans Word
+# Les modèles doivent être dans :
+# models/<score_col>/bert_final/model/
+# models/<score_col>/bert_final/tokenizer/
 ```
 
-### Logs : Où voir ce qui se passe ?
-```bash
-# Regarder les logs en temps réel
-tail -f logs/*.log
+### Issue 6 : Scripts CLI et imports
 
-# Ou les logs de la dernière exécution
-ls -ltrh logs/ | tail -1 | awk '{print $NF}' | xargs cat
+Les scripts supportent des arguments en ligne de commande 
+
+- Pour obtenir la liste des arguments :
+```bash
+python src/preprocessing/text_cleaning.py --help
 ```
 
 ---
 
-## FAQ
+## Ressources Supplémentaires
 
-### Q: Je n'ai pas d'annotations. Que faire ?
-R: Vous devez manuellement annoter les phrases pour indiquer la difficulté de verbalisation. Ouvrez le CSV et ajoutez une colonne "difficulte_verbalisation" avec des valeurs 0-10 (0 = facile, 10 = difficile).
+- [Documentation Hugging Face Transformers](https://huggingface.co/transformers/)
+- [Documentation NLTK](https://www.nltk.org/)
+- [Documentation scikit-learn](https://scikit-learn.org/)
+- [NLPaug pour la data augmentation](https://github.com/makcedward/nlpaug)
 
-### Q: Combien d'annotations sont nécessaires ?
-R: Au minimum 100-500 phrases annotées. Idéalement 1000+. Plus vous en avez, meilleur est le modèle.
+## Support
 
-### Q: Puis-je utiliser d'autres modèles que BERT ?
-R: Actuellement non via le CLI. Mais vous pouvez modifier le code source dans `src/processing/`.
+Pour toute question ou problème, consultez les fichiers de log :
+```bash
+# Logs détaillés
+tail -f logs/bert_artisan.log
 
-### Q: Puis-je paralléliser le nettoyage ?
-R: Pas directement via le CLI, mais l'augmentation et les prédictions utilisent déjà le multi-processing.
-
-### Q: Comment partager les modèles entraînés ?
-R: Copier le répertoire `models/` et le dossier `results/` à quelqu'un d'autre.
-
-### Q: Puis-je combiner plusieurs datasets annotés ?
-R: Oui, fusionnez les CSV avant de lancer verbalisation.
-
-### Q: Je dois vraiment avoir recap_entretien.csv ?
-R: Non ! Les dictionnaires par artisanat/matériau sont optionnels. Vous pouvez juste faire de la détection d'outils sans ce fichier. Utilisez simplement `--build-dicts` seulement si vous avez ce fichier.
-
----
-
-## Support 
-
-Pour les erreurs ou améliorations, consultez :
-- `logs/` pour voir les messages détaillés
-- `src/` pour le code source
-- `docs/` pour la documentation technique et le fichier de référence des modules (ouvrir index.html dans un navigateur)
-
+# Erreurs uniquement
+tail -f logs/errors.log
+```
