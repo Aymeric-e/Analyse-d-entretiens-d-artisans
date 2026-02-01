@@ -196,20 +196,53 @@ class ToolDetector:
 
 
 if __name__ == "__main__":
-    # Initialiser le detecteur
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Détecter les outils avec NER pré-entraîné")
+    parser.add_argument(
+        "--input-dir",
+        type=Path,
+        default=Path("data/processed"),
+        help="Dossier contenant les fichiers CSV nettoyés (défaut: data/processed)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("data/processed_tool_ner"),
+        help="Dossier de sortie pour les résultats (défaut: data/processed_tool_ner)",
+    )
+    parser.add_argument(
+        "--csv-list",
+        type=str,
+        nargs="*",
+        help="Liste optionnelle des fichiers CSV à traiter (ex: cleaned_paragraph.csv cleaned_sentence.csv). "
+        "Si non fourni, traite tous les cleaned_*.csv du dossier input-dir",
+    )
+    parser.add_argument(
+        "--dict-filename",
+        type=str,
+        default="tool_dictionary.csv",
+        help="Nom du fichier dictionnaire de sortie (défaut: tool_dictionary.csv)",
+    )
+
+    args = parser.parse_args()
+
+    # Déterminer la liste des fichiers à traiter
+    if args.csv_list:
+        input_csvs = [args.input_dir / csv_file for csv_file in args.csv_list]
+    else:
+        # Par défaut, traiter les 3 fichiers standards
+        input_csvs = [
+            args.input_dir / "cleaned_paragraph.csv",
+            args.input_dir / "cleaned_sentence.csv",
+            args.input_dir / "cleaned_full.csv",
+        ]
+
+    # Créer le dossier de sortie s'il n'existe pas
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Initialiser le détecteur
     detector = ToolDetector()
 
-    # Definir les chemins des 3 CSV d'entree
-    base_dir = Path("data/processed")
-
-    INPUT_CSV_PATH = [
-        base_dir / "cleaned_paragraph.csv",  # Version paragraphe
-        base_dir / "cleaned_sentence.csv",  # Version phrase
-        base_dir / "cleaned_full.csv",  # Version document entier
-    ]
-
-    # Dossier de sortie
-    OUTPUT_DIR_PATH = Path("data/processed_tool_ner")
-
-    # Traiter tous les CSV et generer le dictionnaire
-    detector.process_all_csvs(input_csvs=INPUT_CSV_PATH, output_dir=OUTPUT_DIR_PATH, dict_filename="tool_dictionary.csv")
+    # Traiter tous les CSV et générer le dictionnaire
+    detector.process_all_csvs(input_csvs=input_csvs, output_dir=args.output_dir, dict_filename=args.dict_filename)

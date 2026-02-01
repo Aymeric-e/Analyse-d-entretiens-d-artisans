@@ -142,9 +142,7 @@ class InterviewCleaner:
         output_csv.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(output_csv, index=False, encoding="utf-8")
 
-        logger.info("%s", "=" * 70)
-        logger.info("NETTOYAGE TERMINÉ")
-        logger.info("%s", "=" * 70)
+        logger.info("Nettoyage terminé")
         logger.info("   - Mode: %s", mode)
         logger.info("   - Lignes nettoyées: %d", len(df))
         logger.info("   - Fichiers traités: %d", df["filename"].nunique() if not df.empty else 0)
@@ -158,15 +156,34 @@ class InterviewCleaner:
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Nettoyer les fichiers .docx d'entretiens")
+    parser.add_argument(
+        "--input", type=Path, default=Path("data/raw"), help="Dossier contenant les fichiers .docx (défaut: data/raw)"
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("data/processed"),
+        help="Dossier de sortie pour les CSV nettoyés (défaut: data/processed)",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["full", "paragraph", "sentence", "all"],
+        default="all",
+        help="Mode de segmentation: 'full' (document entier), 'paragraph' (paragraphe), 'sentence' (phrase), 'all' (tous les modes)",
+    )
+
+    args = parser.parse_args()
+
     cleaner = InterviewCleaner()
-    input_dir_path = Path("data/raw")
-    out_dir_path = Path("data/processed")
+    input_dir_path = args.input
+    out_dir_path = args.output
 
-    logger.info("NETTOYAGE : VERSION NON SEGMENTÉE")
-    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_full.csv", mode="full")
+    modes_to_process = ["full", "paragraph", "sentence"] if args.mode == "all" else [args.mode]
 
-    logger.info("NETTOYAGE : VERSION PARAGRAPHE")
-    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_paragraph.csv", mode="paragraph")
-
-    logger.info("NETTOYAGE : VERSION PAR PHRASE")
-    cleaner.batch_process(input_dir_path, out_dir_path / "cleaned_sentence.csv", mode="sentence")
+    for mode in modes_to_process:
+        output_file = out_dir_path / f"cleaned_{mode}.csv"
+        logger.info("NETTOYAGE : MODE '%s'", mode.upper())
+        cleaner.batch_process(input_dir_path, output_file, mode=mode)

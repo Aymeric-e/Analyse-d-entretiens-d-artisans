@@ -139,4 +139,55 @@ def process_all_csvs(  # pylint: disable=dangerous-default-value
 
 
 if __name__ == "__main__":
-    process_all_csvs()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Détecter les outils dans les fichiers CSV nettoyés")
+    parser.add_argument(
+        "--tool-csv",
+        type=Path,
+        default=Path("data/tool_detection/list_tool_wiki.csv"),
+        help="Chemin vers le CSV contenant la liste des outils (défaut: data/tool_detection/list_tool_wiki.csv)",
+    )
+    parser.add_argument(
+        "--input-dir",
+        type=Path,
+        default=Path("data/processed"),
+        help="Dossier contenant les fichiers CSV nettoyés (défaut: data/processed)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("data/tool_detection"),
+        help="Dossier de sortie pour les résultats (défaut: data/tool_detection)",
+    )
+    parser.add_argument(
+        "--csv-list",
+        type=str,
+        nargs="*",
+        help="Liste optionnelle des fichiers CSV à traiter (ex: cleaned_paragraph.csv cleaned_sentence.csv). "
+        "Si non fourni, traite tous les cleaned_*.csv du dossier input-dir",
+    )
+
+    args = parser.parse_args()
+
+    # Déterminer la liste des fichiers à traiter
+    if args.csv_list:
+        input_csvs = [args.input_dir / csv_file for csv_file in args.csv_list]
+    else:
+        # Par défaut, traiter tous les fichiers cleaned_*.csv
+        input_csvs = [
+            args.input_dir / "cleaned_paragraph.csv",
+            args.input_dir / "cleaned_sentence.csv",
+            args.input_dir / "cleaned_full.csv",
+        ]
+
+    # Créer le dossier de sortie s'il n'existe pas
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Traiter tous les CSV
+    for csv_file in input_csvs:
+        if csv_file.exists():
+            logger.info("Traitement du fichier : %s", csv_file)
+            process_single_csv(args.tool_csv, csv_file, args.output_dir)
+        else:
+            logger.warning("Fichier non trouvé (ignoré) : %s", csv_file)

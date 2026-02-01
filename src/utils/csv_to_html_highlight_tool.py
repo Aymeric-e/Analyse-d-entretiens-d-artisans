@@ -180,18 +180,19 @@ def main():
     Returns:
         None
     """
-    if len(sys.argv) != 3:
-        logger.error("Usage : python csv_to_html_highlight_tool.py <fichier.csv> <dossier_output>")
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Générer un HTML avec surlignage des outils à partir d'un CSV")
+    parser.add_argument("--input", type=Path, required=True, help="Fichier CSV d'entrée")
+    parser.add_argument("--output-dir", type=Path, required=True, help="Dossier de sortie pour le HTML")
+
+    args = parser.parse_args()
+
+    if not args.input.exists():
+        logger.error("Erreur : fichier introuvable : %s", args.input)
         sys.exit(1)
 
-    input_csv = Path(sys.argv[1])
-    output_dir = Path(sys.argv[2])
-
-    if not input_csv.exists():
-        logger.error("Erreur : fichier introuvable : %s", input_csv)
-        sys.exit(1)
-
-    process_csv_to_html(input_csv, output_dir)
+    process_csv_to_html(args.input, args.output_dir)
 
 
 if __name__ == "__main__":

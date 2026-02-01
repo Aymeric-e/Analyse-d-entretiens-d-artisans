@@ -176,27 +176,46 @@ def generate_tool_dicts(entretien_csv, tools_csv, output_dir):
 def main():
     """Entry point CLI qui appelle `generate_tool_dicts`.
 
-    Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>
+    Usage : python build_tool_dicts.py --entretien <csv_entretien> --tools <csv_tools> --output <dossier_sortie>
     """
-    if len(sys.argv) != 4:
-        logger.error("Usage : python build_tool_dicts.py <csv_entretien> <csv_tools> <dossier_sortie>")
-        sys.exit(1)
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Générer des dictionnaires d'outils à partir d'un CSV de récapitulatif d'entretiens et d'un CSV d'outils détectés"
+    )
+    parser.add_argument(
+        "--entretien",
+        type=Path,
+        default=Path("data/recap_entretien.csv"),
+        help="Chemin vers le CSV recap_entretien (défaut: data/recap_entretien.csv)",
+    )
+    parser.add_argument(
+        "--tools",
+        type=Path,
+        default=Path("data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv"),
+        help="Chemin vers le CSV des outils détectés (défaut: data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv)",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("results/tool_comparaison"),
+        help="Dossier de sortie pour les dictionnaires (défaut: results/tool_comparaison)",
+    )
+    parser.add_argument(
+        "--dict-filename",
+        type=str,
+        default="tool_dictionary.csv",
+        help="Nom du fichier dictionnaire de sortie (défaut: tool_dictionary.csv)",
+    )
+
+    args = parser.parse_args()
 
     try:
-        generate_tool_dicts(sys.argv[1], sys.argv[2], sys.argv[3])
+        generate_tool_dicts(args.entretien, args.tools, args.output)
     except Exception as e:  # pylint: disable=broad-except
         logger.exception("Erreur lors de la génération des fichiers : %s", e)
         sys.exit(1)
 
 
 if __name__ == "__main__":
-    # Appel automatique des chemins voulus
-    ENTRETIEN_PATH = "data/recap_entretien.csv"
-    TOOLS_PATH = "data/processed_tool_comparaison_strict/cleaned_full_with_tools.csv"
-    OUTPUT_PATH = "results/tool_comparaison"
-
-    # Si arguments fournis, on les utilise, sinon on prend les chemins par défaut
-    if len(sys.argv) == 1:
-        sys.argv = ["", ENTRETIEN_PATH, TOOLS_PATH, OUTPUT_PATH]
-
     main()

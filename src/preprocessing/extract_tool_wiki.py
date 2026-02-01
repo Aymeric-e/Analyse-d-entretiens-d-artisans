@@ -94,4 +94,16 @@ def extract_tools(output_dir):
 
 
 if __name__ == "__main__":
-    extract_tools("data")
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Extraire la liste des outils depuis Wikipedia")
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="data/tool_detection",
+        help="Dossier de sortie pour le fichier list_tool_wiki.csv (défaut: data/tool_detection)",
+    )
+
+    args = parser.parse_args()
+
+    extract_tools(args.output)
