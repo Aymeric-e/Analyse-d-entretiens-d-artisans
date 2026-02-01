@@ -1,50 +1,51 @@
-**EN COURS DE CONSTRUCTION**
-
-# Projet Analyse d'entretien d'artisans
+# Projet Analyse Automatique d'Entretiens d'Artisans
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-
-Ceci est un projet réalisé dans le cadre de mes études qui a pour objectif de concevoir et expérimenter une méthode d’analyse automatique des entretiens d’artisans en utilisant des techniques classiques de comaparaisons et des techniques de nlp. Ce projet vise à identifier des indices linguistiques caractérisant la relation entre l'artisan et la matière.
-
+Série d'outils d'analyse pour explorer la transmission de conaissance d'artisans de manière implicite à travers d'indices linguistiques présents dans les entretiens réalisés.
 
 ## Contexte
 
-Ce projet s'inscrit dans une exploration des relations entre **l'artisan** et **la matière**, en s'appuyant sur les travaux de recherche concernant les degrés d'intimité entre l'artisan et ses matériaux. L'objectif est de mieux comprendre ces relations afin de contribuer à la conception de nouveaux outils ou méthodes de formation.
+Ce projet s'inscrit dans un travail de recherche qui explore comment transmettre les connaissances et savoirs des artisans. L'objectif est d'identifier des indices linguistiques qui caractérisent cette transmission au travers d'outils d'analyses statistiques et d'outils NLP.
 
-Référence : https://theses.fr/s394689
+**Référence :** https://theses.fr/s394689
 
 ---
 
-## Axes de travail
+## Architecture du Projet
 
-### 1. Détection de la présence d'outils
-- Construction d'un **dictionnaire d'outils** mentionnés par les artisans
-- Organisation optionnelle **par métiers**
-- Extraction automatique depuis Wikipedia
+Ce projet implémente une série d'outil qu'on peut séparer en 4 phases :
 
-### 2. Détection de la difficulté de verbalisation
-Repérage des moments où l'artisan exprime une difficulté à expliquer un geste ou un savoir-faire (indicateur d'intimité matière-artisan).
+### Phase 0 : Préparation des Données
+- Extraction et nettoyage des fichiers `.docx` d'entretiens
+- Segmentation par paragraphes, phrases ou entretiens complets
+- Standardisation en fichiers CSV nettoyés
 
-Techniques :
-- Processus d'annotation manuelle sur corpus cible
-- Augmentation de données (traduction aller/retour, reformulation)
-- Fine-tuning BERT sur tâche de classification
+### Phase 1 : Détection des Outils
+- Extraction automatique d'une liste d'outils depuis Wikipedia
+- Détection par comparaison stricte avec les textes d'entretiens
+- Génération de statistiques d'occurrence des outils
+- Création optionnelle de dictionnaires par métier
 
-Formulations détectées :
-- "C'est difficile à expliquer"
-- "Il faut le faire pour le comprendre"
-- "C'est mieux si je vous montre"
+### Phase 2 : Difficulté de Verbalisation
+- Annotation manuelle des passages verbalement difficiles
+- Augmentation de données (traduction, substitution contextuelle, permutation)
+- Entraînement de deux modèles comparatifs :
+  - **Ridge Regression** : approche basée sur TF-IDF
+  - **BERT Fine-tuned** : approche deep learning (multilingual)
+- Prédiction sur l'ensemble des entretiens
 
-### 3. Distance physique artisan / matière
-Identification d'indices verbaux décrivant la proximité ou l'éloignement physique.
+### Phase 3 : Analyse Multi-Facteurs d'Intimité (7 dimensions)
+- **Fertilité du langage** : richesse vocabulaire et diversité syntaxique
+- **Fluidité** : continuité et fluidité de l'expression
+- **État physique de la matière** : description des transformations
+- **Distance physique** : proxémique artisan-matière
+- **Temps d'attente** : phases d'attente sans intervention
+- **Vulnerability** : indices de vulnérabilité
+- **Imaginaire** : usage d'images et métaphores
 
-### 4. Temps d'attente
-Repérage des passages évoquant des **temps d'attente sans intervention directe** (révélateurs de phases particulières).
-
-### 5. État physique de la matière
-Détection des termes décrivant transformations, propriétés et conditions (texture, température, réaction, etc.).
+Entraînement de 7 modèles BERT indépendants + explications statistiques et avec SHAP
 
 ---
 
@@ -52,25 +53,33 @@ Détection des termes décrivant transformations, propriétés et conditions (te
 
 ### Prérequis
 - **Python 3.10+** 
-- **Poetry** pour la gestion des dépendances et de l'environnement
+- **Poetry** pour la gestion des dépendances
+- **Git** pour cloner le dépôt
 
 ### Installation locale
 
-1. Cloner le dépôt :
 ```bash
+# Cloner le dépôt
 git clone https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans.git
-
 cd Analyse-d-entretiens-d-artisans
-```
 
-2. Installer les dépendances :
-```bash
+# Installer les dépendances
 poetry install
+
 ```
 
-## Usage
+### Vérifier l'installation
+```bash
+python -c "from preprocessing.text_cleaning import InterviewCleaner; print('OK')"
+```
 
-Voir le [tutoriel](docs/tutorials/tutorial.md)
+---
+
+## Utilisation
+
+Voir le [tutoriel détaillé](docs/tutorials/tutorial.md).
+
+---
 
 ## Tests
 
@@ -79,78 +88,53 @@ Exécuter la suite de tests :
 poetry run pytest -q
 ```
 
-Exécuter les tests avec couverture de code :
+Exécuter avec couverture de code :
 ```bash
 poetry run pytest --cov=src --cov-report=html
 ```
 
-Fichiers de test disponibles :
-- `test_text_cleaning.py` — Tests du nettoyage de texte
-- `test_csv_highlight.py` — Tests de mise en évidence d'outils dans CSV
-- `test_merge_predictions.py` — Tests de fusion de prédictions
-- `test_bert.py` — Tests du pipeline BERT
-
-
+---
 
 ## Logging
 
-Le projet utilise une **configuration centralisée du logging** via `src/utils/logger_config.py`.
+Le projet utilise une **configuration centralisée du logging** via [src/utils/logger_config.py](src/utils/logger_config.py).
 
-### Fichiers de log
-
+### Fichiers de log générés
 - `logs/bert_artisan.log` — Logs détaillés (INFO et supérieur, rotation)
 - `logs/errors.log` — Erreurs uniquement (ERROR et supérieur)
 - Console — INFO seulement
 
+---
 
 ## Configuration
 
-### Poetry
+### Dépendances clés (voir [pyproject.toml](pyproject.toml))
 
-Extrait important du `pyproject.toml` :
+```toml
+[tool.poetry.dependencies]
+python = "^3.10"
+transformers = "^4.35.0"
+torch = "^2.2.0"
+pandas = "^2.1.0"
+scikit-learn = "^1.4.0"
+nlpaug = "^1.1.10"
+nltk = "^3.8.0"
+shap = "^0.44.0"
+```
 
-    [tool.poetry]
-    name = "bert-artisan-nlp"
-    version = "0.3.0"
-    python = "^3.10"
+### Outils de qualité
+- **Black** : formatage (line-length: 130)
+- **isort** : organisation des imports
+- **Pylint** : linting *Pour le moment désactiver car trop contraignant*
+- **Pytest** : tests avec couverture
 
-    [tool.poetry.dependencies]
-    transformers = "^4.35.0"
-    torch = "^2.2.0"
-    pandas = "^2.1.0"
-    scikit-learn = "^1.4.0"
+---
 
-### Black (formatage)
+## Licence
 
-    [tool.black]
-    line-length = 130
-    target-version = ['py310', 'py311']
-
-### isort (organisation des imports)
-
-    [tool.isort]
-    profile = "black"
-    line_length = 130
-    src_paths = ["src"]
-
-### Pytest
-
-    [tool.pytest.ini_options]
-    testpaths = ["tests"]
-    addopts = "--cov=src --cov-report=html"
-
-### Pylint
-
-La configuration est fournie dans le [.pylintrc](.pylintrc)
-
-
-
-## License
-
-Ce projet est sous licence **MIT**. Voir `LICENCE.md` pour les détails.
+Ce projet est sous licence **MIT**. Voir [LICENCE.md](LICENCE.md) pour les détails.
 
 ## Auteur
 
 Aymeric Eyer  
 https://github.com/Aymeric-e
-
