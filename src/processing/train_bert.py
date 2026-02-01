@@ -3,7 +3,7 @@ Train final BERT model for verbalization difficulty regression.
 Loads best hyperparameters from tuning results, or uses defaults if not found.
 
 Usage:
-    poetry run python src/processing/train_verbalisation_bert.py \
+    poetry run python src/processing/train_bert.py \
       --input data/annotation/sentenced_annoted_v1_augmented.csv \
       --tuning-results data/verbalisation/bert_tuning_results.csv
 """

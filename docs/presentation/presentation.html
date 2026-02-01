@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERT: Analyse Automatique des Entretiens d'Artisans</title>
+    <style>
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a; /* Fond sombre hors des slides */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            color: #3d2817; /* Marron très foncé */
+        }
+
+        /* --- SLIDE CONTAINER (960x540 Fixed) --- */
+        .deck {
+            width: 960px;
+            height: 540px;
+            position: relative;
+            background-color: #f5f1ed; /* Beige base */
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 4rem; /* 64px padding uniform */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #2d5016; /* Vert accent */
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: #2d5016;
+            margin-bottom: 1.5rem;
+              /*le positionner toujours à 1.5rem du haut de la slide*/
+            position:absolute;
+            top: 3rem;
+            margin: 0;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #8b6f47; /* Marron doré accent */
+            margin-bottom: 1rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #5a4a3a; /* Marron moyen */
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        ul li::before {
+            content: "•";
+            color: #8b6f47;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* --- COMPONENTS --- */
+        
+        /* Cartes */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+        
+        /* Pour les 6 facteurs (2 lignes de 3) */
+        .grid-2x3 { 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 1rem;
+        }
+
+        .card {
+            background-color: #efe9e4; /* Surface */
+            padding: 1.5rem;
+            border-left: 4px solid #2d5016; /* Accent vert */
+            box-shadow: 0 4px 8px rgba(45, 80, 22, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #2d5016;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Divider Slide */
+        .divider-slide {
+            background: linear-gradient(135deg, #f5f1ed 0%, #efe9e4 100%);
+            text-align: center;
+            align-items: center;
+        }
+        
+        .divider-line {
+            width: 100px;
+            height: 4px;
+            background-color: #8b6f47;
+            margin: 2rem auto;
+        }
+
+        /* Formules */
+        .formula-box {
+            background-color: #efe9e4;
+            padding: 1.5rem;
+            border-left: 4px solid #8b6f47;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #2d5016;
+            font-weight: bold;
+        }
+
+        /* Visualisation Placeholder */
+        .viz-placeholder {
+            flex-grow: 1;
+            width: 100%;
+            background-color: #efe9e4;
+            border: 2px dashed #8b6f47;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            color: #8b6f47;
+            font-style: italic;
+        }
+        
+        .viz-caption {
+            font-size: 0.85rem;
+            color: #5a4a3a;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #8b6f47;
+            padding-top: 1rem;
+            width: 100%;
+        }
+
+        .logo-top-right {
+            position: absolute;
+            top: 0rem;
+            right: 0rem;
+            width: 150px; 
+            height: auto;
+            z-index: 100;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+    <div class="slide active">
+        <h3 style="color: #5a4a3a; font-weight: normal; font-size: 1.2rem;">École des Mines de Saint-Étienne </h3>
+        <h1>BERT: Réinventer l'Analyse <br>des Entretiens d'Artisans</h1>
+        <div class="divider-line" style="margin: 2rem 0; width: 60px;"></div>
+        <p style="font-size: 1.4rem; color: #2d5016;">L'intelligence artificielle au service de l'analyse d'entretiens </p>
+        <p style="margin-top: 3rem; font-weight: bold;">Aymeric Eyer | 29 Janvier 2026</p>
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Contexte du Projet</h2>
+        <div class="grid grid-3">
+            <div class="card" >
+                <span class="card-title">Thèse</span>
+                La thèse explore la transmission des connaissances implicites et tacites entre artisans et la matière qu'ils travaillent. 
+            </div>
+            <div class="card">
+                <span class="card-title">Données brutes</span>
+                50+ entretiens transcrits avec des artisans professionnels français.
+            </div>
+            <div class="card">
+                <span class="card-title">Problème Central</span>
+                L'annotation manuelle est chronophage, sujette aux inconsistences dans la notation et difficilement exploitable à grande échelle.
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Objectifs</h2>
+        <div class="card" style="border-left-width: 8px; font-size: 20rem;">
+            <ul>
+                <li>Permettre une annotation automatisée et reproductible des entretiens.</li>
+                <li>Proposer des outils pour permettre l'analyse des entretiens.</li>
+                <li>Fournir moyens de compréhension des entretiens.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Architecture en 4 Phases</h2>
+        <div class="grid grid-4">
+            <div class="card">
+                <span class="card-title">Phase 0</span>
+                Segmentation des entretiens à trois granularités (entretien, paragraphe, phrase) et structuration en fichiers CSV. <br>
+            </div>
+            <div class="card">
+                <span class="card-title">Phase 1</span>
+                Construction d'un dictionnaire d'outils à partir de Wikipedia et détection par comparaison stricte de chaînes. 
+            </div>
+            <div class="card">
+                <span class="card-title">Phase 2</span>
+                Prédiction de la difficulté de verbalisation via modèles BERT fine-tuned et Ridge Regression en comparaison. <br>
+            </div>
+            <div class="card">
+                <span class="card-title">Phase 3</span>
+                Entraînement de 7 modèles BERT, analyse SHAP approfondie et validation statistique des facteurs explicatifs.<br>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Phase 0: Données Préparées</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="card-title">Pipeline de Traitement</span>
+                1. Transcriptions brutes <br> 2. Extraction parole artisans <br> 3. Segmentation (3 niveaux) <br> 4. CSV structuré.
+            </div>
+            <div class="card">
+                <span class="card-title">Statistiques Corpus</span>
+                <ul>
+                    <li>50 fichiers d'entretiens</li>
+                    <li>3,200+ phrases extraites</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide divider-slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>PHASE 1</h2>
+        <div class="divider-line"></div>
+        <h3>Extraction d'Entités - Détection Outils</h3>
+        <p>Approche dictionnaire via Wikipedia</p>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Détection des outils</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="card-title">Approche NER Pré-entraînée (Échec)</span>
+                <ul>
+                    <li>Modèles: CamemBERT, FlauBERT</li>
+                    <li>Problème: Pas de tag spécifique pour outils artisanaux.</li>
+                    <li>Verdict: Inefficace sur ce domaine spécialisé.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left-color: #8b6f47;">
+                <span class="card-title">Solution Implémentée (Succès)</span>
+                <ul>
+                    <li>Source: Extraction automatique Wikipedia.</li>
+                    <li>Méthode: Comparaison stricte (exact matching).</li>
+                    <li>Avantage: Aucune annotation manuelle requise.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Résultats Phase 1</h2>
+        
+        <div class="grid grid-2" style="align-items: center;">
+            <div class="card">
+                <span class="card-title">Dictionnaire d'Outils Finalisé</span>
+                <ul>
+                    <li><strong>Taille:</strong> 49 outils uniques extraits, 343 outils mentionnés au total.</li>
+                    <li><strong>Précision:</strong> Haute (très peu de faux positifs).</li>
+                    <li><strong>Structure:</strong> Catégorisation par métier, dictionnaire des outils...</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center;">
+                <img src="images/tool.png" alt="Visualisation Outils" 
+                    style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </div>
+
+    <div class="slide divider-slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>PHASE 2</h2>
+        <div class="divider-line"></div>
+        <h3>Prédiction Difficulté de Verbalisation</h3>
+        <p>Comparaison Ridge Regression vs BERT Fine-tuned</p>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Contexte Phase 2</h2>
+        <div class="card">
+            <ul>
+                <li><strong>Objectif:</strong> Prédire la difficulté de verbalisation (score 0-10).</li>
+                <li><strong>Données:</strong> 350 phrases labellisées manuellement</li>
+                <li><strong>Protocole:</strong> Split 80/20 train/test, Ridge regression et BERT fine-tuned.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Ridge Regression: Approche</h2>
+        
+        <div class="formula-box">
+            Ridge: min ||y - Xw||² + α||w||²
+        </div>
+        
+        <div class="card" style="margin-top: 1rem;">
+            <ul>
+                <li><strong>Normalisation:</strong> StandardScaler</li>
+                <li><strong>Validation:</strong> 5-fold Cross-Validation</li>
+                <li><strong>Métriques:</strong> R², MAE, RMSE</li>
+                <li><strong>Temps de calcul:</strong> ~2 minutes </li>
+                <li><strong>Avantage:</strong> Solution analytique simple, rapide.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Hyperparamètres du Ridge</h2>
+        <div class="card">
+            <ul>
+                <li>
+                    <strong>TF-IDF – Nombre max. de termes :</strong>
+                    1 000 → 5 000
+                </li>
+                <li>
+                    <strong>TF-IDF – N-grammes :</strong>
+                    (1,1) à (1,4)
+                </li>
+                <li>
+                    <strong>TF-IDF – Fréquence minimale (min_df) :</strong>
+                    1 à 3 documents
+                </li>
+                <li>
+                    <strong>TF-IDF – Fréquence maximale (max_df) :</strong>
+                    60 % à 90 %
+                </li>
+                <li>
+                    <strong>Ridge – Régularisation (α) :</strong>
+                    0.01 à 100
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>BERT : Approche</h2>
+        
+        <div class="formula-box">
+            Modèle : bert-base-multilingual-cased (pré-entraîné)
+        </div>
+        
+        <div class="card" style="margin-top: 1rem;">
+            <ul>
+                <li><strong>Architecture :</strong> Transformer bidirectionnel</li>
+                <li><strong>Modèle :</strong> BERT multilingue sensible à la casse</li>
+                <li><strong>Langues :</strong> +100 langues supportées</li>
+                <li><strong>Temps de calcul :</strong> ~2 heures</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Hyperparamètres BERT</h2>
+        
+        <div class="card">
+            <ul>
+                <li>
+                    <strong>Learning rate :</strong> 1e-5 → 5e-5
+                </li>
+                <li>
+                    <strong>Batch size :</strong> 16 → 32
+                </li>
+                <li>
+                    <strong>Longueur max. des séquences :</strong> 128 → 256 tokens
+                </li>
+                <li>
+                    <strong>Nombre d’époques :</strong> 3 → 7
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Résultats: Ridge vs BERT</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="card-title">Ridge Regression</span>
+                <ul>
+                    <li>R²: 0.6348</li>
+                    <li>MAE: 0.3205</li>
+                    <li>RMSE: 0.4543</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left-color: #8b6f47;">
+                <span class="card-title">BERT Fine-tuned</span>
+                <ul>
+                    <li><strong>R²: 0.8182 (+29.0%)</strong></li>
+                    <li>MAE: 0.1753 (-45.3%)</li>
+                    <li>RMSE: 0.3205 (-29.5%)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Visualisation: Difficulté Verbalisation</h2>
+        
+        <img src="images/verbalisation.png" 
+            alt="Scatter Plot BERT vs Ground Truth" 
+            style="width:70%; max-width:1000px; display:block; margin: 5rem auto 0 auto;">
+        
+    </div>
+
+
+    <div class="slide divider-slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>PHASE 3</h2>
+        <div class="divider-line"></div>
+        <h3>Intimité - Analyse Multi-Facteurs et Explicabilité</h3>
+        <p>7 Modèles BERT + SHAP + Validation Statistique</p>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Contexte Phase 3</h2>
+        <div class="card">
+            <ul>
+                <li><strong>But:</strong> Prédire l'intimité globale + 6 facteurs explicatifs indépendants.</li>
+                <li><strong>Modélisation:</strong> 7 modèles BERT indépendants entraînés séparément.</li>
+                <li><strong>Dataset:</strong> 350 paragraphes × 7 dimensions = 2,450 annotations.</li>
+                <li><strong>Méthode:</strong> Fine-tuning identique à la Phase 2.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Les 6 Facteurs Psycholinguistiques</h2>
+        <div class="grid-2x3">
+            <div class="card" style="padding:1rem;"><strong>Fluidité</strong><br><small>Clarté, continuité narrative.</small></div>
+            <div class="card" style="padding:1rem;"><strong>Fertilité</strong><br><small>Richesse lexicale, vocabulaire.</small></div>
+            <div class="card" style="padding:1rem;"><strong>Émotions</strong><br><small>Charge affective exprimée.</small></div>
+            <div class="card" style="padding:1rem;"><strong>Imaginaire</strong><br><small>Métaphores, créativité.</small></div>
+            <div class="card" style="padding:1rem;"><strong>Expertise</strong><br><small>Maîtrise technique précise.</small></div>
+            <div class="card" style="padding:1rem;"><strong>Vulnérabilité</strong><br><small>Doutes, limites propres.</small></div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Prédiction BERT Phase 3</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <span class="card-title">Intimité Globale</span>
+                R²: 0.846 | mae=0.734
+            </div>
+            <div class="card">
+                <span class="card-title">Performances Facteurs (R²)</span>
+                <ul>
+                    <li>Émotions: 0.784</li>
+                    <li>Fluidité: 0.871</li>
+                    <li>Fertilité: 0.904</li>
+                    <li>Expertise: 0.859</li>
+                    <li>Imaginaire: 0.832</li>
+                    <li>Vulnérabilité: 0.879</li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top:1rem; text-align:center;"><em> Tous les modèles ont efficacement prédit les scores.</em></p>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Fertilité du langage</h2>
+        
+        <img src="images/scatter_note_bert_fertilité du language.png" alt="Scatter plot Fertilité du langage" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Fluidité</h2>
+        
+        <img src="images/scatter_note_bert_fluidité.png" alt="Scatter plot Fluidité" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Émotions</h2>
+        
+        <img src="images/scatter_note_bert_émotions.png" alt="Scatter plot Émotions" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Imaginaire</h2>
+        
+        <img src="images/scatter_note_bert_imaginaire.png" alt="Scatter plot Imaginaire" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Expertise</h2>
+        
+        <img src="images/scatter_note_bert_ expert.png" alt="Scatter plot Expert" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Vulnerable</h2>
+        
+        <img src="images/scatter_note_bert_Vulnerable.png" alt="Scatter plot Vulnerable" style="width:70%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Résumé des scores de régression <br> facteur vs intimité</h2>
+        
+        <div class="card" style="margin-top: 1rem;">
+            <ul>
+                <li><strong>Fertilité du langage :</strong> Pearson = 0.651 | Spearman = 0.651</li>
+                <li><strong>Fluidité :</strong> Pearson = 0.686 | Spearman = 0.711</li>
+                <li><strong>Émotions :</strong> Pearson = 0.656 | Spearman = 0.646</li>
+                <li><strong>Imaginaire :</strong> Pearson = 0.485 | Spearman = 0.540</li>
+                <li><strong>Expertise :</strong> Pearson = 0.515 | Spearman = 0.523</li>
+                <li><strong>Vulnérabilité :</strong> Pearson = 0.452 | Spearman = 0.465</li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>SHAP: Concept Fondamental</h2>
+        <div class="card">
+            <p><strong>Shapley Values:</strong> Mesure la contribution marginale de chaque facteur à la prédiction finale.</p>
+            <ul>
+                <li><strong>Propriété additive:</strong> Somme des valeurs SHAP = Prédiction du modèle.</li>
+                <li><strong>Niveaux d'analyse:</strong>
+                    <ul>
+                        <li>Pourquoi cette phrase a ce score ?</li>
+                        <li>Quels facteurs influencent le plus l'intimité ?</li>
+                        <li>Manquent-ils des facteurs ?</li>
+                        <li>Y a-t-il des interactions entre facteurs ?</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Feature Importance Globale</h2>
+        
+        <img src="images/shap_bar.png" alt="Bar Plot Horizontal: Top features triées par magnitude SHAP" 
+            style="width:80%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+        <p class="viz-caption">Axe X: Magnitude SHAP moyenne | Axe Y: Tokens (Features)</p>
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Distribution SHAP Values par Feature</h2>
+        
+        <img src="images/shap_summary.png" alt="Beeswarm Plot: Nuage de points coloré par intensité" 
+            style="width:80%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+        <p class="viz-caption">Points = Observations | Couleur = Valeur Feature | Position X = Impact SHAP</p>
+    </div>
+    
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Analyse des Résidus via SHAP</h2>
+        
+        <img src="images/residuals_analysis.png" alt="Visualisation: Analyse des phrases avec erreurs élevées" 
+            style="width:80%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+        <p class="viz-caption">Comprendre pourquoi le modèle se trompe sur certains cas.</p>
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>SHAP Interaction Values</h2>
+        
+        <img src="images/shap_interaction.png" alt="Matrice de Chaleur: Interactions entre Top Features" 
+            style="width:80%; max-width:1000px; display:block; margin: 3rem auto 0 auto;">
+        
+        <p class="viz-caption">Contribution conjointe au-delà de la somme individuelle.</p>
+    </div>
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Analyse Multicollinéarité (VIF)</h2>
+        
+        <div class="card">
+            <span class="card-title">Variance Inflation Factor</span>
+            
+            <div class="grid grid-2">
+                <ul>
+                    <li>Fluidité: 4.436</li>
+                    <li>Fertilité du langage: 4.379</li>
+                    <li>Expertise: 2.318</li>
+                </ul>
+                <ul>
+                    <li>Imaginaire: 1.486</li>
+                    <li>Émotions: 1.437</li>
+                    <li>Vulnérable: 1.276</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 1rem; border-top: 1px solid #ccc; padding-top: 0.5rem;">
+                <strong>Diagnostic:</strong> Tous les VIF < 5 (Seuil critique). La multicollinéarité est acceptable.
+            </p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Conclusion</h2>
+        
+        <div class="card" style="border-left-width: 8px;">
+            <ul>
+                <li><strong>Annotation automatisée :</strong> Les modèles BERT permettent une notation rapide et reproductible des entretiens, répondant au problème initial de chronophagie et d’incohérences manuelles.</li>
+                <li><strong>Fiabilité des modèles :</strong> BERT Fine-tuned montre une performance supérieure à Ridge (R² +29 %, MAE réduit de moitié) et les résultats sont statistiquement significatifs.</li>
+                <li><strong>Transparence et interprétabilité :</strong> SHAP fournit des explications locales et globales, permettant d’identifier les contributions de chaque facteur et de détecter les interactions.</li>
+            </ul>
+
+            <p style="margin-top: 1.5rem; font-style: italic; color: #555;">
+                <strong>Limites du travail :</strong> Erreurs humaines possibles, aspects non inclus (audio, video)... 
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="slide">
+        <img src="images/logo.png" alt="Logo" class="logo-top-right">
+        <h2>Merci de votre attention</h2>
+        <div style="margin-top: 2rem;">
+            <p style="font-size: 1.5rem; margin-bottom: 2rem;">Des questions ?</p>
+            
+            <div class="card">
+                <span class="card-title">Contact & Ressources</span>
+                <p><strong>Email:</strong> <a href="mailto:aymeric.eyer@etu.emse.fr" style="color:#2d5016;">aymeric.eyer@etu.emse.fr</a></p>
+                <p><strong>Depôt du projet:</strong> https://github.com/Aymeric-e/Analyse-d-entretiens-d-artisans/tree/main</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Navigation Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowRight') {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            } else if (e.code === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

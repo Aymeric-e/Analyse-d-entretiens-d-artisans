@@ -3,7 +3,7 @@ Generate predictions using trained BERT model.
 Loads a saved BERT model and generates predictions on new data.
 
 Usage:
-    poetry run python src/processing/predict_verbalisation_bert.py \
+    poetry run python src/processing/predict_bert.py \
       --input data/processed/cleaned_sentence.csv \
       --model-dir models/bert_final \
       --output data/verbalisation/verbalisation_bert.csv

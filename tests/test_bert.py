@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from processing.train_verbalisation_bert import BertFinalTrainer
+from processing.train_bert import BertFinalTrainer
 
 
 class TestBertFinalTrainer(unittest.TestCase):

@@ -27,9 +27,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from processing.predict_verbalisation_bert import BertPredictor
-from processing.train_verbalisation_bert import BertFinalTrainer
-from processing.tune_verbalisation_bert import BertHyperparameterTuner
+from processing.predict_bert import BertPredictor
+from processing.train_bert import BertFinalTrainer
+from processing.tune_bert import BertHyperparameterTuner
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

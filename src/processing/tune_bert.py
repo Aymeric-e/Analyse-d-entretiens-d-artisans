@@ -3,7 +3,7 @@ Tune BERT model hyperparameters for verbalization difficulty regression.
 Includes epochs in the hyperparameter grid.
 
 Usage:
-    poetry run python src/processing/tune_verbalisation_bert.py \
+    poetry run python src/processing/tune_bert.py \
       --input data/annotation/sentenced_annoted_v1_augmented.csv \
       --output data/verbalisation/bert_tuning_results.csv
 """
