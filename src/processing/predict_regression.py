@@ -70,11 +70,8 @@ class VerbRegPredicter:
         # Vectorize
         X_vec = self.vectorizer.transform(texts)  # pylint: disable=invalid-name
 
-        # Predict (0-3 scale)
-        y_pred_0_3 = self.model.predict(X_vec)
-
-        # Scale to 0-10
-        y_pred_0_10 = (y_pred_0_3 / 3.0) * 10.0
+        # Predict (0-10 scale)
+        y_pred_0_10 = self.model.predict(X_vec)
 
         # Clip to valid range and round to 2 decimals
         y_pred_0_10 = y_pred_0_10.clip(0, 10)

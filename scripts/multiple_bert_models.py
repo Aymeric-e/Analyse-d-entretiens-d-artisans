@@ -5,9 +5,13 @@ Run tune -> train -> predict for multiple target score columns and aggregate pre
 
 Usage:
   python scripts/multiple_bert_models.py \
-    --annotated-csv data/annotation/annoted_score_intimite_augmented.csv \
-    --predict-csv data/processed/cleaned_paragraph.csv \
-    --output-csv results/intimite/all_scores_predictions.csv
+    --annotated-csv data/interviews/annotation/sentences_annoted_verb_augmented.csv \
+    --predict-csv data/interviews/processed/cleaned_sentence.csv \
+    --output-csv results/verbalisation/new/all_scores_predictions.csv \
+    --n-scores 1 \
+    --tun-dir data/verbalisation/new
+    --model-dir models
+    
 
 If --columns is not provided the script will infer score columns by taking N columns 
 starting at index 4 where N is --n-scores (default 7).

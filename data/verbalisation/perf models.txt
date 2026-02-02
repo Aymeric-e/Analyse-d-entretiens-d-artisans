@@ -1,9 +1,0 @@
-Regression : Résultats sur l'ensemble de test:
-  - R² score: 0.6348
-  - MAE: 0.3205
-  - RMSE: 0.4543
-
-BERT : Résultats d'évaluation:
-  - R² score: 0.8182
-  - MAE: 0.1753
-  - RMSE: 0.3205

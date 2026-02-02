@@ -192,7 +192,7 @@ class BertHyperparameterTuner:
                 r2 = eval_results.get("eval_r2", -float("inf"))
                 mae = eval_results.get("eval_mae", float("inf"))
 
-                logger.info("  → R²: %.4f, MAE: %.4f", r2, mae)
+                logger.info("   R²: %.4f, MAE: %.4f", r2, mae)
 
                 results.append(
                     {

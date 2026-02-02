@@ -1,22 +1,22 @@
 id;filename;text;augmentation_type;difficulté_verbalisation
-1;Entretien 01 24.10.03 01_traitement_A;Une journée de travail en entreprise ou une journée de travail ici au BIP ?;original;2
+1;Entretien 01 24.10.03 01_traitement_A;Une journée de travail en entreprise ou une journée de travail ici au BIP ?;original;6
 10;Entretien 01 24.10.03 01_traitement_A;Du coup, le matin, on arrivait à l'atelier vers, pour ma part, 7h.;original;0
-100;Entretien 01 24.10.03 01_traitement_A;Et du coup, si on a des onglets, c'est petite pièce en petit plomb et notre petite pièce.;original;1
-100_contextual;Entretien 01 24.10.03 01_traitement_A;Et du coup, ici on a 19 onglets, c' indique mini pièce en tout morceau et mini double pièce.;contextual;1
-100_swap;Entretien 01 24.10.03 01_traitement_A;Et du coup on, si a des onglets, c est ' petite pièce en petit et plomb petite notre pièce.;swap;1
-100_translation;Entretien 01 24.10.03 01_traitement_A;Et quand on aura des onglets, c'est un petit morceau de plomb et notre petit morceau.;translation;1
+100;Entretien 01 24.10.03 01_traitement_A;Et du coup, si on a des onglets, c'est petite pièce en petit plomb et notre petite pièce.;original;3
+100_contextual;Entretien 01 24.10.03 01_traitement_A;Et du coup, ici on a 19 onglets, c' indique mini pièce en tout morceau et mini double pièce.;contextual;3
+100_swap;Entretien 01 24.10.03 01_traitement_A;Et du coup on, si a des onglets, c est ' petite pièce en petit et plomb petite notre pièce.;swap;3
+100_translation;Entretien 01 24.10.03 01_traitement_A;Et quand on aura des onglets, c'est un petit morceau de plomb et notre petit morceau.;translation;3
 101;Entretien 01 24.10.03 01_traitement_A;Et puis hop, on vient couper le plomb en onglets.;original;0
 101_contextual;Entretien 01 24.10.03 01_traitement_A;Et ensuite hop, elle vient découper le saucisson en onglets.;contextual;0
 101_swap;Entretien 01 24.10.03 01_traitement_A;Et puis, hop on couper vient le plomb en onglets.;swap;0
 101_translation;Entretien 01 24.10.03 01_traitement_A;Et puis, hey, on coupe le plomb dans les onglets.;translation;0
-102;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si c'est clair.;original;3
-102_contextual;Entretien 01 24.10.03 01_traitement_A;J n sais pas si c'est exact.;contextual;3
-102_swap;Entretien 01 24.10.03 01_traitement_A;Ne sais je pas si c ' clair est.;swap;3
-102_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si c'est clair.;translation;3
-103;Entretien 01 24.10.03 01_traitement_A;Et du coup, petit à petit, on a notre base.;original;1
-103_contextual;Entretien 01 24.10.03 01_traitement_A;Et du renfort, quelques petit peu, on a notre base.;contextual;1
-103_swap;Entretien 01 24.10.03 01_traitement_A;Et coup du petit, petit à, a on notre base.;swap;1
-103_translation;Entretien 01 24.10.03 01_traitement_A;Et puis, petit à petit, nous avons notre base.;translation;1
+102;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si c'est clair.;original;10
+102_contextual;Entretien 01 24.10.03 01_traitement_A;J n sais pas si c'est exact.;contextual;10
+102_swap;Entretien 01 24.10.03 01_traitement_A;Ne sais je pas si c ' clair est.;swap;10
+102_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si c'est clair.;translation;10
+103;Entretien 01 24.10.03 01_traitement_A;Et du coup, petit à petit, on a notre base.;original;3
+103_contextual;Entretien 01 24.10.03 01_traitement_A;Et du renfort, quelques petit peu, on a notre base.;contextual;3
+103_swap;Entretien 01 24.10.03 01_traitement_A;Et coup du petit, petit à, a on notre base.;swap;3
+103_translation;Entretien 01 24.10.03 01_traitement_A;Et puis, petit à petit, nous avons notre base.;translation;3
 104;Entretien 01 24.10.03 01_traitement_A;On bâtit une base qui est d'équerre et qui est régulière.;original;0
 104_contextual;Entretien 01 24.10.03 01_traitement_A;On bâtit leur base elle est d' unequer angulaire donc qui soit régulière.;contextual;0
 104_swap;Entretien 01 24.10.03 01_traitement_A;On une bâtit base qui d est ' qui équerre et régulière est.;swap;0
@@ -33,10 +33,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 107_contextual;Entretien 01 24.10.03 01_traitement_A;Il'est très intéressant.;contextual;0
 107_swap;Entretien 01 24.10.03 01_traitement_A;' c est précis très.;swap;0
 107_translation;Entretien 01 24.10.03 01_traitement_A;C'est très précis.;translation;0
-108;Entretien 01 24.10.03 01_traitement_A;On vient, on fait d'équerre et puis si tout est parfait, on commence à souder.;original;1
-108_contextual;Entretien 01 24.10.03 01_traitement_A;On essaye, on trouve une' excellentquerre et surtout si tout devient parfait, on commence à soudeonner.;contextual;1
-108_swap;Entretien 01 24.10.03 01_traitement_A;Vient on, fait on d équerre ' et puis si tout parfait est on, commence souder à.;swap;1
-108_translation;Entretien 01 24.10.03 01_traitement_A;On arrive, on commence à pivoter, et quand tout sera parfait, on commencera à souder.;translation;1
+108;Entretien 01 24.10.03 01_traitement_A;On vient, on fait d'équerre et puis si tout est parfait, on commence à souder.;original;3
+108_contextual;Entretien 01 24.10.03 01_traitement_A;On essaye, on trouve une' excellentquerre et surtout si tout devient parfait, on commence à soudeonner.;contextual;3
+108_swap;Entretien 01 24.10.03 01_traitement_A;Vient on, fait on d équerre ' et puis si tout parfait est on, commence souder à.;swap;3
+108_translation;Entretien 01 24.10.03 01_traitement_A;On arrive, on commence à pivoter, et quand tout sera parfait, on commencera à souder.;translation;3
 109;Entretien 01 24.10.03 01_traitement_A;Du coup, le verre avec le coupe-verre et la pige.;original;0
 109_contextual;Entretien 01 24.10.03 01_traitement_A;Un coup, le verre avec ouverture coupe-verre devient la coupe l.;contextual;0
 109_swap;Entretien 01 24.10.03 01_traitement_A;Du coup, le avec coupe verre le - verre la et. pige;swap;0
@@ -61,10 +61,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 113_contextual;Entretien 01 24.10.03 01_traitement_A;Et ensuite, pour tout mise avant plomb, on range votre couteau à plat.;contextual;0
 113_swap;Entretien 01 24.10.03 01_traitement_A;Et ensuite pour, en la mise plomb, prend on couteau un à plomb.;swap;0
 113_translation;Entretien 01 24.10.03 01_traitement_A;Et on prendra un couteau à plomb.;translation;0
-114;Entretien 01 24.10.03 01_traitement_A;C'est une espèce de serpette assez longue comme ça.;original;2
-114_contextual;Entretien 01 24.10.03 01_traitement_A;Qu' été une espèce de se démarquerette intégrée facilement comme ça.;contextual;2
-114_swap;Entretien 01 24.10.03 01_traitement_A;C est ' une de espèce serpette assez longue. comme ça;swap;2
-114_translation;Entretien 01 24.10.03 01_traitement_A;C'est un chapeau assez long.;translation;2
+114;Entretien 01 24.10.03 01_traitement_A;C'est une espèce de serpette assez longue comme ça.;original;6
+114_contextual;Entretien 01 24.10.03 01_traitement_A;Qu' été une espèce de se démarquerette intégrée facilement comme ça.;contextual;6
+114_swap;Entretien 01 24.10.03 01_traitement_A;C est ' une de espèce serpette assez longue. comme ça;swap;6
+114_translation;Entretien 01 24.10.03 01_traitement_A;C'est un chapeau assez long.;translation;6
 115;Entretien 01 24.10.03 01_traitement_A;C'est un joli outil.;original;0
 115_contextual;Entretien 01 24.10.03 01_traitement_A;' Un très joli outil.;contextual;0
 115_swap;Entretien 01 24.10.03 01_traitement_A;' c joli est un outil.;swap;0
@@ -97,10 +97,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 121_contextual;Entretien 01 24.10.03 01_traitement_A;Ça ne vous casse pas la journée.;contextual;0
 121_swap;Entretien 01 24.10.03 01_traitement_A;On ne se casse la pas tête.;swap;0
 121_translation;Entretien 01 24.10.03 01_traitement_A;On ne va pas se casser la tête.;translation;0
-122;Entretien 01 24.10.03 01_traitement_A;Il y a des mots un peu techniques, mais ça, c'est couteau à plomb, ouvre-plomb, rabat-plomb.;original;2
-122_contextual;Entretien 01 24.10.03 01_traitement_A;Il ya pas deux mots un poil techniques, mais ça, on'est serrure à plomb, ouvre-pl inox, le-pl etc.;contextual;2
-122_swap;Entretien 01 24.10.03 01_traitement_A;Y il des a mots un peu, techniques ça, mais est c ' couteau à plomb, - ouvre plomb, - rabat plomb.;swap;2
-122_translation;Entretien 01 24.10.03 01_traitement_A;Il y a des mots techniques, mais c'est un couteau à plomb, un rabat, un rabat.;translation;2
+122;Entretien 01 24.10.03 01_traitement_A;Il y a des mots un peu techniques, mais ça, c'est couteau à plomb, ouvre-plomb, rabat-plomb.;original;6
+122_contextual;Entretien 01 24.10.03 01_traitement_A;Il ya pas deux mots un poil techniques, mais ça, on'est serrure à plomb, ouvre-pl inox, le-pl etc.;contextual;6
+122_swap;Entretien 01 24.10.03 01_traitement_A;Y il des a mots un peu, techniques ça, mais est c ' couteau à plomb, - ouvre plomb, - rabat plomb.;swap;6
+122_translation;Entretien 01 24.10.03 01_traitement_A;Il y a des mots techniques, mais c'est un couteau à plomb, un rabat, un rabat.;translation;6
 123;Entretien 01 24.10.03 01_traitement_A;Et du coup, on rabat tous les plombs.;original;0
 123_contextual;Entretien 01 24.10.03 01_traitement_A;Mais du coup, çà recommence tous les 1s.;contextual;0
 123_swap;Entretien 01 24.10.03 01_traitement_A;Du et coup on, rabat les tous plombs.;swap;0
@@ -113,18 +113,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 125_contextual;Entretien 01 24.10.03 01_traitement_A;C' a une technique utilisée permettrait à l étatétain d'ad diérer.;contextual;0
 125_swap;Entretien 01 24.10.03 01_traitement_A;' c est une graisse à qui permet l étain ’ ' d adhérer.;swap;0
 125_translation;Entretien 01 24.10.03 01_traitement_A;C'est une graisse qui relie l'étain.;translation;0
-126;Entretien 01 24.10.03 01_traitement_A;Et on prend une baguette d’étain avec le fer à souder et on vient faire une petite boule comme ça.;original;2
-126_contextual;Entretien 01 24.10.03 01_traitement_A;bonjour cela prend une baguette d éétain avec le fer à souder et nos fait tenter une petite coulée comme ceci.;contextual;2
-126_swap;Entretien 01 24.10.03 01_traitement_A;Et on prend baguette une ’ d avec étain le fer à souder et on vient une faire petite comme boule ça.;swap;2
-126_translation;Entretien 01 24.10.03 01_traitement_A;Et on prend un bâton d'étain avec le fer à souder et on fait une petite balle.;translation;2
+126;Entretien 01 24.10.03 01_traitement_A;Et on prend une baguette d’étain avec le fer à souder et on vient faire une petite boule comme ça.;original;6
+126_contextual;Entretien 01 24.10.03 01_traitement_A;bonjour cela prend une baguette d éétain avec le fer à souder et nos fait tenter une petite coulée comme ceci.;contextual;6
+126_swap;Entretien 01 24.10.03 01_traitement_A;Et on prend baguette une ’ d avec étain le fer à souder et on vient une faire petite comme boule ça.;swap;6
+126_translation;Entretien 01 24.10.03 01_traitement_A;Et on prend un bâton d'étain avec le fer à souder et on fait une petite balle.;translation;6
 127;Entretien 01 24.10.03 01_traitement_A;Oui, ça fait une petite soudure.;original;0
 127_contextual;Entretien 01 24.10.03 01_traitement_A;Oui, ça devient moins grosse soudure.;contextual;0
 127_swap;Entretien 01 24.10.03 01_traitement_A;Oui, ça une fait soudure. petite;swap;0
 127_translation;Entretien 01 24.10.03 01_traitement_A;Oui, c'est une petite soudure.;translation;0
-128;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s'il y a un exemple de vue.;original;3
-128_contextual;Entretien 01 24.10.03 01_traitement_A;Je ne sais plus s' il ya avait un exemple de photos.;contextual;3
-128_swap;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s ' il a y exemple un de. vue;swap;3
-128_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s'il y a un exemple.;translation;3
+128;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s'il y a un exemple de vue.;original;10
+128_contextual;Entretien 01 24.10.03 01_traitement_A;Je ne sais plus s' il ya avait un exemple de photos.;contextual;10
+128_swap;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s ' il a y exemple un de. vue;swap;10
+128_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas s'il y a un exemple.;translation;10
 129;Entretien 01 24.10.03 01_traitement_A;Non, bon, ce n'est pas grave.;original;0
 129_contextual;Entretien 01 24.10.03 01_traitement_A;Non, bon, sinon p' serait pas vrai.;contextual;0
 129_swap;Entretien 01 24.10.03 01_traitement_A;Non, , bon ce ' n grave est pas.;swap;0
@@ -133,14 +133,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 12_swap;Entretien 01 24.10.03 01_traitement_A;' c 7h ou était 7h30.;swap;0
 12_translation;Entretien 01 24.10.03 01_traitement_A;Il était 7 h 30 ou 7 h 30.;translation;0
 13;Entretien 01 24.10.03 01_traitement_A;7h, c'était plutôt pour aller en chantier directement pour partir sur le terrain, déposer les vitraux, reposer les vitraux.;original;0
-130;Entretien 01 24.10.03 01_traitement_A;Réutilise le même outil ?;original;1
-130_contextual;Entretien 01 24.10.03 01_traitement_A;Quelutilise le même serveur ?;contextual;1
-130_swap;Entretien 01 24.10.03 01_traitement_A;Réutilise même outil le?;swap;1
-130_translation;Entretien 01 24.10.03 01_traitement_A;Réutiliser le même outil ?;translation;1
-131;Entretien 01 24.10.03 01_traitement_A;Alors...;original;1
-131_contextual;Entretien 01 24.10.03 01_traitement_A;Page...;contextual;1
-131_swap;Entretien 01 24.10.03 01_traitement_A;. alors..;swap;1
-131_translation;Entretien 01 24.10.03 01_traitement_A;Alors...;translation;1
+130;Entretien 01 24.10.03 01_traitement_A;Réutilise le même outil ?;original;3
+130_contextual;Entretien 01 24.10.03 01_traitement_A;Quelutilise le même serveur ?;contextual;3
+130_swap;Entretien 01 24.10.03 01_traitement_A;Réutilise même outil le?;swap;3
+130_translation;Entretien 01 24.10.03 01_traitement_A;Réutiliser le même outil ?;translation;3
+131;Entretien 01 24.10.03 01_traitement_A;Alors...;original;3
+131_contextual;Entretien 01 24.10.03 01_traitement_A;Page...;contextual;3
+131_swap;Entretien 01 24.10.03 01_traitement_A;. alors..;swap;3
+131_translation;Entretien 01 24.10.03 01_traitement_A;Alors...;translation;3
 132;Entretien 01 24.10.03 01_traitement_A;Des fois, j'utilise mon coupe-verre pour ouvrir mes plombs.;original;0
 132_contextual;Entretien 01 24.10.03 01_traitement_A;Quelque fois, j' utilise en presse-verre sur ouvrir mes plombières.;contextual;0
 132_swap;Entretien 01 24.10.03 01_traitement_A;Des, fois j ' utilise coupe mon - pour verre plombs ouvrir mes.;swap;0
@@ -149,22 +149,22 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 133_contextual;Entretien 01 24.10.03 01_traitement_A;Mais bon, malheureusement y' Y a pas mal de monde en le font.;contextual;0
 133_swap;Entretien 01 24.10.03 01_traitement_A;Mais bon, il n ' y pas a beaucoup monde de qui font le.;swap;0
 133_translation;Entretien 01 24.10.03 01_traitement_A;Mais il n'y en a pas beaucoup qui le font.;translation;0
-134;Entretien 01 24.10.03 01_traitement_A;Qu'est-ce que je fais d'autre avec le même outil?;original;1
-134_contextual;Entretien 01 24.10.03 01_traitement_A;Qu' voit-ce que je fais d'autre prendre une nouvelle iPhone?;contextual;1
-134_swap;Entretien 01 24.10.03 01_traitement_A;' qu - ce est que fais je d ' avec autre le même outil?;swap;1
-134_translation;Entretien 01 24.10.03 01_traitement_A;Qu'est-ce que je fais avec le même outil ?;translation;1
-135;Entretien 01 24.10.03 01_traitement_A;Euh...;original;3
-135_contextual;Entretien 01 24.10.03 01_traitement_A;22...;contextual;3
-135_swap;Entretien 01 24.10.03 01_traitement_A;. euh..;swap;3
-135_translation;Entretien 01 24.10.03 01_traitement_A;Euh...;translation;3
+134;Entretien 01 24.10.03 01_traitement_A;Qu'est-ce que je fais d'autre avec le même outil?;original;3
+134_contextual;Entretien 01 24.10.03 01_traitement_A;Qu' voit-ce que je fais d'autre prendre une nouvelle iPhone?;contextual;3
+134_swap;Entretien 01 24.10.03 01_traitement_A;' qu - ce est que fais je d ' avec autre le même outil?;swap;3
+134_translation;Entretien 01 24.10.03 01_traitement_A;Qu'est-ce que je fais avec le même outil ?;translation;3
+135;Entretien 01 24.10.03 01_traitement_A;Euh...;original;10
+135_contextual;Entretien 01 24.10.03 01_traitement_A;22...;contextual;10
+135_swap;Entretien 01 24.10.03 01_traitement_A;. euh..;swap;10
+135_translation;Entretien 01 24.10.03 01_traitement_A;Euh...;translation;10
 136;Entretien 01 24.10.03 01_traitement_A;Par exemple, on réutilise les outils pour la restauration.;original;0
 136_contextual;Entretien 01 24.10.03 01_traitement_A;Par exemple, Deco ré recherche des outils pour votre restauration.;contextual;0
 136_swap;Entretien 01 24.10.03 01_traitement_A;Par exemple réutilise, on outils les pour la. restauration;swap;0
 136_translation;Entretien 01 24.10.03 01_traitement_A;Par exemple, nous réutiliserons les outils pour la récupération.;translation;0
-137;Entretien 01 24.10.03 01_traitement_A;On vient...;original;1
-137_contextual;Entretien 01 24.10.03 01_traitement_A;On vient le;contextual;1
-137_swap;Entretien 01 24.10.03 01_traitement_A;Vient. on..;swap;1
-137_translation;Entretien 01 24.10.03 01_traitement_A;On arrive...;translation;1
+137;Entretien 01 24.10.03 01_traitement_A;On vient...;original;3
+137_contextual;Entretien 01 24.10.03 01_traitement_A;On vient le;contextual;3
+137_swap;Entretien 01 24.10.03 01_traitement_A;Vient. on..;swap;3
+137_translation;Entretien 01 24.10.03 01_traitement_A;On arrive...;translation;3
 138;Entretien 01 24.10.03 01_traitement_A;Le vitrail déjà fait a déjà été coupé, déjà monté.;original;0
 138_contextual;Entretien 01 24.10.03 01_traitement_A;Tout vitrail préalablement assemblé a déjà était coupé, déjà assemblé.;contextual;0
 138_swap;Entretien 01 24.10.03 01_traitement_A;Le déjà vitrail fait a coupé déjà été, monté déjà.;swap;0
@@ -189,22 +189,22 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 142_contextual;Entretien 01 24.10.03 01_traitement_A;Du changement, on devraitutilise après comme il y a a problème qui se casse quelque part.;contextual;0
 142_swap;Entretien 01 24.10.03 01_traitement_A;Du, coup réutilise on après il quand y a un problème ou une quelque casse part.;swap;0
 142_translation;Entretien 01 24.10.03 01_traitement_A;C'est pourquoi nous l'utilisons à nouveau s'il y a un problème ou une rupture.;translation;0
-143;Entretien 01 24.10.03 01_traitement_A;Sinon...;original;1
-143_contextual;Entretien 01 24.10.03 01_traitement_A;Comment...;contextual;1
-143_swap;Entretien 01 24.10.03 01_traitement_A;. sinon..;swap;1
-143_translation;Entretien 01 24.10.03 01_traitement_A;Sinon...;translation;1
+143;Entretien 01 24.10.03 01_traitement_A;Sinon...;original;3
+143_contextual;Entretien 01 24.10.03 01_traitement_A;Comment...;contextual;3
+143_swap;Entretien 01 24.10.03 01_traitement_A;. sinon..;swap;3
+143_translation;Entretien 01 24.10.03 01_traitement_A;Sinon...;translation;3
 144;Entretien 01 24.10.03 01_traitement_A;Sinon, non.;original;0
 144_contextual;Entretien 01 24.10.03 01_traitement_A;Encore, voila.;contextual;0
 144_swap;Entretien 01 24.10.03 01_traitement_A;, sinon. non;swap;0
 144_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, non.;translation;0
-145;Entretien 01 24.10.03 01_traitement_A;En fait, chaque outil...;original;1
-145_contextual;Entretien 01 24.10.03 01_traitement_A;En principe, chaque outil tourne;contextual;1
-145_swap;Entretien 01 24.10.03 01_traitement_A;Fait, en outil chaque. ..;swap;1
-145_translation;Entretien 01 24.10.03 01_traitement_A;En fait, tous les outils...;translation;1
-146;Entretien 01 24.10.03 01_traitement_A;Là, en tout cas, il n'y a rien qui me vient où je me dis que je réutilise mon couteau à plomb pour autre chose que couper du plomb.;original;1
-146_contextual;Entretien 01 24.10.03 01_traitement_A;Enfin, aucun tout cas, il n'y avait moyen qui me vient où je me dis que Benjamin peut garder mon couteau pour coudre avec autre chose que couper du plomb.;contextual;1
-146_swap;Entretien 01 24.10.03 01_traitement_A;Là, tout en cas, n il y ' rien a qui me vient je où me dis que je réutilise mon à couteau pour autre plomb chose que couper du plomb.;swap;1
-146_translation;Entretien 01 24.10.03 01_traitement_A;Quoi qu'il en soit, il ne m'est rien arrivé où j'imagine que je coupe mon couteau à plomb pour autre chose que le plomb.;translation;1
+145;Entretien 01 24.10.03 01_traitement_A;En fait, chaque outil...;original;3
+145_contextual;Entretien 01 24.10.03 01_traitement_A;En principe, chaque outil tourne;contextual;3
+145_swap;Entretien 01 24.10.03 01_traitement_A;Fait, en outil chaque. ..;swap;3
+145_translation;Entretien 01 24.10.03 01_traitement_A;En fait, tous les outils...;translation;3
+146;Entretien 01 24.10.03 01_traitement_A;Là, en tout cas, il n'y a rien qui me vient où je me dis que je réutilise mon couteau à plomb pour autre chose que couper du plomb.;original;3
+146_contextual;Entretien 01 24.10.03 01_traitement_A;Enfin, aucun tout cas, il n'y avait moyen qui me vient où je me dis que Benjamin peut garder mon couteau pour coudre avec autre chose que couper du plomb.;contextual;3
+146_swap;Entretien 01 24.10.03 01_traitement_A;Là, tout en cas, n il y ' rien a qui me vient je où me dis que je réutilise mon à couteau pour autre plomb chose que couper du plomb.;swap;3
+146_translation;Entretien 01 24.10.03 01_traitement_A;Quoi qu'il en soit, il ne m'est rien arrivé où j'imagine que je coupe mon couteau à plomb pour autre chose que le plomb.;translation;3
 147;Entretien 01 24.10.03 01_traitement_A;Ah si.;original;0
 147_contextual;Entretien 01 24.10.03 01_traitement_A;si si.;contextual;0
 147_swap;Entretien 01 24.10.03 01_traitement_A;Si ah.;swap;0
@@ -293,18 +293,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 166_contextual;Entretien 01 24.10.03 01_traitement_A;Oui, quand ), parce que du coup, il y eu une procédure comme ça ou là rajoutes en après chaque montage.;contextual;0
 166_swap;Entretien 01 24.10.03 01_traitement_A;Oui, quand, même que parce du, coup il y une a comme ligne ça tu que en crées faisant ton. montage;swap;0
 166_translation;Entretien 01 24.10.03 01_traitement_A;Oui, mais quand même, parce qu'il y a une ligne que tu fais en faisant ton montage.;translation;0
-167;Entretien 01 24.10.03 01_traitement_A;Ça peut être une viterie ou ça peut être quelque chose avec des courbes.;original;1
-167_contextual;Entretien 01 24.10.03 01_traitement_A;Ça peut être très viterie où ça peut être quelque code comportant des fautes.;contextual;1
-167_swap;Entretien 01 24.10.03 01_traitement_A;Peut ça être une viterie ou ça peut être chose quelque des avec courbes.;swap;1
-167_translation;Entretien 01 24.10.03 01_traitement_A;C'est peut-être une vitesse, ou peut-être un peu avec des courbes.;translation;1
-168;Entretien 01 24.10.03 01_traitement_A;Et en fait, je ne sais pas, tu vois un pied, selon les peintures, selon les vitraux, et puis tu te poses des questions, tu penses à ta vie.;original;3
-168_contextual;Entretien 01 24.10.03 01_traitement_A;Et en peinture, je me sais pas, donc choisis un tableau, selon les peintures, avec des saisons, et puis tu ta pose juste des questions, tu penses à ta vie.;contextual;3
-168_swap;Entretien 01 24.10.03 01_traitement_A;En et, fait je sais ne pas, tu un vois pied, les selon peintures, selon les vitraux, puis et tu poses te des questions, tu à penses ta vie.;swap;3
-168_translation;Entretien 01 24.10.03 01_traitement_A;Et en fait, je ne sais pas, tu regardes un pied, les peintures, les vitres, et puis tu poses des questions, tu penses à ta vie.;translation;3
-169;Entretien 01 24.10.03 01_traitement_A;Et il y a aussi un moment qui est très méditatif, mais ça, ce n'est pas pendant la mise en plomb, ni la coupe, ni la restauration.;original;1
-169_contextual;Entretien 01 24.10.03 01_traitement_A;Et qui est a aussi un moment qui est très méditnt, mais obligatoire, il n' intervient pas pendant la mise sur forme, avant la coupe, ni la construction.;contextual;1
-169_swap;Entretien 01 24.10.03 01_traitement_A;Y et il a un aussi moment qui est très méditatif, ça mais, n ' pas ce est pendant la mise plomb en, ni la coupe, ni la. restauration;swap;1
-169_translation;Entretien 01 24.10.03 01_traitement_A;Et il y a aussi un moment très méditatif, mais ce n'est pas pendant le plombage, ni lors de la coupe, ni lors de la restauration.;translation;1
+167;Entretien 01 24.10.03 01_traitement_A;Ça peut être une viterie ou ça peut être quelque chose avec des courbes.;original;3
+167_contextual;Entretien 01 24.10.03 01_traitement_A;Ça peut être très viterie où ça peut être quelque code comportant des fautes.;contextual;3
+167_swap;Entretien 01 24.10.03 01_traitement_A;Peut ça être une viterie ou ça peut être chose quelque des avec courbes.;swap;3
+167_translation;Entretien 01 24.10.03 01_traitement_A;C'est peut-être une vitesse, ou peut-être un peu avec des courbes.;translation;3
+168;Entretien 01 24.10.03 01_traitement_A;Et en fait, je ne sais pas, tu vois un pied, selon les peintures, selon les vitraux, et puis tu te poses des questions, tu penses à ta vie.;original;10
+168_contextual;Entretien 01 24.10.03 01_traitement_A;Et en peinture, je me sais pas, donc choisis un tableau, selon les peintures, avec des saisons, et puis tu ta pose juste des questions, tu penses à ta vie.;contextual;10
+168_swap;Entretien 01 24.10.03 01_traitement_A;En et, fait je sais ne pas, tu un vois pied, les selon peintures, selon les vitraux, puis et tu poses te des questions, tu à penses ta vie.;swap;10
+168_translation;Entretien 01 24.10.03 01_traitement_A;Et en fait, je ne sais pas, tu regardes un pied, les peintures, les vitres, et puis tu poses des questions, tu penses à ta vie.;translation;10
+169;Entretien 01 24.10.03 01_traitement_A;Et il y a aussi un moment qui est très méditatif, mais ça, ce n'est pas pendant la mise en plomb, ni la coupe, ni la restauration.;original;3
+169_contextual;Entretien 01 24.10.03 01_traitement_A;Et qui est a aussi un moment qui est très méditnt, mais obligatoire, il n' intervient pas pendant la mise sur forme, avant la coupe, ni la construction.;contextual;3
+169_swap;Entretien 01 24.10.03 01_traitement_A;Y et il a un aussi moment qui est très méditatif, ça mais, n ' pas ce est pendant la mise plomb en, ni la coupe, ni la. restauration;swap;3
+169_translation;Entretien 01 24.10.03 01_traitement_A;Et il y a aussi un moment très méditatif, mais ce n'est pas pendant le plombage, ni lors de la coupe, ni lors de la restauration.;translation;3
 16_contextual;Entretien 01 24.10.03 01_traitement_A;Moi, d' dépasse chaque coup les deux aspects parce que j'  performante depuis les affaires.;contextual;0
 16_swap;Entretien 01 24.10.03 01_traitement_A;Moi j, avais ' coup du les aspects deux que parce j ' étais performante les dans deux.;swap;0
 16_translation;Entretien 01 24.10.03 01_traitement_A;J'avais les deux parce que j'étais bon dans les deux.;translation;0
@@ -353,10 +353,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 17_swap;Entretien 01 24.10.03 01_traitement_A;Sinon, quand c ' en était atelier ce, je faisais que, c est ' on arrive, on se change, on enlève vêtements de les ville, on va dans le vestiaire sale où met on les vêtements de chaussures travail, de sécurité, tout l ' accoutrement.;swap;0
 17_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, si c'était à l'atelier, ce que j'ai fait, ça arrive, on se change, on enlève les vêtements de la ville, on va dans les vestiaires sales où on met les vêtements de travail, les chaussures de sécurité, tout le costume.;translation;0
 18;Entretien 01 24.10.03 01_traitement_A;On descend, on va dans l'atelier.;original;0
-180;Entretien 01 24.10.03 01_traitement_A;C'est comme si tu touilles dans un saladier pour faire une pâte à crêpes.;original;2
-180_contextual;Entretien 01 24.10.03 01_traitement_A;A' expérience comme si tu touilles bien un machin comme avoir une pâte à crêpes.;contextual;2
-180_swap;Entretien 01 24.10.03 01_traitement_A;' est c comme si tu dans touilles un saladier pour faire une pâte crêpes à.;swap;2
-180_translation;Entretien 01 24.10.03 01_traitement_A;C'est comme faire une crêpe dans une salade.;translation;2
+180;Entretien 01 24.10.03 01_traitement_A;C'est comme si tu touilles dans un saladier pour faire une pâte à crêpes.;original;6
+180_contextual;Entretien 01 24.10.03 01_traitement_A;A' expérience comme si tu touilles bien un machin comme avoir une pâte à crêpes.;contextual;6
+180_swap;Entretien 01 24.10.03 01_traitement_A;' est c comme si tu dans touilles un saladier pour faire une pâte crêpes à.;swap;6
+180_translation;Entretien 01 24.10.03 01_traitement_A;C'est comme faire une crêpe dans une salade.;translation;6
 181;Entretien 01 24.10.03 01_traitement_A;On ne réfléchit pas trop à ce moment-là.;original;0
 181_contextual;Entretien 01 24.10.03 01_traitement_A;On ... réfléchit plus beaucoup à ce voyage-là.;contextual;0
 181_swap;Entretien 01 24.10.03 01_traitement_A;On ne réfléchit trop pas à moment ce - là.;swap;0
@@ -389,10 +389,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 188_contextual;Entretien 01 24.10.03 01_traitement_A;Télécharger.;contextual;0
 188_swap;Entretien 01 24.10.03 01_traitement_A;. ok;swap;0
 188_translation;Entretien 01 24.10.03 01_traitement_A;D'accord.;translation;0
-189;Entretien 01 24.10.03 01_traitement_A;Mais des fois …;original;1
-189_contextual;Entretien 01 24.10.03 01_traitement_A;... des ... ...;contextual;1
-189_swap;Entretien 01 24.10.03 01_traitement_A;Fois mais des …;swap;1
-189_translation;Entretien 01 24.10.03 01_traitement_A;Mais parfois...;translation;1
+189;Entretien 01 24.10.03 01_traitement_A;Mais des fois …;original;3
+189_contextual;Entretien 01 24.10.03 01_traitement_A;... des ... ...;contextual;3
+189_swap;Entretien 01 24.10.03 01_traitement_A;Fois mais des …;swap;3
+189_translation;Entretien 01 24.10.03 01_traitement_A;Mais parfois...;translation;3
 18_contextual;Entretien 01 24.10.03 01_traitement_A;On regarde, puis va dans l' arbre.;contextual;0
 18_swap;Entretien 01 24.10.03 01_traitement_A;On, descend on l va dans ' atelier.;swap;0
 18_translation;Entretien 01 24.10.03 01_traitement_A;On descend et on va au garage.;translation;0
@@ -401,18 +401,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 190_contextual;Entretien 01 24.10.03 01_traitement_A;Néanmoins, j'essaie encore nullement devoir trop le torturer.;contextual;0
 190_swap;Entretien 01 24.10.03 01_traitement_A;Moi, j ' ne essaie de pas trop le torturer.;swap;0
 190_translation;Entretien 01 24.10.03 01_traitement_A;J'essaie de ne pas le torturer trop.;translation;0
-191;Entretien 01 24.10.03 01_traitement_A;Parce que quand je vois des fois des plombs, des gens qui apprennent ou des apprentis qui ne font pas ça souvent et du coup, ils sont tout débutants là-dedans, le pauvre plomb torturé, il a été maltraité.;original;1
-191_contextual;Entretien 01 24.10.03 01_traitement_A;Alors que quand je vois des fois des plomb jeunes, des des bons apprennent ou des apprentis mecs ne font pas ça souvent et du autres, ou sont tout débutants là-dedans, le pauvre plomb de, une peu été maltraité.;contextual;1
-191_swap;Entretien 01 24.10.03 01_traitement_A;Parce que je quand vois fois des des plombs, des qui gens apprennent ou des apprentis ne qui pas font souvent ça du et coup, ils sont tout débutants là - dedans le, pauvre plomb torturé il, a maltraité été.;swap;1
-191_translation;Entretien 01 24.10.03 01_traitement_A;Parce que quand je vois parfois des gens qui blanchissent, qui apprennent, ou des apprentis qui ne le font pas souvent, ils sont tout à fait nouveaux là-dedans, le pauvre plomb torturé, il a été maltraité.;translation;1
-192;Entretien 01 24.10.03 01_traitement_A;C'est rigolo parce que ça me fait penser à un moment où, quand j'étais dans mon entreprise à Bruxelles, ou quand on reprenait des vieux vitraux pour les restaurer, ma maître d'apprentissage elle me disait, il est bien malade celui-là, il faut bien le guérir.;original;1
-192_contextual;Entretien 01 24.10.03 01_traitement_A;C'est rigolo maintenant que ça m fait pensait à un moment inoubliable, où j' étaient dans mon entreprise pendant Bruxelles, ou quand on reprenait 3 vieux vitraux pour les restaurer, ma maître d'apprentissage je me disait, il est bien malade mais-là, il faut bien le guérir.;contextual;1
-192_swap;Entretien 01 24.10.03 01_traitement_A;C ' est parce rigolo que ça me penser fait à un moment où, j quand ' étais entreprise dans mon Bruxelles à, ou quand reprenait on des vieux pour vitraux les restaurer, ma d maître ' apprentissage elle me disait, il est bien malade celui - là, il bien faut le guérir.;swap;1
-192_translation;Entretien 01 24.10.03 01_traitement_A;C'est drôle parce que ça me rappelle un moment où j'étais dans mon entreprise à Bruxelles, ou quand on a retiré de vieilles fenêtres de verre pour les restaurer, ma maîtresse m'a dit qu'il était très malade, qu'il devait être guéri.;translation;1
-193;Entretien 01 24.10.03 01_traitement_A;Mais comme si c'était un peu une personne et du coup, on en prenait soin vraiment comme quelqu'un de malade.;original;2
-193_contextual;Entretien 01 24.10.03 01_traitement_A;Dire comme ca c' étais un peu ma personne et du coup, se en prenait parfois vraiment comme quelqu' agir de bon.;contextual;2
-193_swap;Entretien 01 24.10.03 01_traitement_A;Comme mais si c ' un était peu une personne et du coup en, prenait soin on vraiment comme quelqu ' de malade un.;swap;2
-193_translation;Entretien 01 24.10.03 01_traitement_A;Mais comme si c'était un peu une personne, et puis on s'est vraiment occupé d'elle comme d'un malade.;translation;2
+191;Entretien 01 24.10.03 01_traitement_A;Parce que quand je vois des fois des plombs, des gens qui apprennent ou des apprentis qui ne font pas ça souvent et du coup, ils sont tout débutants là-dedans, le pauvre plomb torturé, il a été maltraité.;original;3
+191_contextual;Entretien 01 24.10.03 01_traitement_A;Alors que quand je vois des fois des plomb jeunes, des des bons apprennent ou des apprentis mecs ne font pas ça souvent et du autres, ou sont tout débutants là-dedans, le pauvre plomb de, une peu été maltraité.;contextual;3
+191_swap;Entretien 01 24.10.03 01_traitement_A;Parce que je quand vois fois des des plombs, des qui gens apprennent ou des apprentis ne qui pas font souvent ça du et coup, ils sont tout débutants là - dedans le, pauvre plomb torturé il, a maltraité été.;swap;3
+191_translation;Entretien 01 24.10.03 01_traitement_A;Parce que quand je vois parfois des gens qui blanchissent, qui apprennent, ou des apprentis qui ne le font pas souvent, ils sont tout à fait nouveaux là-dedans, le pauvre plomb torturé, il a été maltraité.;translation;3
+192;Entretien 01 24.10.03 01_traitement_A;C'est rigolo parce que ça me fait penser à un moment où, quand j'étais dans mon entreprise à Bruxelles, ou quand on reprenait des vieux vitraux pour les restaurer, ma maître d'apprentissage elle me disait, il est bien malade celui-là, il faut bien le guérir.;original;3
+192_contextual;Entretien 01 24.10.03 01_traitement_A;C'est rigolo maintenant que ça m fait pensait à un moment inoubliable, où j' étaient dans mon entreprise pendant Bruxelles, ou quand on reprenait 3 vieux vitraux pour les restaurer, ma maître d'apprentissage je me disait, il est bien malade mais-là, il faut bien le guérir.;contextual;3
+192_swap;Entretien 01 24.10.03 01_traitement_A;C ' est parce rigolo que ça me penser fait à un moment où, j quand ' étais entreprise dans mon Bruxelles à, ou quand reprenait on des vieux pour vitraux les restaurer, ma d maître ' apprentissage elle me disait, il est bien malade celui - là, il bien faut le guérir.;swap;3
+192_translation;Entretien 01 24.10.03 01_traitement_A;C'est drôle parce que ça me rappelle un moment où j'étais dans mon entreprise à Bruxelles, ou quand on a retiré de vieilles fenêtres de verre pour les restaurer, ma maîtresse m'a dit qu'il était très malade, qu'il devait être guéri.;translation;3
+193;Entretien 01 24.10.03 01_traitement_A;Mais comme si c'était un peu une personne et du coup, on en prenait soin vraiment comme quelqu'un de malade.;original;6
+193_contextual;Entretien 01 24.10.03 01_traitement_A;Dire comme ca c' étais un peu ma personne et du coup, se en prenait parfois vraiment comme quelqu' agir de bon.;contextual;6
+193_swap;Entretien 01 24.10.03 01_traitement_A;Comme mais si c ' un était peu une personne et du coup en, prenait soin on vraiment comme quelqu ' de malade un.;swap;6
+193_translation;Entretien 01 24.10.03 01_traitement_A;Mais comme si c'était un peu une personne, et puis on s'est vraiment occupé d'elle comme d'un malade.;translation;6
 194;Entretien 01 24.10.03 01_traitement_A;C'est une parenthèse, ça me fait penser du coup à ça.;original;0
 194_contextual;Entretien 01 24.10.03 01_traitement_A;Ce'est une découverte, ça me fait penser premier coup chez Halloween.;contextual;0
 194_swap;Entretien 01 24.10.03 01_traitement_A;' c est une, parenthèse ça me fait penser du à coup ça.;swap;0
@@ -421,10 +421,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 195_contextual;Entretien 01 24.10.03 01_traitement_A;Alors sinon, ce plomb, quand je lui découpe pour faire 3 onglets, quand tu te dis, il devrait être peu souffrir.;contextual;0
 195_swap;Entretien 01 24.10.03 01_traitement_A;Sinon mais, le plomb je, quand découpe faire le pour les onglets, là je me dis, il doit un peu souffrir.;swap;0
 195_translation;Entretien 01 24.10.03 01_traitement_A;Mais si ce n'est pas le cas, je le coupe pour faire les onglets, alors je pense que ça doit faire un peu mal.;translation;0
-196;Entretien 01 24.10.03 01_traitement_A;Parce que du coup, je coupe ses ailes, c'est un peu ça, je coupe ses ailes et je le plie, je le tord, et du coup, c'est un peu trash, ça fait vraiment un angle.;original;1
-196_contextual;Entretien 01 24.10.03 01_traitement_A;Parce que c coup, me coupe ses ailes, ça'est a peu ça, je coupe ses ailes et tu le plie, je mon tord, et le coup, s'est un peu trash, ça fait vraiment son truc.;contextual;1
-196_swap;Entretien 01 24.10.03 01_traitement_A;Parce que du coup, je coupe ses ailes, c ' est peu un ça, je coupe et ses ailes je le plie, je le tord, du et coup c, ' peu est trash un, fait ça vraiment un. angle;swap;1
-196_translation;Entretien 01 24.10.03 01_traitement_A;Parce que je coupe ses ailes, c'est un peu, je coupe ses ailes, je le plie, je le retourne, et c'est un peu fou, c'est vraiment un angle.;translation;1
+196;Entretien 01 24.10.03 01_traitement_A;Parce que du coup, je coupe ses ailes, c'est un peu ça, je coupe ses ailes et je le plie, je le tord, et du coup, c'est un peu trash, ça fait vraiment un angle.;original;3
+196_contextual;Entretien 01 24.10.03 01_traitement_A;Parce que c coup, me coupe ses ailes, ça'est a peu ça, je coupe ses ailes et tu le plie, je mon tord, et le coup, s'est un peu trash, ça fait vraiment son truc.;contextual;3
+196_swap;Entretien 01 24.10.03 01_traitement_A;Parce que du coup, je coupe ses ailes, c ' est peu un ça, je coupe et ses ailes je le plie, je le tord, du et coup c, ' peu est trash un, fait ça vraiment un. angle;swap;3
+196_translation;Entretien 01 24.10.03 01_traitement_A;Parce que je coupe ses ailes, c'est un peu, je coupe ses ailes, je le plie, je le retourne, et c'est un peu fou, c'est vraiment un angle.;translation;3
 197;Entretien 01 24.10.03 01_traitement_A;C'est pas une courbe, c'est pas doux, c'est un angle.;original;0
 197_contextual;Entretien 01 24.10.03 01_traitement_A;et' quasiment pas une courbe, il' pas pas linéaire, c'est aucun angle.;contextual;0
 197_swap;Entretien 01 24.10.03 01_traitement_A;C ' pas est courbe une, c est ' pas doux, ' c est un angle.;swap;0
@@ -433,17 +433,17 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 198_contextual;Entretien 01 24.10.03 01_traitement_A;Dans ce moment- J, Gabriel me répète, Nathan va mal, j'essaie des le chasser doucement, lentement.;contextual;0
 198_swap;Entretien 01 24.10.03 01_traitement_A;Dans ce moment -, là je dis me, ça fait, mal j ' essaie de le faire gentiment, . lentement;swap;0
 198_translation;Entretien 01 24.10.03 01_traitement_A;À ce moment-là, je pense que ça fait mal, j'essaie d'être gentil, lent.;translation;0
-199;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je le tord pour faire des courbes et des lignes, on voit ça comme un peu un serpent qui se déplace et c'est doux à ce moment-là.;original;2
-199_contextual;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je per tord pour observer ces courbes avec mes lignes, on voit tout comme un peu comme serpent qui se déplace et c'est imperceptible après ce moment- précis.;contextual;2
-199_swap;Entretien 01 24.10.03 01_traitement_A;, sinon quand je le pour tord des faire et courbes des lignes, on voit ça comme un un peu qui serpent se déplace et c ' est doux à moment ce - là.;swap;2
-199_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je le tourne pour former des courbes et des lignes, on le voit comme un serpent qui bouge et il est mou à ce moment-là.;translation;2
+199;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je le tord pour faire des courbes et des lignes, on voit ça comme un peu un serpent qui se déplace et c'est doux à ce moment-là.;original;6
+199_contextual;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je per tord pour observer ces courbes avec mes lignes, on voit tout comme un peu comme serpent qui se déplace et c'est imperceptible après ce moment- précis.;contextual;6
+199_swap;Entretien 01 24.10.03 01_traitement_A;, sinon quand je le pour tord des faire et courbes des lignes, on voit ça comme un un peu qui serpent se déplace et c ' est doux à moment ce - là.;swap;6
+199_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, quand je le tourne pour former des courbes et des lignes, on le voit comme un serpent qui bouge et il est mou à ce moment-là.;translation;6
 19_contextual;Entretien 01 24.10.03 01_traitement_A;Et bien, on pouvait pas travailler sur nos panneau, sur notre tableau ensuite on traure les panneaux à la chaîne un peu.;contextual;0
 19_swap;Entretien 01 24.10.03 01_traitement_A;Et là on, à commence travailler sur notre table, sur notre établi où on restaure panneaux les à chaîne la un peu.;swap;0
 19_translation;Entretien 01 24.10.03 01_traitement_A;Et maintenant, on commence à travailler sur notre table, sur notre installation, où on restaure un peu les plaques sur la chaîne.;translation;0
-1_contextual;Entretien 01 24.10.03 01_traitement_A;Votre journée de travail en anglais ou votre journée de travail ici au TraIP Shop;contextual;2
-1_swap;Entretien 01 24.10.03 01_traitement_A;Journée une travail ou de en entreprise une journée de travail ici au BIP?;swap;2
-1_translation;Entretien 01 24.10.03 01_traitement_A;Un jour ouvrable dans l'exploitation ou un jour ouvrable dans le PIB?;translation;2
-2;Entretien 01 24.10.03 01_traitement_A;Dans l'entreprise ?;original;1
+1_contextual;Entretien 01 24.10.03 01_traitement_A;Votre journée de travail en anglais ou votre journée de travail ici au TraIP Shop;contextual;6
+1_swap;Entretien 01 24.10.03 01_traitement_A;Journée une travail ou de en entreprise une journée de travail ici au BIP?;swap;6
+1_translation;Entretien 01 24.10.03 01_traitement_A;Un jour ouvrable dans l'exploitation ou un jour ouvrable dans le PIB?;translation;6
+2;Entretien 01 24.10.03 01_traitement_A;Dans l'entreprise ?;original;3
 20;Entretien 01 24.10.03 01_traitement_A;Repiquage, dépiquage, ça veut dire enlever une pièce, remettre une pièce ancienne, nouvelle, remettre d'équerre, remettre aux mesures ou monter un panneau complètement qui a été coupé par d'autres.;original;0
 200;Entretien 01 24.10.03 01_traitement_A;J'ai l'impression qu'il apprécie le plomb.;original;0
 200_contextual;Entretien 01 24.10.03 01_traitement_A;J' même presque'impression qu'il recommence le bricolage.;contextual;0
@@ -453,18 +453,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 201_contextual;Entretien 01 24.10.03 01_traitement_A;Et aussi, et il répond ressemblait maintenant autre défi, j'avais pensé.;contextual;0
 201_swap;Entretien 01 24.10.03 01_traitement_A;Aussi et, quand a il y autre un moment j, ' avais pensé.;swap;0
 201_translation;Entretien 01 24.10.03 01_traitement_A;Et quand c'était il y a une autre époque, j'ai pensé.;translation;0
-202;Entretien 01 24.10.03 01_traitement_A;Du coup, les angles, les courbes, quand on le tire, parce qu'il y a des gens qui tirent le plomb pour le rendre bien droit, dans ces moments-là, c'est comme si je m'étirais le corps et comme si on m'étendait un peu comme un linge et qu'il souffrait un peu.;original;2
-202_contextual;Entretien 01 24.10.03 01_traitement_A;Le coup, les angles, les courbes, quand on le tire, parce qu'il tu a des gens qui tirent le plomb pour le rendre bien droit, dans celui moments-là, c'est comme si je pouvais'éti tout le corps et comme si on m'étendait un instant comme Monsieur linge parce qu' il souffrait si peu.;contextual;2
-202_swap;Entretien 01 24.10.03 01_traitement_A;Du, coup les angles, les courbes quand, on le tire, qu parce ' il y a des gens qui tirent le plomb pour le rendre bien droit, dans ces moments - là, c ' est comme si m je ' le étirais corps comme et si on ' m un étendait peu un comme et linge qu ' il souffrait un peu.;swap;2
-202_translation;Entretien 01 24.10.03 01_traitement_A;Donc, les angles, les courbes quand on les tire, parce qu'il y a des gens qui tirent le plomb pour le faire tout droit, à ces moments-là, c'est comme si j'avais le corps, et comme si on m'étendait comme un linge et qu'on souffrait un peu.;translation;2
+202;Entretien 01 24.10.03 01_traitement_A;Du coup, les angles, les courbes, quand on le tire, parce qu'il y a des gens qui tirent le plomb pour le rendre bien droit, dans ces moments-là, c'est comme si je m'étirais le corps et comme si on m'étendait un peu comme un linge et qu'il souffrait un peu.;original;6
+202_contextual;Entretien 01 24.10.03 01_traitement_A;Le coup, les angles, les courbes, quand on le tire, parce qu'il tu a des gens qui tirent le plomb pour le rendre bien droit, dans celui moments-là, c'est comme si je pouvais'éti tout le corps et comme si on m'étendait un instant comme Monsieur linge parce qu' il souffrait si peu.;contextual;6
+202_swap;Entretien 01 24.10.03 01_traitement_A;Du, coup les angles, les courbes quand, on le tire, qu parce ' il y a des gens qui tirent le plomb pour le rendre bien droit, dans ces moments - là, c ' est comme si m je ' le étirais corps comme et si on ' m un étendait peu un comme et linge qu ' il souffrait un peu.;swap;6
+202_translation;Entretien 01 24.10.03 01_traitement_A;Donc, les angles, les courbes quand on les tire, parce qu'il y a des gens qui tirent le plomb pour le faire tout droit, à ces moments-là, c'est comme si j'avais le corps, et comme si on m'étendait comme un linge et qu'on souffrait un peu.;translation;6
 203;Entretien 01 24.10.03 01_traitement_A;Mais des fois, c'est vrai que je me mets à la place du matériau, c'est vrai, l'air de rien.;original;0
 203_contextual;Entretien 01 24.10.03 01_traitement_A;Mais des fois, c'est vrai que je leur demandais in leur place du matériau, ce'est sympa, il'air plus faux.;contextual;0
 203_swap;Entretien 01 24.10.03 01_traitement_A;Mais fois des c, ' est vrai me que je mets à la place du, matériau c ' vrai est, ' l air de rien.;swap;0
 203_translation;Entretien 01 24.10.03 01_traitement_A;Mais parfois, il est vrai que je me place à la place du matériel, c'est vrai, l'air de rien.;translation;0
-204;Entretien 01 24.10.03 01_traitement_A;Et sinon, pour la coupe aussi, la coupe du verre, puisque les deux vont ensemble, il y a des moments où, quand on entend qu'il n'y a pas d'huile de coupe, ça crise comme ça.;original;3
-204_contextual;Entretien 01 24.10.03 01_traitement_A;Car sinon, pour sa coupe aussi, sans reprise du verre, puisque les deux vont ensembles, il y à des sujets où, quand on entend qu' i n'y a pas d'huile sans coupe, ça crise comme cela.;contextual;3
-204_swap;Entretien 01 24.10.03 01_traitement_A;Et sinon, pour la coupe aussi, la coupe du verre puisque, deux les vont ensemble, il a y des moments où, entend quand on ' qu il ' n a y pas d huile ' de coupe, ça crise ça comme.;swap;3
-204_translation;Entretien 01 24.10.03 01_traitement_A;Et si ce n'est pas le cas, même pour la coupe, la coupe de verre, puisque les deux vont ensemble, il y a des moments où quand on entend qu'il n'y a pas d'huile de coupe, ça commence comme ça.;translation;3
+204;Entretien 01 24.10.03 01_traitement_A;Et sinon, pour la coupe aussi, la coupe du verre, puisque les deux vont ensemble, il y a des moments où, quand on entend qu'il n'y a pas d'huile de coupe, ça crise comme ça.;original;10
+204_contextual;Entretien 01 24.10.03 01_traitement_A;Car sinon, pour sa coupe aussi, sans reprise du verre, puisque les deux vont ensembles, il y à des sujets où, quand on entend qu' i n'y a pas d'huile sans coupe, ça crise comme cela.;contextual;10
+204_swap;Entretien 01 24.10.03 01_traitement_A;Et sinon, pour la coupe aussi, la coupe du verre puisque, deux les vont ensemble, il a y des moments où, entend quand on ' qu il ' n a y pas d huile ' de coupe, ça crise ça comme.;swap;10
+204_translation;Entretien 01 24.10.03 01_traitement_A;Et si ce n'est pas le cas, même pour la coupe, la coupe de verre, puisque les deux vont ensemble, il y a des moments où quand on entend qu'il n'y a pas d'huile de coupe, ça commence comme ça.;translation;10
 205;Entretien 01 24.10.03 01_traitement_A;Ça crise, ce n'est pas agréable comme bruit.;original;0
 205_contextual;Entretien 01 24.10.03 01_traitement_A;La crise, ce sont' donc pas silencieux comme bruit.;contextual;0
 205_swap;Entretien 01 24.10.03 01_traitement_A;Crise ça, n ce est ' pas agréable bruit comme.;swap;0
@@ -473,10 +473,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 206_contextual;Entretien 01 24.10.03 01_traitement_A;Chacun sait que quand on fume, le verre éclate.;contextual;0
 206_swap;Entretien 01 24.10.03 01_traitement_A;On que dit quand on coupe, le verre. chante;swap;0
 206_translation;Entretien 01 24.10.03 01_traitement_A;On dit que quand on coupe, le verre chante.;translation;0
-207;Entretien 01 24.10.03 01_traitement_A;Et quand ça crise, là, ça fait un peu souffrir l'oreille.;original;1
-207_contextual;Entretien 01 24.10.03 01_traitement_A;Et effectivement ça passera, là, ça devrait chaque nouveau souffrir l'oreille.;contextual;1
-207_swap;Entretien 01 24.10.03 01_traitement_A;Quand et crise, ça là, ça un fait peu l souffrir ' oreille.;swap;1
-207_translation;Entretien 01 24.10.03 01_traitement_A;Et quand ça commence, ça fait un peu mal à l'oreille.;translation;1
+207;Entretien 01 24.10.03 01_traitement_A;Et quand ça crise, là, ça fait un peu souffrir l'oreille.;original;3
+207_contextual;Entretien 01 24.10.03 01_traitement_A;Et effectivement ça passera, là, ça devrait chaque nouveau souffrir l'oreille.;contextual;3
+207_swap;Entretien 01 24.10.03 01_traitement_A;Quand et crise, ça là, ça un fait peu l souffrir ' oreille.;swap;3
+207_translation;Entretien 01 24.10.03 01_traitement_A;Et quand ça commence, ça fait un peu mal à l'oreille.;translation;3
 208;Entretien 01 24.10.03 01_traitement_A;Tu te dis, ouh là, le pauvre verre.;original;0
 208_contextual;Entretien 01 24.10.03 01_traitement_A;Tu te dis, ou bonsoir monsieur, oh pauvre papy.;contextual;0
 208_swap;Entretien 01 24.10.03 01_traitement_A;Tu dis te ouh là, le, pauvre verre.;swap;0
@@ -493,10 +493,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 210_contextual;Entretien 01 24.10.03 01_traitement_A;Il veut grimper tout droit, il va être complètement droit.;contextual;0
 210_swap;Entretien 01 24.10.03 01_traitement_A;Il va être droit tout, il va être coupé bien.;swap;0
 210_translation;Entretien 01 24.10.03 01_traitement_A;Il sera tout droit, il sera bien coupé.;translation;0
-211;Entretien 01 24.10.03 01_traitement_A;C'est un peu ça.;original;1
-211_contextual;Entretien 01 24.10.03 01_traitement_A;C' du trop mélange ça.;contextual;1
-211_swap;Entretien 01 24.10.03 01_traitement_A;Est c ' peu un ça.;swap;1
-211_translation;Entretien 01 24.10.03 01_traitement_A;Oui, c'est ça.;translation;1
+211;Entretien 01 24.10.03 01_traitement_A;C'est un peu ça.;original;3
+211_contextual;Entretien 01 24.10.03 01_traitement_A;C' du trop mélange ça.;contextual;3
+211_swap;Entretien 01 24.10.03 01_traitement_A;Est c ' peu un ça.;swap;3
+211_translation;Entretien 01 24.10.03 01_traitement_A;Oui, c'est ça.;translation;3
 212;Entretien 01 24.10.03 01_traitement_A;Si tu as d'autres questions, n'hésite pas.;original;0
 212_contextual;Entretien 01 24.10.03 01_traitement_A;Et tu as d' nouvelles questions, on' manque jamais.;contextual;0
 212_swap;Entretien 01 24.10.03 01_traitement_A;Si tu d as autres ' questions, ' n hésite. pas;swap;0
@@ -557,22 +557,22 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 225_contextual;Entretien 01 24.10.03 02_traitement_A;Inter rémunéré pour services hors entretien;contextual;0
 225_swap;Entretien 01 24.10.03 02_traitement_A;Interruption de personnes hors entretien ;swap;0
 225_translation;Entretien 01 24.10.03 02_traitement_A;Interrompre les personnes sans pension alimentaire;translation;0
-226;Entretien 01 24.10.03 02_traitement_A;Est-ce que tu as des attentes un peu quant à cette question ?;original;1
-226_contextual;Entretien 01 24.10.03 02_traitement_A;Es-ce qu tu as mes attentes un peu quant pour cette question ;contextual;1
-226_swap;Entretien 01 24.10.03 02_traitement_A;- est tu ce que as attentes des un peu quant à question cette?;swap;1
-226_translation;Entretien 01 24.10.03 02_traitement_A;Avez - vous des attentes à ce sujet?;translation;1
+226;Entretien 01 24.10.03 02_traitement_A;Est-ce que tu as des attentes un peu quant à cette question ?;original;3
+226_contextual;Entretien 01 24.10.03 02_traitement_A;Es-ce qu tu as mes attentes un peu quant pour cette question ;contextual;3
+226_swap;Entretien 01 24.10.03 02_traitement_A;- est tu ce que as attentes des un peu quant à question cette?;swap;3
+226_translation;Entretien 01 24.10.03 02_traitement_A;Avez - vous des attentes à ce sujet?;translation;3
 227;Entretien 01 24.10.03 02_traitement_A;Ok.;original;0
 227_contextual;Entretien 01 24.10.03 02_traitement_A;...;contextual;0
 227_swap;Entretien 01 24.10.03 02_traitement_A;. ok;swap;0
 227_translation;Entretien 01 24.10.03 02_traitement_A;D'accord.;translation;0
-228;Entretien 01 24.10.03 02_traitement_A;Parce que...;original;1
-228_contextual;Entretien 01 24.10.03 02_traitement_A;Parce quelle...;contextual;1
-228_swap;Entretien 01 24.10.03 02_traitement_A;. parce que..;swap;1
-228_translation;Entretien 01 24.10.03 02_traitement_A;Parce que...;translation;1
-229;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance à divaguer, à partir dans des trucs qui...;original;1
-229_contextual;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance aux divaguer, voire rebondir sur deux trucs qui...;contextual;1
-229_swap;Entretien 01 24.10.03 02_traitement_A;Je peux à avoir tendance, divaguer dans à partir des trucs qui. ..;swap;1
-229_translation;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance à aller dans des choses qui...;translation;1
+228;Entretien 01 24.10.03 02_traitement_A;Parce que...;original;3
+228_contextual;Entretien 01 24.10.03 02_traitement_A;Parce quelle...;contextual;3
+228_swap;Entretien 01 24.10.03 02_traitement_A;. parce que..;swap;3
+228_translation;Entretien 01 24.10.03 02_traitement_A;Parce que...;translation;3
+229;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance à divaguer, à partir dans des trucs qui...;original;3
+229_contextual;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance aux divaguer, voire rebondir sur deux trucs qui...;contextual;3
+229_swap;Entretien 01 24.10.03 02_traitement_A;Je peux à avoir tendance, divaguer dans à partir des trucs qui. ..;swap;3
+229_translation;Entretien 01 24.10.03 02_traitement_A;Je peux avoir tendance à aller dans des choses qui...;translation;3
 22_contextual;Entretien 01 24.10.03 01_traitement_A;Cela'était très biencindé côté écriture, on les' retrouvait pas de tout.;contextual;0
 22_swap;Entretien 01 24.10.03 01_traitement_A;C ' était scindé comme très, travail n on ' avait de pas tout.;swap;0
 22_translation;Entretien 01 24.10.03 01_traitement_A;Il était très fragmenté comme travail, nous n'avions pas tout.;translation;0
@@ -589,18 +589,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 232_contextual;Entretien 01 24.10.03 02_traitement_A;oh, il y a quand mm une routine dans le quotidien car on va à l' épicerie, on nous'habille mais après se met chaque monde.;contextual;0
 232_swap;Entretien 01 24.10.03 02_traitement_A;Après, il y a même quand une dans routine sens le on où à l va ', atelier s on ' habille on se et met au boulot.;swap;0
 232_translation;Entretien 01 24.10.03 02_traitement_A;Alors il y a toujours une routine dans le sens où nous allons à l'atelier, nous habillons et allons au travail.;translation;0
-233;Entretien 01 24.10.03 02_traitement_A;Mais...;original;1
-233_contextual;Entretien 01 24.10.03 02_traitement_A;Mais si;contextual;1
-233_swap;Entretien 01 24.10.03 02_traitement_A;. mais..;swap;1
-233_translation;Entretien 01 24.10.03 02_traitement_A;Mais...;translation;1
-234;Entretien 01 24.10.03 02_traitement_A;Je ne saurais pas trop...;original;3
-234_contextual;Entretien 01 24.10.03 02_traitement_A;Je ne s laisse pas vous dire;contextual;3
-234_swap;Entretien 01 24.10.03 02_traitement_A;Je ne pas saurais trop. ..;swap;3
-234_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas...;translation;3
-235;Entretien 01 24.10.03 02_traitement_A;Ouais, il n'y a pas de...;original;2
-235_contextual;Entretien 01 24.10.03 02_traitement_A;Ouais, il pleure' on a pas de photo;contextual;2
-235_swap;Entretien 01 24.10.03 02_traitement_A;Ouais il, n ' a pas y. de..;swap;2
-235_translation;Entretien 01 24.10.03 02_traitement_A;Oui, il n'y a pas de...;translation;2
+233;Entretien 01 24.10.03 02_traitement_A;Mais...;original;3
+233_contextual;Entretien 01 24.10.03 02_traitement_A;Mais si;contextual;3
+233_swap;Entretien 01 24.10.03 02_traitement_A;. mais..;swap;3
+233_translation;Entretien 01 24.10.03 02_traitement_A;Mais...;translation;3
+234;Entretien 01 24.10.03 02_traitement_A;Je ne saurais pas trop...;original;10
+234_contextual;Entretien 01 24.10.03 02_traitement_A;Je ne s laisse pas vous dire;contextual;10
+234_swap;Entretien 01 24.10.03 02_traitement_A;Je ne pas saurais trop. ..;swap;10
+234_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas...;translation;10
+235;Entretien 01 24.10.03 02_traitement_A;Ouais, il n'y a pas de...;original;6
+235_contextual;Entretien 01 24.10.03 02_traitement_A;Ouais, il pleure' on a pas de photo;contextual;6
+235_swap;Entretien 01 24.10.03 02_traitement_A;Ouais il, n ' a pas y. de..;swap;6
+235_translation;Entretien 01 24.10.03 02_traitement_A;Oui, il n'y a pas de...;translation;6
 236;Entretien 01 24.10.03 02_traitement_A;Toutes les étapes.;original;0
 236_contextual;Entretien 01 24.10.03 02_traitement_A;Téléchargez les photos.;contextual;0
 236_swap;Entretien 01 24.10.03 02_traitement_A;Les étapes toutes.;swap;0
@@ -620,7 +620,7 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 23_contextual;Entretien 01 24.10.03 01_traitement_A;... enfin, qd on finissait, elles le mettait sur le comptoir et on en revenaiten encore un autre.;contextual;0
 23_swap;Entretien 01 24.10.03 01_traitement_A;Après et, quand on finissait, le mettait on sur le côté et on reprenait en. un autre;swap;0
 23_translation;Entretien 01 24.10.03 01_traitement_A;Et quand on a fini, on l'a mis sur le côté et on en a pris un autre.;translation;0
-24;Entretien 01 24.10.03 01_traitement_A;C'était comme ça un peu toute la journée où c'était à la chaîne.;original;1
+24;Entretien 01 24.10.03 01_traitement_A;C'était comme ça un peu toute la journée où c'était à la chaîne.;original;3
 240;Entretien 01 24.10.03 02_traitement_A;Ensuite, on va découper les calibres.;original;0
 240_contextual;Entretien 01 24.10.03 02_traitement_A;Ensuite, on pourra installer les piècess.;contextual;0
 240_swap;Entretien 01 24.10.03 02_traitement_A;, ensuite on va découper les calibres.;swap;0
@@ -653,17 +653,17 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 247_contextual;Entretien 01 24.10.03 02_traitement_A;Probablement, ça puisse être le sert rituel.;contextual;0
 247_swap;Entretien 01 24.10.03 02_traitement_A;Après va, ça être sertissage le.;swap;0
 247_translation;Entretien 01 24.10.03 02_traitement_A;Alors, ce sera le bisou.;translation;0
-248;Entretien 01 24.10.03 02_traitement_A;Il y a une journée type, peut-être, pour chaque étape.;original;1
-248_contextual;Entretien 01 24.10.03 02_traitement_A;Une y a une période type, après-être, après mon étape.;contextual;1
-248_swap;Entretien 01 24.10.03 02_traitement_A;Y il une a type journée, peut être -, chaque pour étape.;swap;1
-248_translation;Entretien 01 24.10.03 02_traitement_A;Il y a peut-être un jour typique pour chaque étape.;translation;1
+248;Entretien 01 24.10.03 02_traitement_A;Il y a une journée type, peut-être, pour chaque étape.;original;3
+248_contextual;Entretien 01 24.10.03 02_traitement_A;Une y a une période type, après-être, après mon étape.;contextual;3
+248_swap;Entretien 01 24.10.03 02_traitement_A;Y il une a type journée, peut être -, chaque pour étape.;swap;3
+248_translation;Entretien 01 24.10.03 02_traitement_A;Il y a peut-être un jour typique pour chaque étape.;translation;3
 249;Entretien 01 24.10.03 02_traitement_A;Et donc, chaque étape, chaque matière différente.;original;0
 249_contextual;Entretien 01 24.10.03 02_traitement_A;Et donc, première étape, chaque histoire :.;contextual;0
 249_swap;Entretien 01 24.10.03 02_traitement_A;Donc et, étape chaque, matière chaque différente.;swap;0
 249_translation;Entretien 01 24.10.03 02_traitement_A;Et ainsi, chaque étape, chaque autre thème.;translation;0
-24_contextual;Entretien 01 24.10.03 01_traitement_A;C' est tout ça un soir toute la journée où on'était à ma télévision.;contextual;1
-24_swap;Entretien 01 24.10.03 01_traitement_A;C ' était ça comme un toute peu la c journée où ' à était la. chaîne;swap;1
-24_translation;Entretien 01 24.10.03 01_traitement_A;C'était comme ça toute la journée dans la chaîne.;translation;1
+24_contextual;Entretien 01 24.10.03 01_traitement_A;C' est tout ça un soir toute la journée où on'était à ma télévision.;contextual;3
+24_swap;Entretien 01 24.10.03 01_traitement_A;C ' était ça comme un toute peu la c journée où ' à était la. chaîne;swap;3
+24_translation;Entretien 01 24.10.03 01_traitement_A;C'était comme ça toute la journée dans la chaîne.;translation;3
 25;Entretien 01 24.10.03 01_traitement_A;Et après, du coup, pause de 10 heures où on boit un petit café le matin.;original;0
 250;Entretien 01 24.10.03 02_traitement_A;Comme je disais, on commence avec du dessin.;original;0
 250_contextual;Entretien 01 24.10.03 02_traitement_A;Comme je disais, nous continue avec un dessin.;contextual;0
@@ -677,10 +677,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 252_contextual;Entretien 01 24.10.03 02_traitement_A;Ensuite, on va totalement découper et utiliser plusieurs calibres.;contextual;0
 252_swap;Entretien 01 24.10.03 02_traitement_A;Ensuite on, va le pour découper calibres faire les.;swap;0
 252_translation;Entretien 01 24.10.03 02_traitement_A;On va le couper pour faire le calibre.;translation;0
-253;Entretien 01 24.10.03 02_traitement_A;On a un matériau qui est assez...;original;2
-253_contextual;Entretien 01 24.10.03 02_traitement_A;elle a un matériau il est assez résistant;contextual;2
-253_swap;Entretien 01 24.10.03 02_traitement_A;On a un matériau qui est. assez..;swap;2
-253_translation;Entretien 01 24.10.03 02_traitement_A;On a assez de matériel pour...;translation;2
+253;Entretien 01 24.10.03 02_traitement_A;On a un matériau qui est assez...;original;6
+253_contextual;Entretien 01 24.10.03 02_traitement_A;elle a un matériau il est assez résistant;contextual;6
+253_swap;Entretien 01 24.10.03 02_traitement_A;On a un matériau qui est. assez..;swap;6
+253_translation;Entretien 01 24.10.03 02_traitement_A;On a assez de matériel pour...;translation;6
 254;Entretien 01 24.10.03 02_traitement_A;C'est du papier, donc c'est assez fragile.;original;0
 254_contextual;Entretien 01 24.10.03 02_traitement_A;Et' écris en papier, donc ce'est assez fragile.;contextual;0
 254_swap;Entretien 01 24.10.03 02_traitement_A;C est ' du, papier ' donc c est assez fragile.;swap;0
@@ -693,18 +693,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 256_contextual;Entretien 01 24.10.03 02_traitement_A;La semaine d' octobre, on passe par mon rangement.;contextual;0
 256_swap;Entretien 01 24.10.03 02_traitement_A;La semaine d ' après, passe on du à verre.;swap;0
 256_translation;Entretien 01 24.10.03 02_traitement_A;La semaine prochaine, on ira en verre.;translation;0
-257;Entretien 01 24.10.03 02_traitement_A;C'est un autre rapport qu'on a à la matière puisqu'il est plus froid, il est plus sensible.;original;1
-257_contextual;Entretien 01 24.10.03 02_traitement_A;C'est tout autre rapport qu'on trouve entre cette neige puisqu'il est plus froid, rigide et plus translucide.;contextual;1
-257_swap;Entretien 01 24.10.03 02_traitement_A;C est un ' rapport autre qu on ' a à la matière puisqu ' il plus froid est, plus il est sensible.;swap;1
-257_translation;Entretien 01 24.10.03 02_traitement_A;C'est un autre rapport que nous avons sur la matière, car il est plus froid, il est plus sensible.;translation;1
-258;Entretien 01 24.10.03 02_traitement_A;Il y a une manière de travailler le verre pour pouvoir le couper correctement, faire des coupes assez techniques.;original;1
-258_contextual;Entretien 01 24.10.03 02_traitement_A;Il y à une manière dont dessiner en filet pour faire le couper correctement, faire 3 coupes assez techniques.;contextual;1
-258_swap;Entretien 01 24.10.03 02_traitement_A;Il y une a manière de travailler le verre pour pouvoir le correctement couper, faire des assez coupes techniques.;swap;1
-258_translation;Entretien 01 24.10.03 02_traitement_A;Il y a une façon de travailler le verre pour le couper correctement, faire des coupes assez techniques.;translation;1
-259;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibres de masse et de tension dans la matière pour arriver à nos fins.;original;1
-259_contextual;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibre extrêmes de masse et de tension dans lesquels peine à arriver aux deux fins.;contextual;1
-259_swap;Entretien 01 24.10.03 02_traitement_A;Il y a équilibres ces masse et de tension de la dans matière arriver pour à nos fins.;swap;1
-259_translation;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibres de masse et de tension dans la matière pour atteindre nos objectifs.;translation;1
+257;Entretien 01 24.10.03 02_traitement_A;C'est un autre rapport qu'on a à la matière puisqu'il est plus froid, il est plus sensible.;original;3
+257_contextual;Entretien 01 24.10.03 02_traitement_A;C'est tout autre rapport qu'on trouve entre cette neige puisqu'il est plus froid, rigide et plus translucide.;contextual;3
+257_swap;Entretien 01 24.10.03 02_traitement_A;C est un ' rapport autre qu on ' a à la matière puisqu ' il plus froid est, plus il est sensible.;swap;3
+257_translation;Entretien 01 24.10.03 02_traitement_A;C'est un autre rapport que nous avons sur la matière, car il est plus froid, il est plus sensible.;translation;3
+258;Entretien 01 24.10.03 02_traitement_A;Il y a une manière de travailler le verre pour pouvoir le couper correctement, faire des coupes assez techniques.;original;3
+258_contextual;Entretien 01 24.10.03 02_traitement_A;Il y à une manière dont dessiner en filet pour faire le couper correctement, faire 3 coupes assez techniques.;contextual;3
+258_swap;Entretien 01 24.10.03 02_traitement_A;Il y une a manière de travailler le verre pour pouvoir le correctement couper, faire des assez coupes techniques.;swap;3
+258_translation;Entretien 01 24.10.03 02_traitement_A;Il y a une façon de travailler le verre pour le couper correctement, faire des coupes assez techniques.;translation;3
+259;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibres de masse et de tension dans la matière pour arriver à nos fins.;original;3
+259_contextual;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibre extrêmes de masse et de tension dans lesquels peine à arriver aux deux fins.;contextual;3
+259_swap;Entretien 01 24.10.03 02_traitement_A;Il y a équilibres ces masse et de tension de la dans matière arriver pour à nos fins.;swap;3
+259_translation;Entretien 01 24.10.03 02_traitement_A;Il y a ces équilibres de masse et de tension dans la matière pour atteindre nos objectifs.;translation;3
 25_contextual;Entretien 01 24.10.03 01_traitement_A;Et après, le coup, pause sieste 10 heures et Paul boit un petit café par soir.;contextual;0
 25_swap;Entretien 01 24.10.03 01_traitement_A;Et après, coup du de, pause 10 heures où on boit un café petit le matin.;swap;0
 25_translation;Entretien 01 24.10.03 01_traitement_A;Et puis, à 10 h, si on boit un petit café le matin.;translation;0
@@ -721,18 +721,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 262_contextual;Entretien 01 24.10.03 02_traitement_A;Monsieur y a tous les sens où seront actifs quand on chauffe notre coupe à verre.;contextual;0
 262_swap;Entretien 01 24.10.03 02_traitement_A;Y il a tous les qui sens actifs sont quand travaille on la coupe de verre.;swap;0
 262_translation;Entretien 01 24.10.03 02_traitement_A;Il y a tous les sens qui sont actifs quand on travaille la coupe de verre.;translation;0
-263;Entretien 01 24.10.03 02_traitement_A;Déjà au toucher, on a un ressenti du verre quand il vient se détacher.;original;1
-263_contextual;Entretien 01 24.10.03 02_traitement_A;Quand au contact, on aura un ressenti du verre qui il va se détacher.;contextual;1
-263_swap;Entretien 01 24.10.03 02_traitement_A;Déjà au toucher on, a un du ressenti verre quand il se vient détacher.;swap;1
-263_translation;Entretien 01 24.10.03 02_traitement_A;Quand on le touche, on se sent comme un verre quand il se dissout.;translation;1
-264;Entretien 01 24.10.03 02_traitement_A;A l'œil, on voit les choses qui se passent.;original;1
-264_contextual;Entretien 01 24.10.03 02_traitement_A;A notre'œil, on voit divers indications qui bien passent.;contextual;1
-264_swap;Entretien 01 24.10.03 02_traitement_A;A œil l ', les on voit choses qui se passent.;swap;1
-264_translation;Entretien 01 24.10.03 02_traitement_A;On voit les choses qui arrivent.;translation;1
-265;Entretien 01 24.10.03 02_traitement_A;A l'oreille, quand on détonne le verre pour faire filer une coupe, le son n'est plus le même quand c'est dense ou quand la coupe s'ouvre et ça ne devient plus clair.;original;1
-265_contextual;Entretien 01 24.10.03 02_traitement_A;A l'oreille, quand on rétonne notre signal pour faire filer une coupe, le son s'est plus le juste c le'est dense ou parce la coupe s' éclate et ça ne devient plus puissant.;contextual;1
-265_swap;Entretien 01 24.10.03 02_traitement_A;A ' l oreille, quand on détonne verre le faire une pour filer coupe, le son n ' est le plus même quand ' c est dense ou quand coupe la ' s ouvre et ça ne devient clair plus.;swap;1
-265_translation;Entretien 01 24.10.03 02_traitement_A;Dans l'oreille, quand vous surprenez le verre pour couper une tasse, le son n'est plus le même quand il est dense ou quand la tasse s'ouvre et il ne devient plus clair.;translation;1
+263;Entretien 01 24.10.03 02_traitement_A;Déjà au toucher, on a un ressenti du verre quand il vient se détacher.;original;3
+263_contextual;Entretien 01 24.10.03 02_traitement_A;Quand au contact, on aura un ressenti du verre qui il va se détacher.;contextual;3
+263_swap;Entretien 01 24.10.03 02_traitement_A;Déjà au toucher on, a un du ressenti verre quand il se vient détacher.;swap;3
+263_translation;Entretien 01 24.10.03 02_traitement_A;Quand on le touche, on se sent comme un verre quand il se dissout.;translation;3
+264;Entretien 01 24.10.03 02_traitement_A;A l'œil, on voit les choses qui se passent.;original;3
+264_contextual;Entretien 01 24.10.03 02_traitement_A;A notre'œil, on voit divers indications qui bien passent.;contextual;3
+264_swap;Entretien 01 24.10.03 02_traitement_A;A œil l ', les on voit choses qui se passent.;swap;3
+264_translation;Entretien 01 24.10.03 02_traitement_A;On voit les choses qui arrivent.;translation;3
+265;Entretien 01 24.10.03 02_traitement_A;A l'oreille, quand on détonne le verre pour faire filer une coupe, le son n'est plus le même quand c'est dense ou quand la coupe s'ouvre et ça ne devient plus clair.;original;3
+265_contextual;Entretien 01 24.10.03 02_traitement_A;A l'oreille, quand on rétonne notre signal pour faire filer une coupe, le son s'est plus le juste c le'est dense ou parce la coupe s' éclate et ça ne devient plus puissant.;contextual;3
+265_swap;Entretien 01 24.10.03 02_traitement_A;A ' l oreille, quand on détonne verre le faire une pour filer coupe, le son n ' est le plus même quand ' c est dense ou quand coupe la ' s ouvre et ça ne devient clair plus.;swap;3
+265_translation;Entretien 01 24.10.03 02_traitement_A;Dans l'oreille, quand vous surprenez le verre pour couper une tasse, le son n'est plus le même quand il est dense ou quand la tasse s'ouvre et il ne devient plus clair.;translation;3
 266;Entretien 01 24.10.03 02_traitement_A;C'est une étape assez intéressante parce que justement ce rapport à la matière, là on le conscientise vraiment.;original;0
 266_contextual;Entretien 01 24.10.03 02_traitement_A;I'est une réforme cruciale nécessaire parce que justement ce rapport à la culture, là on le goûtt vraiment.;contextual;0
 266_swap;Entretien 01 24.10.03 02_traitement_A;C ' est une étape intéressante assez parce que justement ce rapport à la, matière là on le vraiment conscientise.;swap;0
@@ -745,10 +745,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 268_contextual;Entretien 01 24.10.03 02_traitement_A;Il faudra choisir idéalement calme, prendre son téléphone, respirer.;contextual;0
 268_swap;Entretien 01 24.10.03 02_traitement_A;Faut il assez être, calme prendre temps son, respirer.;swap;0
 268_translation;Entretien 01 24.10.03 02_traitement_A;Il faut être assez calme, prendre du temps et respirer.;translation;0
-269;Entretien 01 24.10.03 02_traitement_A;Il y a une sorte de trance qui se met en place.;original;1
-269_contextual;Entretien 01 24.10.03 02_traitement_A;Il y presque deux semaine une trance narrative se met en place.;contextual;1
-269_swap;Entretien 01 24.10.03 02_traitement_A;Il a y sorte une de qui trance se en met place.;swap;1
-269_translation;Entretien 01 24.10.03 02_traitement_A;Il y a une sorte de danse qui se met en vie.;translation;1
+269;Entretien 01 24.10.03 02_traitement_A;Il y a une sorte de trance qui se met en place.;original;3
+269_contextual;Entretien 01 24.10.03 02_traitement_A;Il y presque deux semaine une trance narrative se met en place.;contextual;3
+269_swap;Entretien 01 24.10.03 02_traitement_A;Il a y sorte une de qui trance se en met place.;swap;3
+269_translation;Entretien 01 24.10.03 02_traitement_A;Il y a une sorte de danse qui se met en vie.;translation;3
 26_contextual;Entretien 01 24.10.03 01_traitement_A;On reprit le travail, c'était depuis septembre, de bons jours de petite pause.;contextual;0
 26_swap;Entretien 01 24.10.03 01_traitement_A;On reprend le travail c, ' 5 était minutes 5, - minutes petite 10 de pause.;swap;0
 26_translation;Entretien 01 24.10.03 01_traitement_A;On retourne au boulot, il y a 5 minutes, 5-10 minutes de pause.;translation;0
@@ -781,10 +781,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 276_contextual;Entretien 01 24.10.03 02_traitement_A;Ça les permet pour développer des choses.;contextual;0
 276_swap;Entretien 01 24.10.03 02_traitement_A;Ça permet nous de comprendre des choses.;swap;0
 276_translation;Entretien 01 24.10.03 02_traitement_A;Ça nous aide à comprendre les choses.;translation;0
-277;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur verre parce que ça relève un peu de la sorcellerie et de l'alchimie dans le sens où, contrairement au sertissage ou à la coupe de verre, on a des méthodes qui sont assez similaires les uns des autres.;original;2
-277_contextual;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur carton parce que çà relève un peu de  sorcellerie et de l'alchimie dans le domaine où, contrairement au scrapissage ou autre la gravure de verre, ça a des méthodes qui sont assez similaires les uns les derniers.;contextual;2
-277_swap;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur verre parce ça que relève un peu de et la sorcellerie de l ' alchimie dans le où sens, contrairement au sertissage à ou la coupe de verre, on a des méthodes qui assez sont similaires uns les autres des.;swap;2
-277_translation;Entretien 01 24.10.03 02_traitement_A;Je suis assez sensible à la couleur du verre parce qu'elle démarque quelque chose de la sorcellerie et de l'alchimie dans le sens où nous avons des méthodes qui sont assez semblables à celles du pétrissage ou de la coupe du verre.;translation;2
+277;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur verre parce que ça relève un peu de la sorcellerie et de l'alchimie dans le sens où, contrairement au sertissage ou à la coupe de verre, on a des méthodes qui sont assez similaires les uns des autres.;original;6
+277_contextual;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur carton parce que çà relève un peu de  sorcellerie et de l'alchimie dans le domaine où, contrairement au scrapissage ou autre la gravure de verre, ça a des méthodes qui sont assez similaires les uns les derniers.;contextual;6
+277_swap;Entretien 01 24.10.03 02_traitement_A;Moi, je suis assez sensible à la peinture sur verre parce ça que relève un peu de et la sorcellerie de l ' alchimie dans le où sens, contrairement au sertissage à ou la coupe de verre, on a des méthodes qui assez sont similaires uns les autres des.;swap;6
+277_translation;Entretien 01 24.10.03 02_traitement_A;Je suis assez sensible à la couleur du verre parce qu'elle démarque quelque chose de la sorcellerie et de l'alchimie dans le sens où nous avons des méthodes qui sont assez semblables à celles du pétrissage ou de la coupe du verre.;translation;6
 278;Entretien 01 24.10.03 02_traitement_A;Quant à la peinture, étant donné que c'est une pratique un peu plus personnelle et artistique, chacun a sa manière de l'approcher et chacun a sa manière de préparer sa peinture parce qu'il y a l'application mais il y a aussi la préparation en amont.;original;0
 278_contextual;Entretien 01 24.10.03 02_traitement_A;Quant à ta peinture, étant donnée que c'est mon action un peu plus personnelle et artistique, chacun a sa manière de l'approcher et chacun a sa manières de préparer sa peinture parce qu' IL y a l'application mais il ya avait toujours sa préparation en amont.;contextual;0
 278_swap;Entretien 01 24.10.03 02_traitement_A;Quant à la peinture, donné étant que c ' est une un pratique plus peu et personnelle artistique, chacun a sa de manière l ' et approcher chacun a sa de manière préparer sa peinture parce qu ' il y a l ' application mais il y aussi a la préparation en amont.;swap;0
@@ -801,10 +801,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 280_contextual;Entretien 01 24.10.03 02_traitement_A;Ça, ça' es un truc qui je tente parce justement il y ait eu beaucoup mille recherches et derrière, il y a trois années d'application comment arriver à réussir ce geste assuré, dynamique et spontané.;contextual;0
 280_swap;Entretien 01 24.10.03 02_traitement_A;Ça, c ' est un truc qui me parce parle justement il a y eu beaucoup de et derrière recherches, il y a des années d application ' pour arriver avoir un à assuré geste, et dynamique. spontané;swap;0
 280_translation;Entretien 01 24.10.03 02_traitement_A;C'est quelque chose qui me parle parce qu'il y a eu beaucoup de recherches, il y a des années, pour réaliser un geste sûr, dynamique et spontané.;translation;0
-281;Entretien 01 24.10.03 02_traitement_A;Et un geste qui vient aussi avec une connaissance de la matière parce que je dirais même que la connaissance de la matière vient avant toute chose parce qu'une fois qu'on connaît la matière, comment elle réagit à la température, à l'humidité ambiante, à la tension qu'on lui applique, derrière, on peut avoir un geste plus assuré.;original;1
-281_contextual;Entretien 01 24.10.03 02_traitement_A;Et un artiste qui vient aussi avec une connaissance avant la matière parce que si dirais dirais plutôt la connaissance de la matière vient avant toute chose parce qu'une fois qu'on connaît la matière, comment elle réagit à moi chaleur, à l'humidité ambiante, à ma forme qu'on lui montre, derrière, on peut avoir un geste plus assuré.;contextual;1
-281_swap;Entretien 01 24.10.03 02_traitement_A;Et un qui geste vient aussi avec une connaissance de la matière parce que je dirais même que connaissance la la de vient matière avant chose toute parce qu ' une fois qu ' on connaît la matière, elle réagit comment à la température, l à ' humidité ambiante, à la tension qu ' lui on applique, derrière, peut on avoir un geste plus assuré.;swap;1
-281_translation;Entretien 01 24.10.03 02_traitement_A;Et un geste qui vient aussi avec une connaissance de la matière, parce que je dirais même que la connaissance de la matière vient avant tout parce que dès que vous connaissez la matière, comment elle réagit à la température, à l'humidité ambiante, à la tension qu'on applique sur elle, on peut avoir un geste plus sûr derrière elle.;translation;1
+281;Entretien 01 24.10.03 02_traitement_A;Et un geste qui vient aussi avec une connaissance de la matière parce que je dirais même que la connaissance de la matière vient avant toute chose parce qu'une fois qu'on connaît la matière, comment elle réagit à la température, à l'humidité ambiante, à la tension qu'on lui applique, derrière, on peut avoir un geste plus assuré.;original;3
+281_contextual;Entretien 01 24.10.03 02_traitement_A;Et un artiste qui vient aussi avec une connaissance avant la matière parce que si dirais dirais plutôt la connaissance de la matière vient avant toute chose parce qu'une fois qu'on connaît la matière, comment elle réagit à moi chaleur, à l'humidité ambiante, à ma forme qu'on lui montre, derrière, on peut avoir un geste plus assuré.;contextual;3
+281_swap;Entretien 01 24.10.03 02_traitement_A;Et un qui geste vient aussi avec une connaissance de la matière parce que je dirais même que connaissance la la de vient matière avant chose toute parce qu ' une fois qu ' on connaît la matière, elle réagit comment à la température, l à ' humidité ambiante, à la tension qu ' lui on applique, derrière, peut on avoir un geste plus assuré.;swap;3
+281_translation;Entretien 01 24.10.03 02_traitement_A;Et un geste qui vient aussi avec une connaissance de la matière, parce que je dirais même que la connaissance de la matière vient avant tout parce que dès que vous connaissez la matière, comment elle réagit à la température, à l'humidité ambiante, à la tension qu'on applique sur elle, on peut avoir un geste plus sûr derrière elle.;translation;3
 282;Entretien 01 24.10.03 02_traitement_A;La matière déjà sur laquelle on peint, c'est des feuilles de verre.;original;0
 282_contextual;Entretien 01 24.10.03 02_traitement_A;Une matière blanche sur laquelle on peint, c' appelle des feuilles dans soie.;contextual;0
 282_swap;Entretien 01 24.10.03 02_traitement_A;La matière peint déjà sur laquelle on, c ' des est feuilles de verre.;swap;0
@@ -877,17 +877,17 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 298_contextual;Entretien 01 24.10.03 02_traitement_A;=' est- --dire q'on pourra peindre sous l'eau, puis mélanger au-dessus a l'essence pour pouvoir faire des différentes couleurss.;contextual;0
 298_swap;Entretien 01 24.10.03 02_traitement_A;C ' est - à - dire qu ' peut on à l ' peindre eau, puis par au - l dessus à ' essence superpositions pour pouvoir faire des.;swap;0
 298_translation;Entretien 01 24.10.03 02_traitement_A;C'est-à-dire que vous pouvez peindre avec de l'eau, puis au-dessus de l'essence pour faire des superpositions.;translation;0
-299;Entretien 01 24.10.03 02_traitement_A;Après, peut-être que je m'égare un peu.;original;2
-299_contextual;Entretien 01 24.10.03 02_traitement_A;bon, peut-être que je croyais' aidera une peu.;contextual;2
-299_swap;Entretien 01 24.10.03 02_traitement_A;, après peut - que être je m égare ' peu un.;swap;2
-299_translation;Entretien 01 24.10.03 02_traitement_A;Je me trompe peut-être un peu.;translation;2
+299;Entretien 01 24.10.03 02_traitement_A;Après, peut-être que je m'égare un peu.;original;6
+299_contextual;Entretien 01 24.10.03 02_traitement_A;bon, peut-être que je croyais' aidera une peu.;contextual;6
+299_swap;Entretien 01 24.10.03 02_traitement_A;, après peut - que être je m égare ' peu un.;swap;6
+299_translation;Entretien 01 24.10.03 02_traitement_A;Je me trompe peut-être un peu.;translation;6
 29_contextual;Entretien 01 24.10.03 01_traitement_A;Si on avait plusieurs périodes fixes, des services, 17h30.;contextual;0
 29_swap;Entretien 01 24.10.03 01_traitement_A;On si avait heures sup des, des, fois 17h30.;swap;0
 29_translation;Entretien 01 24.10.03 01_traitement_A;Si on avait des heures sup, parfois à 17 h 30.;translation;0
-2_contextual;Entretien 01 24.10.03 01_traitement_A;Dans quel'  ?;contextual;1
-2_swap;Entretien 01 24.10.03 01_traitement_A;Dans l ' entreprise?;swap;1
-2_translation;Entretien 01 24.10.03 01_traitement_A;À l'entreprise ?;translation;1
-3;Entretien 01 24.10.03 01_traitement_A;Ça dépend un peu parce que du coup j'ai eu deux aspects très différents.;original;1
+2_contextual;Entretien 01 24.10.03 01_traitement_A;Dans quel'  ?;contextual;3
+2_swap;Entretien 01 24.10.03 01_traitement_A;Dans l ' entreprise?;swap;3
+2_translation;Entretien 01 24.10.03 01_traitement_A;À l'entreprise ?;translation;3
+3;Entretien 01 24.10.03 01_traitement_A;Ça dépend un peu parce que du coup j'ai eu deux aspects très différents.;original;3
 30;Entretien 01 24.10.03 01_traitement_A;Des fois, encore 2 heures sup, 16h.;original;0
 300;Entretien 01 24.10.03 02_traitement_A;Le moment de la préparation de la peinture et de la palette, c'est un moment un peu méditatif.;original;0
 300_contextual;Entretien 01 24.10.03 02_traitement_A;Le moment de non préparation de la pour bien préparer la palette, c'est du moment vraiment petit atatif.;contextual;0
@@ -897,10 +897,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 301_contextual;Entretien 01 24.10.03 02_traitement_A;On va yécraser les 2s, on va mélanger en palette, et selon l'état d'esprit dans lequel on est, si on est un peu fatigué, si on souhaite un peu lunaire, on peut se poser et juste  tourner avec les pigments pendant 15 minutes sans jamais' la rendre fatigue.;contextual;0
 301_swap;Entretien 01 24.10.03 02_traitement_A;Va on écraser les pigments, on mélanger la va palette, et l ' selon état d ' esprit dans lequel on est, si on est un peu, fatigué si on est un peu lunaire, on peut perdre se et juste écraser les pigments pendant 15 minutes sans s ' rendre en compte.;swap;0
 301_translation;Entretien 01 24.10.03 02_traitement_A;On écrase les pigments, on mélange la palette, et selon l'esprit dans lequel on est, quand on est un peu fatigué, quand on est un peu lunaire, on peut se perdre et simplement écraser les pigments pendant 15 minutes sans le remarquer.;translation;0
-302;Entretien 01 24.10.03 02_traitement_A;Et là, on met une certaine attention dans cette matière qui, à mon goût, est essentielle, puisque cette matière, on va la transformer, on va la sublimer pour en faire des images qui viennent de notre esprit.;original;1
-302_contextual;Entretien 01 24.10.03 02_traitement_A;Car là, on met une certaine attention dans cette matière qui, à mon sens, est essentielle, dans chaque matière, qui va la transformer, on pourra lui sublimer pour vraiment extraire des images qui changent de notre esprit.;contextual;1
-302_swap;Entretien 01 24.10.03 02_traitement_A;Et là on, met une certaine attention cette dans matière, qui à mon goût, essentielle est, puisque cette matière, on va transformer la, on va sublimer la en pour faire images des qui viennent de notre esprit.;swap;1
-302_translation;Entretien 01 24.10.03 02_traitement_A;Et ici, une certaine attention est portée à cette matière, qui est essentielle à mon goût, parce que cette matière est transformée, elle est sublimée et transformée en images venant de notre esprit.;translation;1
+302;Entretien 01 24.10.03 02_traitement_A;Et là, on met une certaine attention dans cette matière qui, à mon goût, est essentielle, puisque cette matière, on va la transformer, on va la sublimer pour en faire des images qui viennent de notre esprit.;original;3
+302_contextual;Entretien 01 24.10.03 02_traitement_A;Car là, on met une certaine attention dans cette matière qui, à mon sens, est essentielle, dans chaque matière, qui va la transformer, on pourra lui sublimer pour vraiment extraire des images qui changent de notre esprit.;contextual;3
+302_swap;Entretien 01 24.10.03 02_traitement_A;Et là on, met une certaine attention cette dans matière, qui à mon goût, essentielle est, puisque cette matière, on va transformer la, on va sublimer la en pour faire images des qui viennent de notre esprit.;swap;3
+302_translation;Entretien 01 24.10.03 02_traitement_A;Et ici, une certaine attention est portée à cette matière, qui est essentielle à mon goût, parce que cette matière est transformée, elle est sublimée et transformée en images venant de notre esprit.;translation;3
 303;Entretien 01 24.10.03 02_traitement_A;Et c'est important que cette matière première soit vraiment traitée avec soin et mettre une énergie dedans parce que derrière, c'est ce qui va permettre de faire un bon boulot.;original;0
 303_contextual;Entretien 01 24.10.03 02_traitement_A;Et c'est important pour cette matière lui soit vraiment comme un soin comment mettre une énergie dedans parce celui derrière, ...'est ce mec va permettre le faire son bon boulot.;contextual;0
 303_swap;Entretien 01 24.10.03 02_traitement_A;Et c ' est important que cette première matière soit vraiment traitée avec et mettre soin une dedans énergie que parce, derrière c ' ce est qui va permettre faire un bon de boulot.;swap;0
@@ -909,10 +909,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 304_contextual;Entretien 01 24.10.03 02_traitement_A;Bien évidement, seule différence, c'est la préparation de ma peinture.;contextual;0
 304_swap;Entretien 01 24.10.03 02_traitement_A;Vraiment donc, la, base c ' est la de préparation la peinture.;swap;0
 304_translation;Entretien 01 24.10.03 02_traitement_A;Vraiment, la base est la préparation de la peinture.;translation;0
-305;Entretien 01 24.10.03 02_traitement_A;Et au moment de l'application aussi, il y a un état d'esprit à avoir assez vif pour avoir des gestes qui sont japonais, qui sont justes.;original;1
-305_contextual;Entretien 01 24.10.03 02_traitement_A;Et au pire fini l'application aussi, il y a notre état d'esprit à avoir assez contrôlé pour donner des gestes qui reste précis, ça font juste juste.;contextual;1
-305_swap;Entretien 01 24.10.03 02_traitement_A;Et moment au l de application ' aussi il, y a un d état ' esprit à avoir assez pour vif avoir des qui gestes japonais sont, justes qui sont.;swap;1
-305_translation;Entretien 01 24.10.03 02_traitement_A;Et même au moment de l'application, il y a un état d'esprit assez fort pour avoir des gestes qui sont japonais, qui sont justes.;translation;1
+305;Entretien 01 24.10.03 02_traitement_A;Et au moment de l'application aussi, il y a un état d'esprit à avoir assez vif pour avoir des gestes qui sont japonais, qui sont justes.;original;3
+305_contextual;Entretien 01 24.10.03 02_traitement_A;Et au pire fini l'application aussi, il y a notre état d'esprit à avoir assez contrôlé pour donner des gestes qui reste précis, ça font juste juste.;contextual;3
+305_swap;Entretien 01 24.10.03 02_traitement_A;Et moment au l de application ' aussi il, y a un d état ' esprit à avoir assez pour vif avoir des qui gestes japonais sont, justes qui sont.;swap;3
+305_translation;Entretien 01 24.10.03 02_traitement_A;Et même au moment de l'application, il y a un état d'esprit assez fort pour avoir des gestes qui sont japonais, qui sont justes.;translation;3
 306;Entretien 01 24.10.03 02_traitement_A;Chaque geste doit être juste, et on n'a pas trop le droit à l'erreur si on veut avoir un résultat qui est bon.;original;0
 306_contextual;Entretien 01 24.10.03 02_traitement_A;Chaque résultat dois être calculé, après on n' à guère trop le droit sur l' exception si on veut obtenir un résultat qui est bon.;contextual;0
 306_swap;Entretien 01 24.10.03 02_traitement_A;Chaque doit être geste, juste n et on ' a trop pas le droit à ' l erreur si on veut avoir résultat un qui est. bon;swap;0
@@ -925,14 +925,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 308_contextual;Entretien 01 24.10.03 02_traitement_A;C'est pour ça que c'est une étape qui vous parle aussi bien qu'on est calme tout de long et c'est vraiment à ce moment-là que cette matière qui, à al limite, est une poudre tout'oxyde qui n'a vraiment jamais de bon, d'ailleurs qui, de base, pour notre santé, est beaucoup extrêmementocive.;contextual;0
 308_swap;Entretien 01 24.10.03 02_traitement_A;C ' est pour ça que c ' une est étape qui me parle aussi parce qu ' est on calme tout long le c et ' est vraiment à ce moment - que là cette qui matière, à base la, est une poudre d ' oxyde n qui ' a vraiment rien de noble, d ' ailleurs qui, de base, pour notre, santé très est nocive.;swap;0
 308_translation;Entretien 01 24.10.03 02_traitement_A;C'est pourquoi c'est un pas qui me parle aussi parce que nous sommes calmes tout le temps, et c'est vraiment à ce moment-là que cette matière, qui est à la base une poudre d'oxyde qui n'a vraiment rien de noble, d'ailleurs, qui est fondamentalement très nuisible à notre santé.;translation;0
-309;Entretien 01 24.10.03 02_traitement_A;Je trouve qu'il y a un amour qui est mis dans cette matière pour la sublimer et la transformer.;original;1
-309_contextual;Entretien 01 24.10.03 02_traitement_A;Je découvre qu'il y a un soin fou fût mis devant cette matière pour en préserver et la transformer.;contextual;1
-309_swap;Entretien 01 24.10.03 02_traitement_A;Je qu trouve ' il a y un qui amour dans est mis cette pour matière la sublimer et transformer la.;swap;1
-309_translation;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a un amour qui est placé dans cette matière pour l'élever et la transformer.;translation;1
+309;Entretien 01 24.10.03 02_traitement_A;Je trouve qu'il y a un amour qui est mis dans cette matière pour la sublimer et la transformer.;original;3
+309_contextual;Entretien 01 24.10.03 02_traitement_A;Je découvre qu'il y a un soin fou fût mis devant cette matière pour en préserver et la transformer.;contextual;3
+309_swap;Entretien 01 24.10.03 02_traitement_A;Je qu trouve ' il a y un qui amour dans est mis cette pour matière la sublimer et transformer la.;swap;3
+309_translation;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a un amour qui est placé dans cette matière pour l'élever et la transformer.;translation;3
 30_contextual;Entretien 01 24.10.03 01_traitement_A;Par fois, durant 2 heures minimum, 16 inscriptions.;contextual;0
 30_swap;Entretien 01 24.10.03 01_traitement_A;Des encore fois, heures 2 sup, 16h.;swap;0
 30_translation;Entretien 01 24.10.03 01_traitement_A;Parfois, 2 heures supplémentaires, 16 heures.;translation;0
-31;Entretien 01 24.10.03 01_traitement_A;C'était très variable.;original;1
+31;Entretien 01 24.10.03 01_traitement_A;C'était très variable.;original;3
 310;Entretien 01 24.10.03 02_traitement_A;Donc, la préparation, l'application, et il y a ce moment aussi où ce verre, à la fin, on doit le cuire pour vitrifier les peintures.;original;0
 310_contextual;Entretien 01 24.10.03 02_traitement_A;Donc, cette préparation, l' intérieur, mais il y finit au moment aussi où ce moule, à toute fin, Simon doit le vider pour vitrifier les aliments.;contextual;0
 310_swap;Entretien 01 24.10.03 02_traitement_A;Donc, préparation la, l ' application, et y il a ce aussi moment verre où ce, fin à la, doit on le cuire pour vitrifier peintures. les;swap;0
@@ -953,46 +953,46 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 314_contextual;Entretien 01 24.10.03 02_traitement_A;La y a malheureusement une part du' atéatoire qu'<unk> e peut toujours réaliser : ça nous redonne un peu d'humilité.;contextual;0
 314_swap;Entretien 01 24.10.03 02_traitement_A;Il y une a toujours part ' d aléatoire qu on ' peut ne pas contrôler et ça nous redonne un d peu ' humilité.;swap;0
 314_translation;Entretien 01 24.10.03 02_traitement_A;Il y a toujours une partie des coïncidences que nous ne pouvons pas contrôler, et cela nous donne un peu d'humilité.;translation;0
-315;Entretien 01 24.10.03 02_traitement_A;Je pense que ce matériau qui est sous forme de poudre, on lui donne une forme.;original;1
-315_contextual;Entretien 01 24.10.03 02_traitement_A;Je pense que tout matériau qui est en contrainte de poudre, on y connaît sa forme.;contextual;1
-315_swap;Entretien 01 24.10.03 02_traitement_A;Je que pense matériau ce qui sous est forme poudre de, on lui une donne. forme;swap;1
-315_translation;Entretien 01 24.10.03 02_traitement_A;Je pense que ce matériau, qui est sous forme de poudre, existe une forme.;translation;1
-316;Entretien 01 24.10.03 02_traitement_A;Finalement, c'est peut-être un peu comme un sculpteur qui vient modeler une terre et lui donner un corps.;original;2
-316_contextual;Entretien 01 24.10.03 02_traitement_A;Finalement, c' a peut-être très peu comme un sculpteur que peut enner ta terre puis lui donner un corps.;contextual;2
-316_swap;Entretien 01 24.10.03 02_traitement_A;Finalement, c ' est peut - être peu un comme sculpteur un vient qui modeler une terre lui et donner un corps.;swap;2
-316_translation;Entretien 01 24.10.03 02_traitement_A;Après tout, c'est peut-être un peu comme un sculpteur qui forme une terre et lui donne un corps.;translation;2
-317;Entretien 01 24.10.03 02_traitement_A;Là, c'est un peu ça aussi.;original;3
-317_contextual;Entretien 01 24.10.03 02_traitement_A;Finalement, c' à petit peu ça aussi.;contextual;3
-317_swap;Entretien 01 24.10.03 02_traitement_A;Là c, ' un est ça peu aussi.;swap;3
-317_translation;Entretien 01 24.10.03 02_traitement_A;C'est un peu comme ça.;translation;3
-318;Entretien 01 24.10.03 02_traitement_A;On vient lui donner un sens à nos yeux d'humain.;original;1
-318_contextual;Entretien 01 24.10.03 02_traitement_A;Ceci peut lui donner un sens à nos comportements d' humains.;contextual;1
-318_swap;Entretien 01 24.10.03 02_traitement_A;On vient lui donner à un sens nos d yeux '. humain;swap;1
-318_translation;Entretien 01 24.10.03 02_traitement_A;Nous sommes ici pour lui donner un sens à nos yeux humains.;translation;1
-319;Entretien 01 24.10.03 02_traitement_A;Mais encore une fois, c'est une vision de l'artisan, finalement.;original;2
-319_contextual;Entretien 01 24.10.03 02_traitement_A;Ah encore une façon, peut' avoir une vision uniquement son'artisan, finalement.;contextual;2
-319_swap;Entretien 01 24.10.03 02_traitement_A;Encore mais une fois, ' c est vision une ' de l artisan finalement,.;swap;2
-319_translation;Entretien 01 24.10.03 02_traitement_A;Mais encore une fois, c'est une vision de l'artisan, enfin.;translation;2
-31_contextual;Entretien 01 24.10.03 01_traitement_A;C' accueil très agréable.;contextual;1
-31_swap;Entretien 01 24.10.03 01_traitement_A;C ' très était. variable;swap;1
-31_translation;Entretien 01 24.10.03 01_traitement_A;C'était très différent.;translation;1
-32;Entretien 01 24.10.03 01_traitement_A;C'était très ouvrier comme façon de faire.;original;1
-320;Entretien 01 24.10.03 02_traitement_A;Il vit, justement.;original;1
-320_contextual;Entretien 01 24.10.03 02_traitement_A;Il triomphe, résiste.;contextual;1
-320_swap;Entretien 01 24.10.03 02_traitement_A;Il vit, justement.;swap;1
-320_translation;Entretien 01 24.10.03 02_traitement_A;Il est en vie.;translation;1
+315;Entretien 01 24.10.03 02_traitement_A;Je pense que ce matériau qui est sous forme de poudre, on lui donne une forme.;original;3
+315_contextual;Entretien 01 24.10.03 02_traitement_A;Je pense que tout matériau qui est en contrainte de poudre, on y connaît sa forme.;contextual;3
+315_swap;Entretien 01 24.10.03 02_traitement_A;Je que pense matériau ce qui sous est forme poudre de, on lui une donne. forme;swap;3
+315_translation;Entretien 01 24.10.03 02_traitement_A;Je pense que ce matériau, qui est sous forme de poudre, existe une forme.;translation;3
+316;Entretien 01 24.10.03 02_traitement_A;Finalement, c'est peut-être un peu comme un sculpteur qui vient modeler une terre et lui donner un corps.;original;6
+316_contextual;Entretien 01 24.10.03 02_traitement_A;Finalement, c' a peut-être très peu comme un sculpteur que peut enner ta terre puis lui donner un corps.;contextual;6
+316_swap;Entretien 01 24.10.03 02_traitement_A;Finalement, c ' est peut - être peu un comme sculpteur un vient qui modeler une terre lui et donner un corps.;swap;6
+316_translation;Entretien 01 24.10.03 02_traitement_A;Après tout, c'est peut-être un peu comme un sculpteur qui forme une terre et lui donne un corps.;translation;6
+317;Entretien 01 24.10.03 02_traitement_A;Là, c'est un peu ça aussi.;original;10
+317_contextual;Entretien 01 24.10.03 02_traitement_A;Finalement, c' à petit peu ça aussi.;contextual;10
+317_swap;Entretien 01 24.10.03 02_traitement_A;Là c, ' un est ça peu aussi.;swap;10
+317_translation;Entretien 01 24.10.03 02_traitement_A;C'est un peu comme ça.;translation;10
+318;Entretien 01 24.10.03 02_traitement_A;On vient lui donner un sens à nos yeux d'humain.;original;3
+318_contextual;Entretien 01 24.10.03 02_traitement_A;Ceci peut lui donner un sens à nos comportements d' humains.;contextual;3
+318_swap;Entretien 01 24.10.03 02_traitement_A;On vient lui donner à un sens nos d yeux '. humain;swap;3
+318_translation;Entretien 01 24.10.03 02_traitement_A;Nous sommes ici pour lui donner un sens à nos yeux humains.;translation;3
+319;Entretien 01 24.10.03 02_traitement_A;Mais encore une fois, c'est une vision de l'artisan, finalement.;original;6
+319_contextual;Entretien 01 24.10.03 02_traitement_A;Ah encore une façon, peut' avoir une vision uniquement son'artisan, finalement.;contextual;6
+319_swap;Entretien 01 24.10.03 02_traitement_A;Encore mais une fois, ' c est vision une ' de l artisan finalement,.;swap;6
+319_translation;Entretien 01 24.10.03 02_traitement_A;Mais encore une fois, c'est une vision de l'artisan, enfin.;translation;6
+31_contextual;Entretien 01 24.10.03 01_traitement_A;C' accueil très agréable.;contextual;3
+31_swap;Entretien 01 24.10.03 01_traitement_A;C ' très était. variable;swap;3
+31_translation;Entretien 01 24.10.03 01_traitement_A;C'était très différent.;translation;3
+32;Entretien 01 24.10.03 01_traitement_A;C'était très ouvrier comme façon de faire.;original;3
+320;Entretien 01 24.10.03 02_traitement_A;Il vit, justement.;original;3
+320_contextual;Entretien 01 24.10.03 02_traitement_A;Il triomphe, résiste.;contextual;3
+320_swap;Entretien 01 24.10.03 02_traitement_A;Il vit, justement.;swap;3
+320_translation;Entretien 01 24.10.03 02_traitement_A;Il est en vie.;translation;3
 321;Entretien 01 24.10.03 02_traitement_A;Parce que quand il est inerte et qu'il est sous forme d'oxyde, il est là, il ne bouge pas.;original;0
 321_contextual;Entretien 01 24.10.03 02_traitement_A;Parce simplement quand il est revenu et qu'il apparait à forme minérale'oxyde, il est là, on est bouge !!.;contextual;0
 321_swap;Entretien 01 24.10.03 02_traitement_A;Parce que il quand est et inerte qu ' est il sous d forme ' oxyde, il là est, ne il bouge pas.;swap;0
 321_translation;Entretien 01 24.10.03 02_traitement_A;Car s'il est inerte et sous forme d'oxyde, il ne bouge pas.;translation;0
-322;Entretien 01 24.10.03 02_traitement_A;Et là, peut-être qu'on lui donne une vie.;original;2
-322_contextual;Entretien 01 24.10.03 02_traitement_A;Et là, allez- croire qu' Allah lui devra ensuite vie.;contextual;2
-322_swap;Entretien 01 24.10.03 02_traitement_A;Là et peut, - qu être ' donne on lui une vie.;swap;2
-322_translation;Entretien 01 24.10.03 02_traitement_A;Et peut-être lui donnerons-nous une vie.;translation;2
-323;Entretien 01 24.10.03 02_traitement_A;Enfin, selon notre sens à nous, finalement.;original;1
-323_contextual;Entretien 01 24.10.03 02_traitement_A;Enfin, chacun notre rythme à nous, euh.;contextual;1
-323_swap;Entretien 01 24.10.03 02_traitement_A;Enfin, selon notre sens à, nous finalement.;swap;1
-323_translation;Entretien 01 24.10.03 02_traitement_A;Après tout, selon notre esprit pour nous, enfin.;translation;1
+322;Entretien 01 24.10.03 02_traitement_A;Et là, peut-être qu'on lui donne une vie.;original;6
+322_contextual;Entretien 01 24.10.03 02_traitement_A;Et là, allez- croire qu' Allah lui devra ensuite vie.;contextual;6
+322_swap;Entretien 01 24.10.03 02_traitement_A;Là et peut, - qu être ' donne on lui une vie.;swap;6
+322_translation;Entretien 01 24.10.03 02_traitement_A;Et peut-être lui donnerons-nous une vie.;translation;6
+323;Entretien 01 24.10.03 02_traitement_A;Enfin, selon notre sens à nous, finalement.;original;3
+323_contextual;Entretien 01 24.10.03 02_traitement_A;Enfin, chacun notre rythme à nous, euh.;contextual;3
+323_swap;Entretien 01 24.10.03 02_traitement_A;Enfin, selon notre sens à, nous finalement.;swap;3
+323_translation;Entretien 01 24.10.03 02_traitement_A;Après tout, selon notre esprit pour nous, enfin.;translation;3
 324;Entretien 01 24.10.03 02_traitement_A;Parce que lui, il n'a pas de conscience.;original;0
 324_contextual;Entretien 01 24.10.03 02_traitement_A;Parce la maintenant, il n' a pas cette conscience.;contextual;0
 324_swap;Entretien 01 24.10.03 02_traitement_A;Parce que lui, n ' il a pas de conscience.;swap;0
@@ -1009,17 +1009,17 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 327_contextual;Entretien 01 24.10.03 02_traitement_A;Avec toute façons, dès qu'on transforme une surface végétale ou le donner un sens technique ou fonctionnel, dès le moment même ça transforme une matière, progressivement, on la fait vivre.;contextual;0
 327_swap;Entretien 01 24.10.03 02_traitement_A;De toute façon, dès ' qu transforme on première une matière pour donner un lui sens technique ou artistique, le dès moment on où transforme une, matière, finalement on la fait vivre.;swap;0
 327_translation;Entretien 01 24.10.03 02_traitement_A;Quand on transforme une matière première pour lui donner un sens technique ou artistique, on la laisse vivre quand on transforme une matière.;translation;0
-328;Entretien 01 24.10.03 02_traitement_A;Il y a quelque chose de particulier à cette étape.;original;1
-328_contextual;Entretien 01 24.10.03 02_traitement_A;Il y a certaine chose de particulier par leur action.;contextual;1
-328_swap;Entretien 01 24.10.03 02_traitement_A;Il a quelque y de particulier chose à cette étape.;swap;1
-328_translation;Entretien 01 24.10.03 02_traitement_A;Il y a quelque chose de spécial dans cette phase.;translation;1
+328;Entretien 01 24.10.03 02_traitement_A;Il y a quelque chose de particulier à cette étape.;original;3
+328_contextual;Entretien 01 24.10.03 02_traitement_A;Il y a certaine chose de particulier par leur action.;contextual;3
+328_swap;Entretien 01 24.10.03 02_traitement_A;Il a quelque y de particulier chose à cette étape.;swap;3
+328_translation;Entretien 01 24.10.03 02_traitement_A;Il y a quelque chose de spécial dans cette phase.;translation;3
 329;Entretien 01 24.10.03 02_traitement_A;Oui.;original;0
 329_contextual;Entretien 01 24.10.03 02_traitement_A;...;contextual;0
 329_swap;Entretien 01 24.10.03 02_traitement_A;. oui;swap;0
 329_translation;Entretien 01 24.10.03 02_traitement_A;Oui.;translation;0
-32_contextual;Entretien 01 24.10.03 01_traitement_A;C' être très ouvrier comme façon à voyager.;contextual;1
-32_swap;Entretien 01 24.10.03 01_traitement_A;C ' était comme très ouvrier façon faire de.;swap;1
-32_translation;Entretien 01 24.10.03 01_traitement_A;C'était très tenace comme on le fait.;translation;1
+32_contextual;Entretien 01 24.10.03 01_traitement_A;C' être très ouvrier comme façon à voyager.;contextual;3
+32_swap;Entretien 01 24.10.03 01_traitement_A;C ' était comme très ouvrier façon faire de.;swap;3
+32_translation;Entretien 01 24.10.03 01_traitement_A;C'était très tenace comme on le fait.;translation;3
 33;Entretien 01 24.10.03 01_traitement_A;Voilà;original;0
 330;Entretien 01 24.10.03 02_traitement_A;Parce qu'il y a aussi, là, cet état d'esprit.;original;0
 330_contextual;Entretien 01 24.10.03 02_traitement_A;Parce que'il on a aussi, là, juste ordre de'esprit.;contextual;0
@@ -1053,14 +1053,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 337_contextual;Entretien 01 24.10.03 02_traitement_A;Un, une.;contextual;0
 337_swap;Entretien 01 24.10.03 02_traitement_A;, enfin. voilà;swap;0
 337_translation;Entretien 01 24.10.03 02_traitement_A;Je veux dire, c'est ça.;translation;0
-338;Entretien 01 24.10.03 02_traitement_A;Je n'en ai plus trop la compo.;original;3
-338_contextual;Entretien 01 24.10.03 02_traitement_A;Je vous'en ai également jamais aperçu compo.;contextual;3
-338_swap;Entretien 01 24.10.03 02_traitement_A;Je n en ai ' plus trop compo la.;swap;3
-338_translation;Entretien 01 24.10.03 02_traitement_A;Je n'en ai plus beaucoup.;translation;3
-339;Entretien 01 24.10.03 02_traitement_A;Il faut que je fasse gaffe à ce que je dis.;original;3
-339_contextual;Entretien 01 24.10.03 02_traitement_A;Il faut absolument je fasse grâce à là que je fabrique.;contextual;3
-339_swap;Entretien 01 24.10.03 02_traitement_A;Faut que il je fasse ce gaffe à que je dis.;swap;3
-339_translation;Entretien 01 24.10.03 02_traitement_A;Je dois faire attention à ce que je dis.;translation;3
+338;Entretien 01 24.10.03 02_traitement_A;Je n'en ai plus trop la compo.;original;10
+338_contextual;Entretien 01 24.10.03 02_traitement_A;Je vous'en ai également jamais aperçu compo.;contextual;10
+338_swap;Entretien 01 24.10.03 02_traitement_A;Je n en ai ' plus trop compo la.;swap;10
+338_translation;Entretien 01 24.10.03 02_traitement_A;Je n'en ai plus beaucoup.;translation;10
+339;Entretien 01 24.10.03 02_traitement_A;Il faut que je fasse gaffe à ce que je dis.;original;10
+339_contextual;Entretien 01 24.10.03 02_traitement_A;Il faut absolument je fasse grâce à là que je fabrique.;contextual;10
+339_swap;Entretien 01 24.10.03 02_traitement_A;Faut que il je fasse ce gaffe à que je dis.;swap;10
+339_translation;Entretien 01 24.10.03 02_traitement_A;Je dois faire attention à ce que je dis.;translation;10
 33_contextual;Entretien 01 24.10.03 01_traitement_A;V;contextual;0
 33_swap;Entretien 01 24.10.03 01_traitement_A;Voilà;swap;0
 33_translation;Entretien 01 24.10.03 01_traitement_A;Tiens.;translation;0
@@ -1069,10 +1069,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 340_contextual;Entretien 01 24.10.03 02_traitement_A;Mais n' pas pareil.;contextual;0
 340_swap;Entretien 01 24.10.03 02_traitement_A;Mais c ' est pareil.;swap;0
 340_translation;Entretien 01 24.10.03 02_traitement_A;Mais c'est la même chose.;translation;0
-341;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui, la coupe de verre, le sertissage au plomb, c'est pareil.;original;1
-341_contextual;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui, la poudre à verre, en fauxissage au pinceau, c' était pareil.;contextual;1
-341_swap;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui la, coupe de verre le, au sertissage plomb, ' c est pareil.;swap;1
-341_translation;Entretien 01 24.10.03 02_traitement_A;Oui, la coupe en verre, la couche de plomb est la même.;translation;1
+341;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui, la coupe de verre, le sertissage au plomb, c'est pareil.;original;3
+341_contextual;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui, la poudre à verre, en fauxissage au pinceau, c' était pareil.;contextual;3
+341_swap;Entretien 01 24.10.03 02_traitement_A;Effectivement, oui la, coupe de verre le, au sertissage plomb, ' c est pareil.;swap;3
+341_translation;Entretien 01 24.10.03 02_traitement_A;Oui, la coupe en verre, la couche de plomb est la même.;translation;3
 342;Entretien 01 24.10.03 02_traitement_A;Le plomb, on va l'extraire, on va le transformer, on va le couler, on va lui donner une forme.;original;0
 342_contextual;Entretien 01 24.10.03 02_traitement_A;de fond, on va le'extraire, on va il transformer, on pourra le chauffer, on va leur donner leur forme.;contextual;0
 342_swap;Entretien 01 24.10.03 02_traitement_A;Le plomb, on l va extraire ', va on le transformer, on va le couler on, va lui forme donner une.;swap;0
@@ -1089,22 +1089,22 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 345_contextual;Entretien 01 24.10.03 02_traitement_A;-, etc.;contextual;0
 345_swap;Entretien 01 24.10.03 02_traitement_A;, oui. évidemment;swap;0
 345_translation;Entretien 01 24.10.03 02_traitement_A;Oui, bien sûr.;translation;0
-346;Entretien 01 24.10.03 02_traitement_A;J'ai un peu ce toc, je crois, de placer des métaphores quand je peux parce que ça permet, je pense, aux gens d'avoir des généralités et de leur parler.;original;2
-346_contextual;Entretien 01 24.10.03 02_traitement_A;J'ai un peu ce toc, je dirais, faut jeter des métaphoreions hors du peux parce que ça permet, je sais, aux mots des'avoir des crités et de leur parler.;contextual;2
-346_swap;Entretien 01 24.10.03 02_traitement_A;J ' ai un toc peu ce, je crois, de placer des métaphores quand je parce que ça peux, permet je pense aux, gens d ' des avoir et généralités de leur. parler;swap;2
-346_translation;Entretien 01 24.10.03 02_traitement_A;Je crois que j'arrête les métaphores si je peux, parce que ça permet aux gens d'avoir des opinions générales et de leur parler.;translation;2
-347;Entretien 01 24.10.03 02_traitement_A;Et là, pour ce qui est de l'étape de la peinture, finalement, c'est un peu de la cuisine.;original;1
-347_contextual;Entretien 01 24.10.03 02_traitement_A;Et bien, pour ce qui c de l' efficacité sur la peinture, franchement, c'est un peu pas leur tarte.;contextual;1
-347_swap;Entretien 01 24.10.03 02_traitement_A;Là et, pour ce qui est l de la ' étape de peinture, finalement, c ' un est de peu cuisine la.;swap;1
-347_translation;Entretien 01 24.10.03 02_traitement_A;Et maintenant, en ce qui concerne le niveau de la peinture, c'est enfin un peu de cuisine.;translation;1
+346;Entretien 01 24.10.03 02_traitement_A;J'ai un peu ce toc, je crois, de placer des métaphores quand je peux parce que ça permet, je pense, aux gens d'avoir des généralités et de leur parler.;original;6
+346_contextual;Entretien 01 24.10.03 02_traitement_A;J'ai un peu ce toc, je dirais, faut jeter des métaphoreions hors du peux parce que ça permet, je sais, aux mots des'avoir des crités et de leur parler.;contextual;6
+346_swap;Entretien 01 24.10.03 02_traitement_A;J ' ai un toc peu ce, je crois, de placer des métaphores quand je parce que ça peux, permet je pense aux, gens d ' des avoir et généralités de leur. parler;swap;6
+346_translation;Entretien 01 24.10.03 02_traitement_A;Je crois que j'arrête les métaphores si je peux, parce que ça permet aux gens d'avoir des opinions générales et de leur parler.;translation;6
+347;Entretien 01 24.10.03 02_traitement_A;Et là, pour ce qui est de l'étape de la peinture, finalement, c'est un peu de la cuisine.;original;3
+347_contextual;Entretien 01 24.10.03 02_traitement_A;Et bien, pour ce qui c de l' efficacité sur la peinture, franchement, c'est un peu pas leur tarte.;contextual;3
+347_swap;Entretien 01 24.10.03 02_traitement_A;Là et, pour ce qui est l de la ' étape de peinture, finalement, c ' un est de peu cuisine la.;swap;3
+347_translation;Entretien 01 24.10.03 02_traitement_A;Et maintenant, en ce qui concerne le niveau de la peinture, c'est enfin un peu de cuisine.;translation;3
 348;Entretien 01 24.10.03 02_traitement_A;Donc, on a des ingrédients et on les transforme.;original;0
 348_contextual;Entretien 01 24.10.03 02_traitement_A;"Donc, chacun a plusieurs ingrédients ; on me transforme.";contextual;0
 348_swap;Entretien 01 24.10.03 02_traitement_A;, donc on des a ingrédients on et les. transforme;swap;0
 348_translation;Entretien 01 24.10.03 02_traitement_A;Donc on a des ingrédients et on les transforme.;translation;0
-349;Entretien 01 24.10.03 02_traitement_A;C'est tout l'art de la cuisine, quoi, de prendre des matières premières et de faire quelque chose à la fin.;original;1
-349_contextual;Entretien 01 24.10.03 02_traitement_A;C'est tout les' art de la pizza, quoi, ou profiter des ingrédients première et aller faire quelque chose pour la fin.;contextual;1
-349_swap;Entretien 01 24.10.03 02_traitement_A;' c l est tout ' art la cuisine de, , de quoi prendre des matières premières de et faire chose quelque à la fin.;swap;1
-349_translation;Entretien 01 24.10.03 02_traitement_A;C'est l'art de la cuisine, ce qui prend des matières premières et finit par faire quelque chose.;translation;1
+349;Entretien 01 24.10.03 02_traitement_A;C'est tout l'art de la cuisine, quoi, de prendre des matières premières et de faire quelque chose à la fin.;original;3
+349_contextual;Entretien 01 24.10.03 02_traitement_A;C'est tout les' art de la pizza, quoi, ou profiter des ingrédients première et aller faire quelque chose pour la fin.;contextual;3
+349_swap;Entretien 01 24.10.03 02_traitement_A;' c l est tout ' art la cuisine de, , de quoi prendre des matières premières de et faire chose quelque à la fin.;swap;3
+349_translation;Entretien 01 24.10.03 02_traitement_A;C'est l'art de la cuisine, ce qui prend des matières premières et finit par faire quelque chose.;translation;3
 34_contextual;Entretien 01 24.10.03 01_traitement_A;Et dans ...'autre boite où j'étais, où j'ai acheté le vitpeakil depuis Belgique, là, j' manque un peu ta tnt.;contextual;0
 34_swap;Entretien 01 24.10.03 01_traitement_A;Et l dans autre ' où entreprise j ' étais où, j ' appris ai en le vitrail Belgique là, , ' c était peu un plus chill.;swap;0
 34_translation;Entretien 01 24.10.03 01_traitement_A;Et dans l'autre société où j'étais, où j'ai appris des fenêtres en verre en Belgique, c'était un peu plus cool.;translation;0
@@ -1113,62 +1113,62 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 350_contextual;Entretien 01 24.10.03 02_traitement_A;Puis celle qui est de ta maison, peut-être, dans son endroit précis, oui.;contextual;0
 350_swap;Entretien 01 24.10.03 02_traitement_A;Ce pour qui de consistance est la, peut - être, dans un cas précis, oui.;swap;0
 350_translation;Entretien 01 24.10.03 02_traitement_A;En ce qui concerne la cohérence, peut-être dans un cas précis, oui.;translation;0
-351;Entretien 01 24.10.03 02_traitement_A;Après, là, je ne saurais pas...;original;3
-351_contextual;Entretien 01 24.10.03 02_traitement_A;..., là, ne la saurais pas...;contextual;3
-351_swap;Entretien 01 24.10.03 02_traitement_A;, après là, ne je. saurais pas..;swap;3
-351_translation;Entretien 01 24.10.03 02_traitement_A;Alors je ne saurais pas...;translation;3
+351;Entretien 01 24.10.03 02_traitement_A;Après, là, je ne saurais pas...;original;10
+351_contextual;Entretien 01 24.10.03 02_traitement_A;..., là, ne la saurais pas...;contextual;10
+351_swap;Entretien 01 24.10.03 02_traitement_A;, après là, ne je. saurais pas..;swap;10
+351_translation;Entretien 01 24.10.03 02_traitement_A;Alors je ne saurais pas...;translation;10
 352;Entretien 01 24.10.03 02_traitement_A;Ce serait au cas par cas, oui.;original;0
 352_contextual;Entretien 01 24.10.03 02_traitement_A;Ce serait se prendre par cas, comme.;contextual;0
 352_swap;Entretien 01 24.10.03 02_traitement_A;Au ce serait cas par, cas oui.;swap;0
 352_translation;Entretien 01 24.10.03 02_traitement_A;Ce serait au cas par cas, oui.;translation;0
-353;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a les mêmes qui reviennent, celles qui sont les plus explicites.;original;1
-353_contextual;Entretien 01 24.10.03 02_traitement_A;Mais note qu'il y a des mêmes qui reviennent, phrases qui sont toujours plus expliciteuses.;contextual;1
-353_swap;Entretien 01 24.10.03 02_traitement_A;Je pense qu il ' y a les qui mêmes reviennent, celles sont qui plus les explicites.;swap;1
-353_translation;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a ceux qui reviennent, ceux qui sont les plus clairs.;translation;1
-354;Entretien 01 24.10.03 02_traitement_A;Là, la notion de la cuisine pour faire notre tambouille avec notre peinture, évidemment, mais...;original;2
-354_contextual;Entretien 01 24.10.03 02_traitement_A;Là, profit notion de la cuisine pour faire quelques sweat -shirt et notre peinture, évidemment, alors...;contextual;2
-354_swap;Entretien 01 24.10.03 02_traitement_A;Là, la notion la de cuisine pour faire tambouille notre notre peinture avec, , mais évidemment. ..;swap;2
-354_translation;Entretien 01 24.10.03 02_traitement_A;Ici, le concept de la cuisine à notre cul avec notre peinture, bien sûr, mais...;translation;2
-355;Entretien 01 24.10.03 02_traitement_A;Il y a toujours des images qui viennent dans des cas précis.;original;1
-355_contextual;Entretien 01 24.10.03 02_traitement_A;Vous y a uniquement des images quelles restent dans des cas précis.;contextual;1
-355_swap;Entretien 01 24.10.03 02_traitement_A;Y a il des toujours images qui viennent dans des précis cas.;swap;1
-355_translation;Entretien 01 24.10.03 02_traitement_A;Il y a toujours des images qui viennent dans certains cas.;translation;1
-356;Entretien 01 24.10.03 02_traitement_A;J'ai remarqué un truc depuis que je suis dans le métier.;original;1
-356_contextual;Entretien 01 24.10.03 02_traitement_A;Des'ai trouvée un truc depuis et la suis devenue le métier.;contextual;1
-356_swap;Entretien 01 24.10.03 02_traitement_A;J ' remarqué un truc ai depuis je que suis dans le. métier;swap;1
-356_translation;Entretien 01 24.10.03 02_traitement_A;J'ai remarqué quelque chose depuis que j'étais dans les affaires.;translation;1
+353;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a les mêmes qui reviennent, celles qui sont les plus explicites.;original;3
+353_contextual;Entretien 01 24.10.03 02_traitement_A;Mais note qu'il y a des mêmes qui reviennent, phrases qui sont toujours plus expliciteuses.;contextual;3
+353_swap;Entretien 01 24.10.03 02_traitement_A;Je pense qu il ' y a les qui mêmes reviennent, celles sont qui plus les explicites.;swap;3
+353_translation;Entretien 01 24.10.03 02_traitement_A;Je pense qu'il y a ceux qui reviennent, ceux qui sont les plus clairs.;translation;3
+354;Entretien 01 24.10.03 02_traitement_A;Là, la notion de la cuisine pour faire notre tambouille avec notre peinture, évidemment, mais...;original;6
+354_contextual;Entretien 01 24.10.03 02_traitement_A;Là, profit notion de la cuisine pour faire quelques sweat -shirt et notre peinture, évidemment, alors...;contextual;6
+354_swap;Entretien 01 24.10.03 02_traitement_A;Là, la notion la de cuisine pour faire tambouille notre notre peinture avec, , mais évidemment. ..;swap;6
+354_translation;Entretien 01 24.10.03 02_traitement_A;Ici, le concept de la cuisine à notre cul avec notre peinture, bien sûr, mais...;translation;6
+355;Entretien 01 24.10.03 02_traitement_A;Il y a toujours des images qui viennent dans des cas précis.;original;3
+355_contextual;Entretien 01 24.10.03 02_traitement_A;Vous y a uniquement des images quelles restent dans des cas précis.;contextual;3
+355_swap;Entretien 01 24.10.03 02_traitement_A;Y a il des toujours images qui viennent dans des précis cas.;swap;3
+355_translation;Entretien 01 24.10.03 02_traitement_A;Il y a toujours des images qui viennent dans certains cas.;translation;3
+356;Entretien 01 24.10.03 02_traitement_A;J'ai remarqué un truc depuis que je suis dans le métier.;original;3
+356_contextual;Entretien 01 24.10.03 02_traitement_A;Des'ai trouvée un truc depuis et la suis devenue le métier.;contextual;3
+356_swap;Entretien 01 24.10.03 02_traitement_A;J ' remarqué un truc ai depuis je que suis dans le. métier;swap;3
+356_translation;Entretien 01 24.10.03 02_traitement_A;J'ai remarqué quelque chose depuis que j'étais dans les affaires.;translation;3
 357;Entretien 01 24.10.03 02_traitement_A;C'est que j'ai une certaine passion pour ce métier et justement pour cette transformation de la matière.;original;0
 357_contextual;Entretien 01 24.10.03 02_traitement_A;C'est que j'ai une certaine passion pour la métal mais également pour la transformation sous sa matière.;contextual;0
 357_swap;Entretien 01 24.10.03 02_traitement_A;C ' est que ' j une ai certaine passion ce pour métier et justement pour cette de transformation matière la.;swap;0
 357_translation;Entretien 01 24.10.03 02_traitement_A;C'est que j'ai une certaine passion pour cette profession et précisément pour cette transformation de la matière.;translation;0
-358;Entretien 01 24.10.03 02_traitement_A;Un peu...;original;1
-358_contextual;Entretien 01 24.10.03 02_traitement_A;Un bref...;contextual;1
-358_swap;Entretien 01 24.10.03 02_traitement_A;Peu. un..;swap;1
-358_translation;Entretien 01 24.10.03 02_traitement_A;Un peu...;translation;1
-359;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, un peu maladif ?;original;3
-359_contextual;Entretien 01 24.10.03 02_traitement_A;Moi peux sais quoi, un besoin maladif ?;contextual;3
-359_swap;Entretien 01 24.10.03 02_traitement_A;Je ne sais, pas peu un? maladif;swap;3
-359_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, un peu malade ?;translation;3
+358;Entretien 01 24.10.03 02_traitement_A;Un peu...;original;3
+358_contextual;Entretien 01 24.10.03 02_traitement_A;Un bref...;contextual;3
+358_swap;Entretien 01 24.10.03 02_traitement_A;Peu. un..;swap;3
+358_translation;Entretien 01 24.10.03 02_traitement_A;Un peu...;translation;3
+359;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, un peu maladif ?;original;10
+359_contextual;Entretien 01 24.10.03 02_traitement_A;Moi peux sais quoi, un besoin maladif ?;contextual;10
+359_swap;Entretien 01 24.10.03 02_traitement_A;Je ne sais, pas peu un? maladif;swap;10
+359_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, un peu malade ?;translation;10
 35_contextual;Entretien 01 24.10.03 01_traitement_A;Comment on arrivait, on vivait ce projet, on était deux chaque personnel.;contextual;0
 35_swap;Entretien 01 24.10.03 01_traitement_A;Où on arrivait, on avait projet un, on était deux du coup.;swap;0
 35_translation;Entretien 01 24.10.03 01_traitement_A;Là où nous sommes arrivés, nous avions un projet, nous en étions deux.;translation;0
 36;Entretien 01 24.10.03 01_traitement_A;C'était moins à la chaîne.;original;0
-360;Entretien 01 24.10.03 02_traitement_A;Un peu...;original;1
-360_contextual;Entretien 01 24.10.03 02_traitement_A;Un homme...;contextual;1
-360_swap;Entretien 01 24.10.03 02_traitement_A;Un peu. ..;swap;1
-360_translation;Entretien 01 24.10.03 02_traitement_A;Un peu...;translation;1
+360;Entretien 01 24.10.03 02_traitement_A;Un peu...;original;3
+360_contextual;Entretien 01 24.10.03 02_traitement_A;Un homme...;contextual;3
+360_swap;Entretien 01 24.10.03 02_traitement_A;Un peu. ..;swap;3
+360_translation;Entretien 01 24.10.03 02_traitement_A;Un peu...;translation;3
 361;Entretien 01 24.10.03 02_traitement_A;Un peu obsessionnel, oui.;original;0
 361_contextual;Entretien 01 24.10.03 02_traitement_A;Un marin maliste, oui.;contextual;0
 361_swap;Entretien 01 24.10.03 02_traitement_A;Peu obsessionnel un, oui.;swap;0
 361_translation;Entretien 01 24.10.03 02_traitement_A;Un peu obsédé, oui.;translation;0
-362;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître bizarre des fois pour certains qui sont dans le métier parce que...;original;1
-362_contextual;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître étrange des fois mais eux qui voudraient dans le métier aussi que...;contextual;1
-362_swap;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître des bizarre fois pour qui dans certains le métier sont parce que. ..;swap;1
-362_translation;Entretien 01 24.10.03 02_traitement_A;Ça a l'air bizarre pour certains qui sont dans les affaires parce que...;translation;1
-363;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, des fois qu'ils prennent un peu pour un zinzin.;original;1
-363_contextual;Entretien 01 24.10.03 02_traitement_A;Bref ne sais pas, des soit qu'ils prennent un peu pas de beauzin !!!.;contextual;1
-363_swap;Entretien 01 24.10.03 02_traitement_A;Ne je pas sais des, qu fois ils prennent ' un peu pour un zinzin.;swap;1
-363_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, parfois ils se prennent pour un zinzin.;translation;1
+362;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître bizarre des fois pour certains qui sont dans le métier parce que...;original;3
+362_contextual;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître étrange des fois mais eux qui voudraient dans le métier aussi que...;contextual;3
+362_swap;Entretien 01 24.10.03 02_traitement_A;Ça peut paraître des bizarre fois pour qui dans certains le métier sont parce que. ..;swap;3
+362_translation;Entretien 01 24.10.03 02_traitement_A;Ça a l'air bizarre pour certains qui sont dans les affaires parce que...;translation;3
+363;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, des fois qu'ils prennent un peu pour un zinzin.;original;3
+363_contextual;Entretien 01 24.10.03 02_traitement_A;Bref ne sais pas, des soit qu'ils prennent un peu pas de beauzin !!!.;contextual;3
+363_swap;Entretien 01 24.10.03 02_traitement_A;Ne je pas sais des, qu fois ils prennent ' un peu pour un zinzin.;swap;3
+363_translation;Entretien 01 24.10.03 02_traitement_A;Je ne sais pas, parfois ils se prennent pour un zinzin.;translation;3
 364;Entretien 01 24.10.03 02_traitement_A;Mais ça me permet justement d'avoir un rapport un peu plus intime avec ces matériaux et aller chercher des choses plus puissantes.;original;0
 364_contextual;Entretien 01 24.10.03 02_traitement_A;Mais ça vous permet justement t'avoir un rapport un peu plus intime avec différents paysages pour aller offrir des nuances plus profondes.;contextual;0
 364_swap;Entretien 01 24.10.03 02_traitement_A;Mais ça permet me justement d ' avoir rapport un un plus peu avec intime ces et matériaux aller chercher des choses puissantes plus.;swap;0
@@ -1181,14 +1181,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 366_contextual;Entretien 01 24.10.03 02_traitement_A;Et bien, je dirai que j' ai plus chercher ça assez loin pour comprendre...;contextual;0
 366_swap;Entretien 01 24.10.03 02_traitement_A;Moi et je, que sais j aime aller ' chercher vraiment plus loin comprendre pour. ..;swap;0
 366_translation;Entretien 01 24.10.03 02_traitement_A;Et je sais que j'aime continuer à chercher pour comprendre...;translation;0
-367;Entretien 01 24.10.03 02_traitement_A;En fait, c'est comprendre même l'essence même de ces matériaux, comment ils fonctionnent.;original;1
-367_contextual;Entretien 01 24.10.03 02_traitement_A;En résumer, c'est comprendre clairement i' utilité même de ces matériaux, voir combien fonctionnent.;contextual;1
-367_swap;Entretien 01 24.10.03 02_traitement_A;Fait en, c ' comprendre est l même ' essence de même ces matériaux, comment ils fonctionnent.;swap;1
-367_translation;Entretien 01 24.10.03 02_traitement_A;En fait, même l'essence de ces matériaux est de comprendre comment ils fonctionnent.;translation;1
-368;Entretien 01 24.10.03 02_traitement_A;Et j'ai pas de notion de chimie ou de...;original;1
-368_contextual;Entretien 01 24.10.03 02_traitement_A;Et apparemment'ai pas de notion de chimie quoi autre biologie;contextual;1
-368_swap;Entretien 01 24.10.03 02_traitement_A;Et ' j pas ai notion de de chimie ou de. ..;swap;1
-368_translation;Entretien 01 24.10.03 02_traitement_A;Et je n'ai aucune idée de la chimie ou...;translation;1
+367;Entretien 01 24.10.03 02_traitement_A;En fait, c'est comprendre même l'essence même de ces matériaux, comment ils fonctionnent.;original;3
+367_contextual;Entretien 01 24.10.03 02_traitement_A;En résumer, c'est comprendre clairement i' utilité même de ces matériaux, voir combien fonctionnent.;contextual;3
+367_swap;Entretien 01 24.10.03 02_traitement_A;Fait en, c ' comprendre est l même ' essence de même ces matériaux, comment ils fonctionnent.;swap;3
+367_translation;Entretien 01 24.10.03 02_traitement_A;En fait, même l'essence de ces matériaux est de comprendre comment ils fonctionnent.;translation;3
+368;Entretien 01 24.10.03 02_traitement_A;Et j'ai pas de notion de chimie ou de...;original;3
+368_contextual;Entretien 01 24.10.03 02_traitement_A;Et apparemment'ai pas de notion de chimie quoi autre biologie;contextual;3
+368_swap;Entretien 01 24.10.03 02_traitement_A;Et ' j pas ai notion de de chimie ou de. ..;swap;3
+368_translation;Entretien 01 24.10.03 02_traitement_A;Et je n'ai aucune idée de la chimie ou...;translation;3
 369;Entretien 01 24.10.03 02_traitement_A;Mais j'essaie d'avoir une connaissance un peu plus poussée.;original;0
 369_contextual;Entretien 01 24.10.03 02_traitement_A;Heureusement il'essaie aussi'avoir une comptabilité un peut plus poussée.;contextual;0
 369_swap;Entretien 01 24.10.03 02_traitement_A;J mais essaie ' d ' une avoir connaissance un peu poussée. plus;swap;0
@@ -1201,10 +1201,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 370_contextual;Entretien 01 24.10.03 02_traitement_A;Pensée juste, j' a adopté sa méthodologie, je l'applique.;contextual;0
 370_swap;Entretien 01 24.10.03 02_traitement_A;Juste pas, ' j poudre ai de la, je l ' applique.;swap;0
 370_translation;Entretien 01 24.10.03 02_traitement_A;Pas seulement, j'ai de la poudre à canon, je la mets.;translation;0
-371;Entretien 01 24.10.03 02_traitement_A;Mais savoir comment tout réagit.;original;1
-371_contextual;Entretien 01 24.10.03 02_traitement_A;Mais voila comment ca réagit.;contextual;1
-371_swap;Entretien 01 24.10.03 02_traitement_A;Mais comment tout savoir réagit.;swap;1
-371_translation;Entretien 01 24.10.03 02_traitement_A;Mais sachez comment tout réagit.;translation;1
+371;Entretien 01 24.10.03 02_traitement_A;Mais savoir comment tout réagit.;original;3
+371_contextual;Entretien 01 24.10.03 02_traitement_A;Mais voila comment ca réagit.;contextual;3
+371_swap;Entretien 01 24.10.03 02_traitement_A;Mais comment tout savoir réagit.;swap;3
+371_translation;Entretien 01 24.10.03 02_traitement_A;Mais sachez comment tout réagit.;translation;3
 372;Entretien 01 24.10.03 02_traitement_A;Ouais, la matière.;original;0
 372_contextual;Entretien 01 24.10.03 02_traitement_A;Socrate, la démocratie.;contextual;0
 372_swap;Entretien 01 24.10.03 02_traitement_A;, ouais matière la.;swap;0
@@ -1213,10 +1213,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 373_contextual;Entretien 01 24.10.03 02_traitement_A;Et la matière après les nuages qui 'entoure aussi, parce à ma matière, ce n'est jamais exactement là, dans le monde.;contextual;0
 373_swap;Entretien 01 24.10.03 02_traitement_A;La et matière dans les qui éléments l ' aussi entoure, parce la que matière elle, n ' est pas juste, le là dans. vide;swap;0
 373_translation;Entretien 01 24.10.03 02_traitement_A;Et la matière dans les éléments qui l'entourent, parce que la matière n'est pas juste là, dans le vide.;translation;0
-374;Entretien 01 24.10.03 02_traitement_A;Ne serait-ce que la météo et...;original;1
-374_contextual;Entretien 01 24.10.03 02_traitement_A;Ne serait- ce toutes la météo et tout;contextual;1
-374_swap;Entretien 01 24.10.03 02_traitement_A;Serait ne ce que la - météo et. ..;swap;1
-374_translation;Entretien 01 24.10.03 02_traitement_A;Si seulement c'était le temps et...;translation;1
+374;Entretien 01 24.10.03 02_traitement_A;Ne serait-ce que la météo et...;original;3
+374_contextual;Entretien 01 24.10.03 02_traitement_A;Ne serait- ce toutes la météo et tout;contextual;3
+374_swap;Entretien 01 24.10.03 02_traitement_A;Serait ne ce que la - météo et. ..;swap;3
+374_translation;Entretien 01 24.10.03 02_traitement_A;Si seulement c'était le temps et...;translation;3
 375;Entretien 01 24.10.03 02_traitement_A;Enfin, tout l'environnement joue sur la matière, comment elle se comporte.;original;0
 375_contextual;Entretien 01 24.10.03 02_traitement_A;Bonjour, tout l' qui vit sur la voiture, comment est se comporte.;contextual;0
 375_swap;Entretien 01 24.10.03 02_traitement_A;Enfin tout l, ' environnement joue sur la matière, elle comment se comporte.;swap;0
@@ -1241,18 +1241,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 37_swap;Entretien 01 24.10.03 01_traitement_A;' c était vraiment, avait on vitrail un à ou restaurer une création à et il faire nous durait toute la pendant semaine.;swap;0
 37_translation;Entretien 01 24.10.03 01_traitement_A;C'était vraiment, nous avons eu une fenêtre à restaurer ou à faire une création, et il nous a fallu toute la semaine.;translation;0
 38;Entretien 01 24.10.03 01_traitement_A;Et qu'on prenait vraiment bien le temps de le faire, de le restaurer, de le créer.;original;0
-380;Entretien 01 24.10.03 02_traitement_A;Je me questionne là-dessus, effectivement, mais sur ce qui est abordable à mon niveau, dans le sens où c'est un métier où les matériaux sont...;original;1
-380_contextual;Entretien 01 24.10.03 02_traitement_A;Je me voisne le- bas, effectivement, mais sur du cadre est abordable dans mon niveau, dans le sens supposée m' être un métier où les matériaux sont (...);contextual;1
-380_swap;Entretien 01 24.10.03 02_traitement_A;Questionne je me là dessus -, , effectivement mais sur ce est qui abordable à niveau, mon le sens dans où c ' est un métier où les sont matériaux. ..;swap;1
-380_translation;Entretien 01 24.10.03 02_traitement_A;Je me demande vraiment, mais ce qui est abordable à mon niveau, c'est que c'est une profession où les matériaux sont...;translation;1
+380;Entretien 01 24.10.03 02_traitement_A;Je me questionne là-dessus, effectivement, mais sur ce qui est abordable à mon niveau, dans le sens où c'est un métier où les matériaux sont...;original;3
+380_contextual;Entretien 01 24.10.03 02_traitement_A;Je me voisne le- bas, effectivement, mais sur du cadre est abordable dans mon niveau, dans le sens supposée m' être un métier où les matériaux sont (...);contextual;3
+380_swap;Entretien 01 24.10.03 02_traitement_A;Questionne je me là dessus -, , effectivement mais sur ce est qui abordable à niveau, mon le sens dans où c ' est un métier où les sont matériaux. ..;swap;3
+380_translation;Entretien 01 24.10.03 02_traitement_A;Je me demande vraiment, mais ce qui est abordable à mon niveau, c'est que c'est une profession où les matériaux sont...;translation;3
 381;Entretien 01 24.10.03 02_traitement_A;Certains sont assez nobles, et c'est difficile de s'en procurer.;original;0
 381_contextual;Entretien 01 24.10.03 02_traitement_A;Certains son assez nobles, seulement c'est difficile en trouver' les procurer.;contextual;0
 381_swap;Entretien 01 24.10.03 02_traitement_A;Sont certains assez nobles et, c ' est difficile de s ' en. procurer;swap;0
 381_translation;Entretien 01 24.10.03 02_traitement_A;Certains sont très nobles, et il est difficile de les obtenir.;translation;0
-382;Entretien 01 24.10.03 02_traitement_A;Mais l'histoire du...;original;1
-382_contextual;Entretien 01 24.10.03 02_traitement_A;Mais après' ascension du...;contextual;1
-382_swap;Entretien 01 24.10.03 02_traitement_A;Mais histoire l '. du..;swap;1
-382_translation;Entretien 01 24.10.03 02_traitement_A;Mais l'histoire de...;translation;1
+382;Entretien 01 24.10.03 02_traitement_A;Mais l'histoire du...;original;3
+382_contextual;Entretien 01 24.10.03 02_traitement_A;Mais après' ascension du...;contextual;3
+382_swap;Entretien 01 24.10.03 02_traitement_A;Mais histoire l '. du..;swap;3
+382_translation;Entretien 01 24.10.03 02_traitement_A;Mais l'histoire de...;translation;3
 383;Entretien 01 24.10.03 02_traitement_A;Le plomb, c'est difficile de le remplacer, mais la peinture, des fois, on peut peut-être essayer de la créer soi-même pour être un peu autosuffisant.;original;0
 383_contextual;Entretien 01 24.10.03 02_traitement_A;Ce garage, c' si facile de le fabriquer, surtout la peinture, des fois, il peut peut- se essayer par la créer soit-même pour être un peu autosuffisant.;contextual;0
 383_swap;Entretien 01 24.10.03 02_traitement_A;Le plomb c, ' est difficile le de remplacer, la mais peinture, fois des, peut on peut - essayer être la de créer soi - pour même un être autosuffisant peu.;swap;0
@@ -1269,10 +1269,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 386_contextual;Entretien 01 24.10.03 02_traitement_A;Il y a peut- eu la risque, justement, de neutraliser tous ces déclarations par d' ....;contextual;0
 386_swap;Entretien 01 24.10.03 02_traitement_A;Y il peut a - être un moyen, justement, de substituer à matières par ces ' d autres.;swap;0
 386_translation;Entretien 01 24.10.03 02_traitement_A;Peut-être y a-t-il un moyen de remplacer ces questions par d'autres.;translation;0
-387;Entretien 01 24.10.03 02_traitement_A;Mais...;original;2
-387_contextual;Entretien 01 24.10.03 02_traitement_A;Mais Qu;contextual;2
-387_swap;Entretien 01 24.10.03 02_traitement_A;. mais..;swap;2
-387_translation;Entretien 01 24.10.03 02_traitement_A;Mais...;translation;2
+387;Entretien 01 24.10.03 02_traitement_A;Mais...;original;6
+387_contextual;Entretien 01 24.10.03 02_traitement_A;Mais Qu;contextual;6
+387_swap;Entretien 01 24.10.03 02_traitement_A;. mais..;swap;6
+387_translation;Entretien 01 24.10.03 02_traitement_A;Mais...;translation;6
 388;Entretien 01 24.10.03 02_traitement_A;Je pense que l'essence du vitrail, c'est du verre, du plomb, et de la grisaille.;original;0
 388_contextual;Entretien 01 24.10.03 02_traitement_A;Je pense que l' identité du Whiteoil, c'est entre soleil, le plomb, et de pure lumièreaille.;contextual;0
 388_swap;Entretien 01 24.10.03 02_traitement_A;Je que pense l ' essence vitrail du, c ' est verre du, du plomb de, et la grisaille.;swap;0
@@ -1297,14 +1297,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 392_contextual;Entretien 01 24.10.03 02_traitement_A;Après s' être essayéné un peu, bah je trouve ke c'est bien ce rester assez simple.;contextual;0
 392_swap;Entretien 01 24.10.03 02_traitement_A;L après avoir ' questionné peu un, moi trouve je c que est ' bien de rester essentiel assez.;swap;0
 392_translation;Entretien 01 24.10.03 02_traitement_A;Après lui avoir posé une question, je pense que c'est une bonne chose que ça reste assez important.;translation;0
-393;Entretien 01 24.10.03 02_traitement_A;Mais je me...;original;2
-393_contextual;Entretien 01 24.10.03 02_traitement_A;Mais quel dois...;contextual;2
-393_swap;Entretien 01 24.10.03 02_traitement_A;Je mais. me..;swap;2
-393_translation;Entretien 01 24.10.03 02_traitement_A;Mais je...;translation;2
-394;Entretien 01 24.10.03 02_traitement_A;C'est pas une question qui me...;original;2
-394_contextual;Entretien 01 24.10.03 02_traitement_A;-'est pas cette histoire qui me...;contextual;2
-394_swap;Entretien 01 24.10.03 02_traitement_A;Est c pas ' une question me qui. ..;swap;2
-394_translation;Entretien 01 24.10.03 02_traitement_A;Ce n'est pas une question...;translation;2
+393;Entretien 01 24.10.03 02_traitement_A;Mais je me...;original;6
+393_contextual;Entretien 01 24.10.03 02_traitement_A;Mais quel dois...;contextual;6
+393_swap;Entretien 01 24.10.03 02_traitement_A;Je mais. me..;swap;6
+393_translation;Entretien 01 24.10.03 02_traitement_A;Mais je...;translation;6
+394;Entretien 01 24.10.03 02_traitement_A;C'est pas une question qui me...;original;6
+394_contextual;Entretien 01 24.10.03 02_traitement_A;-'est pas cette histoire qui me...;contextual;6
+394_swap;Entretien 01 24.10.03 02_traitement_A;Est c pas ' une question me qui. ..;swap;6
+394_translation;Entretien 01 24.10.03 02_traitement_A;Ce n'est pas une question...;translation;6
 395;Entretien 01 24.10.03 02_traitement_A;C'est ça.;original;0
 395_contextual;Entretien 01 24.10.03 02_traitement_A;C' enfin terminé.;contextual;0
 395_swap;Entretien 01 24.10.03 02_traitement_A;C ' est ça.;swap;0
@@ -1328,9 +1328,9 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 39_contextual;Entretien 01 24.10.03 01_traitement_A;Le conseil de bien faire tes cartons.;contextual;0
 39_swap;Entretien 01 24.10.03 01_traitement_A;Le bien temps de faire les. choses;swap;0
 39_translation;Entretien 01 24.10.03 01_traitement_A;Il est temps de faire ce qui est juste.;translation;0
-3_contextual;Entretien 01 24.10.03 01_traitement_A;Ça dépend un peu parce un par coup l' est eu deux aspects quasiment variables.;contextual;1
-3_swap;Entretien 01 24.10.03 01_traitement_A;Dépend ça un peu parce du que coup j ' deux ai eu aspects très différents.;swap;1
-3_translation;Entretien 01 24.10.03 01_traitement_A;Ça dépend parce que j'avais deux aspects différents.;translation;1
+3_contextual;Entretien 01 24.10.03 01_traitement_A;Ça dépend un peu parce un par coup l' est eu deux aspects quasiment variables.;contextual;3
+3_swap;Entretien 01 24.10.03 01_traitement_A;Dépend ça un peu parce du que coup j ' deux ai eu aspects très différents.;swap;3
+3_translation;Entretien 01 24.10.03 01_traitement_A;Ça dépend parce que j'avais deux aspects différents.;translation;3
 4;Entretien 01 24.10.03 01_traitement_A;J'ai été dans deux entreprises.;original;0
 40;Entretien 01 24.10.03 01_traitement_A;Et ensuite, on le finissait, on allait en chantier, on allait le poser.;original;0
 400;Entretien 01 24.10.03 03_traitement_A;Je suis enseignante ici au BIP.;original;0
@@ -1360,18 +1360,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 45_contextual;Entretien 01 24.10.03 01_traitement_A;... voilà ....;contextual;0
 45_swap;Entretien 01 24.10.03 01_traitement_A;Quoi et voilà.;swap;0
 45_translation;Entretien 01 24.10.03 01_traitement_A;Et c'est ça.;translation;0
-46;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si je répondais clairement à la question.;original;3
-46_contextual;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas ou cela répondais clairement de la rédaction.;contextual;3
-46_swap;Entretien 01 24.10.03 01_traitement_A;Je ne si sais pas je à répondais clairement la question.;swap;3
-46_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si j'ai répondu clairement à la question.;translation;3
-47;Entretien 01 24.10.03 01_traitement_A;Celui que j'ai fait le plus et celui qui me plaît aussi le plus.;original;1
-47_contextual;Entretien 01 24.10.03 01_traitement_A;Celui qui j'ai fait le pire suis celui qui se plaisait aussi beaucoup plus.;contextual;1
-47_swap;Entretien 01 24.10.03 01_traitement_A;Celui j que ' fait ai le et plus qui celui plaît me aussi plus le.;swap;1
-47_translation;Entretien 01 24.10.03 01_traitement_A;Celui que j'ai fait le plus et celui que j'aime le plus.;translation;1
-48;Entretien 01 24.10.03 01_traitement_A;Est-ce que j'aime ?;original;1
-48_contextual;Entretien 01 24.10.03 01_traitement_A;Est-ce e j' allez a;contextual;1
-48_swap;Entretien 01 24.10.03 01_traitement_A;Est ce - que ' j? aime;swap;1
-48_translation;Entretien 01 24.10.03 01_traitement_A;Ça me plaît ?;translation;1
+46;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si je répondais clairement à la question.;original;10
+46_contextual;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas ou cela répondais clairement de la rédaction.;contextual;10
+46_swap;Entretien 01 24.10.03 01_traitement_A;Je ne si sais pas je à répondais clairement la question.;swap;10
+46_translation;Entretien 01 24.10.03 01_traitement_A;Je ne sais pas si j'ai répondu clairement à la question.;translation;10
+47;Entretien 01 24.10.03 01_traitement_A;Celui que j'ai fait le plus et celui qui me plaît aussi le plus.;original;3
+47_contextual;Entretien 01 24.10.03 01_traitement_A;Celui qui j'ai fait le pire suis celui qui se plaisait aussi beaucoup plus.;contextual;3
+47_swap;Entretien 01 24.10.03 01_traitement_A;Celui j que ' fait ai le et plus qui celui plaît me aussi plus le.;swap;3
+47_translation;Entretien 01 24.10.03 01_traitement_A;Celui que j'ai fait le plus et celui que j'aime le plus.;translation;3
+48;Entretien 01 24.10.03 01_traitement_A;Est-ce que j'aime ?;original;3
+48_contextual;Entretien 01 24.10.03 01_traitement_A;Est-ce e j' allez a;contextual;3
+48_swap;Entretien 01 24.10.03 01_traitement_A;Est ce - que ' j? aime;swap;3
+48_translation;Entretien 01 24.10.03 01_traitement_A;Ça me plaît ?;translation;3
 49;Entretien 01 24.10.03 01_traitement_A;Il y a plusieurs choses que j'aime dans le vitrail.;original;0
 49_contextual;Entretien 01 24.10.03 01_traitement_A;Il y finalement plusieurs choses que j' aime aborder un vit musicalil.;contextual;0
 49_swap;Entretien 01 24.10.03 01_traitement_A;Il a y plusieurs choses que ' j aime le vitrail dans.;swap;0
@@ -1388,10 +1388,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 51_contextual;Entretien 01 24.10.03 01_traitement_A;Et de coup, quand on voit deux vitreries monter très droits, cette sensation d'avoir des miroirs quasiment alignés, presque linéaires où tu dois vraiment toujours calculer si c'est bien d' unquerre, bien droit, mais symétrique.;contextual;0
 51_swap;Entretien 01 24.10.03 01_traitement_A;Et du coup, quand on des a vitreries monter très droits, cette rigueur ' d avoir des plombs alignés très très, linéaires tu où vraiment dois toujours si calculer ' c est bien d équerre ' bien, droit, bien parfait.;swap;0
 51_translation;Entretien 01 24.10.03 01_traitement_A;Et puis, quand on a des fenêtres très droites, cette rigueur, très droite, très droite, où il faut vraiment toujours calculer si c'est juste, tourner parfaitement.;translation;0
-52;Entretien 01 24.10.03 01_traitement_A;Il y a ce truc que j'aime beaucoup et que j'essaie d'en faire le plus possible.;original;2
-52_contextual;Entretien 01 24.10.03 01_traitement_A;Mais y a ce texte que m'aime beaucoup parler que j'essaie d' ensemble faire du davantage possible.;contextual;2
-52_swap;Entretien 01 24.10.03 01_traitement_A;Il y ce a truc j que ' aime et beaucoup j que ' ' essaie d en faire le possible plus.;swap;2
-52_translation;Entretien 01 24.10.03 01_traitement_A;Il y a cette chose que j'aime beaucoup et que je veux faire autant que possible.;translation;2
+52;Entretien 01 24.10.03 01_traitement_A;Il y a ce truc que j'aime beaucoup et que j'essaie d'en faire le plus possible.;original;6
+52_contextual;Entretien 01 24.10.03 01_traitement_A;Mais y a ce texte que m'aime beaucoup parler que j'essaie d' ensemble faire du davantage possible.;contextual;6
+52_swap;Entretien 01 24.10.03 01_traitement_A;Il y ce a truc j que ' aime et beaucoup j que ' ' essaie d en faire le possible plus.;swap;6
+52_translation;Entretien 01 24.10.03 01_traitement_A;Il y a cette chose que j'aime beaucoup et que je veux faire autant que possible.;translation;6
 53;Entretien 01 24.10.03 01_traitement_A;Par exemple, à l'exposition, je ne sais pas si tu allais voir un tout petit peu l'expo d'en bas qu'il y a.;original;0
 53_contextual;Entretien 01 24.10.03 01_traitement_A;Parcontre, en mi' entrée, je ne comprenais pas si tu devaisallais voir quelque tout petit peu l' exposition d'en bas lorsqu'il y eut.;contextual;0
 53_swap;Entretien 01 24.10.03 01_traitement_A;Par exemple, à ' l exposition je, pas ne sais si tu allais voir un tout petit peu l ' expo d ' qu en bas il ' a y.;swap;0
@@ -1408,18 +1408,18 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 56_contextual;Entretien 01 24.10.03 01_traitement_A;Ce l' IL y a de si simple un peu dans le monde ça vit... ... où cet'est juste des mosange lumineux.;contextual;0
 56_swap;Entretien 01 24.10.03 01_traitement_A;Ce qu ' y a il simple de plus peu un le dans monde du où vitrail c ' est des juste losanges.;swap;0
 56_translation;Entretien 01 24.10.03 01_traitement_A;Ce qui est un peu plus facile dans le monde de la fenêtre en verre où il n'y a que des chenilles.;translation;0
-57;Entretien 01 24.10.03 01_traitement_A;Et on vient et on monte comme ça et c'est une certaine rigueur.;original;2
-57_contextual;Entretien 01 24.10.03 01_traitement_A;Oui on vient donc on monte comme ça ce 'est une incroyable rigueur.;contextual;2
-57_swap;Entretien 01 24.10.03 01_traitement_A;Et vient on on et monte comme ça et c ' une certaine est. rigueur;swap;2
-57_translation;Entretien 01 24.10.03 01_traitement_A;Et nous venons et montons si haut, et c'est une certaine rigueur.;translation;2
+57;Entretien 01 24.10.03 01_traitement_A;Et on vient et on monte comme ça et c'est une certaine rigueur.;original;6
+57_contextual;Entretien 01 24.10.03 01_traitement_A;Oui on vient donc on monte comme ça ce 'est une incroyable rigueur.;contextual;6
+57_swap;Entretien 01 24.10.03 01_traitement_A;Et vient on on et monte comme ça et c ' une certaine est. rigueur;swap;6
+57_translation;Entretien 01 24.10.03 01_traitement_A;Et nous venons et montons si haut, et c'est une certaine rigueur.;translation;6
 58;Entretien 01 24.10.03 01_traitement_A;Et j'ai un peu haï le losanger pendant mes deux ans de CAP parce qu'on n'a fait que ça.;original;0
 58_contextual;Entretien 01 24.10.03 01_traitement_A;Et j' avait un peu haï la losanger pendant mes 10 ans à licence parce que'on l' y fait forcément ça.;contextual;0
 58_swap;Entretien 01 24.10.03 01_traitement_A;J et ' un ai haï peu losanger pendant le deux mes de ans CAP parce ' qu on n ' a fait que ça.;swap;0
 58_translation;Entretien 01 24.10.03 01_traitement_A;Et je le détestais un peu pendant que j'avais 2 ans de CAP, parce que c'est ce qu'on a fait.;translation;0
-59;Entretien 01 24.10.03 01_traitement_A;Et du coup, j'avais envie de montrer qu'on pouvait le faire parfaitement, qu'il pouvait être beau, tu verras en bas à quoi ça ressemble plus ou moins.;original;3
-59_contextual;Entretien 01 24.10.03 01_traitement_A;Voilà du moins, quand'avais envie de réaliser qu'on pouvait le faire pousser, comment'il pouvait être beau, tu verras en voyant la droite ça ressemble plus mais moins.;contextual;3
-59_swap;Entretien 01 24.10.03 01_traitement_A;Et du coup j, ' de avais envie qu montrer ' le on pouvait faire parfaitement, qu ' il pouvait être beau, verras tu en bas quoi à ressemble ça plus ou. moins;swap;3
-59_translation;Entretien 01 24.10.03 01_traitement_A;Et puis je voulais montrer qu'on peut faire comme si c'était beau, et tu verras ce que ça fait.;translation;3
+59;Entretien 01 24.10.03 01_traitement_A;Et du coup, j'avais envie de montrer qu'on pouvait le faire parfaitement, qu'il pouvait être beau, tu verras en bas à quoi ça ressemble plus ou moins.;original;10
+59_contextual;Entretien 01 24.10.03 01_traitement_A;Voilà du moins, quand'avais envie de réaliser qu'on pouvait le faire pousser, comment'il pouvait être beau, tu verras en voyant la droite ça ressemble plus mais moins.;contextual;10
+59_swap;Entretien 01 24.10.03 01_traitement_A;Et du coup j, ' de avais envie qu montrer ' le on pouvait faire parfaitement, qu ' il pouvait être beau, verras tu en bas quoi à ressemble ça plus ou. moins;swap;10
+59_translation;Entretien 01 24.10.03 01_traitement_A;Et puis je voulais montrer qu'on peut faire comme si c'était beau, et tu verras ce que ça fait.;translation;10
 5_contextual;Entretien 01 24.10.03 01_traitement_A;L'entreprise auquel j'ai passé ce CAP, c' la Grande couronne.;contextual;0
 5_swap;Entretien 01 24.10.03 01_traitement_A;L entreprise ' j où ' ai mon CAP fait, c ' entreprise était grosse.;swap;0
 5_translation;Entretien 01 24.10.03 01_traitement_A;L'entreprise où j'ai fait mon CAP était une grande entreprise.;translation;0
@@ -1476,10 +1476,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 71_contextual;Entretien 01 24.10.03 01_traitement_A;Et ça, je'aime vraiment dessiner.;contextual;0
 71_swap;Entretien 01 24.10.03 01_traitement_A;Ça et j, ' bien aime faire.;swap;0
 71_translation;Entretien 01 24.10.03 01_traitement_A;Et j'aime ça.;translation;0
-72;Entretien 01 24.10.03 01_traitement_A;Sinon, qu'est-ce que c'est ?;original;1
-72_contextual;Entretien 01 24.10.03 01_traitement_A;Sinon, qu' Est-ce ça m'est ??;contextual;1
-72_swap;Entretien 01 24.10.03 01_traitement_A;, sinon qu ' - ce est que c est '?;swap;1
-72_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, qu'est-ce que c'est ?;translation;1
+72;Entretien 01 24.10.03 01_traitement_A;Sinon, qu'est-ce que c'est ?;original;3
+72_contextual;Entretien 01 24.10.03 01_traitement_A;Sinon, qu' Est-ce ça m'est ??;contextual;3
+72_swap;Entretien 01 24.10.03 01_traitement_A;, sinon qu ' - ce est que c est '?;swap;3
+72_translation;Entretien 01 24.10.03 01_traitement_A;Sinon, qu'est-ce que c'est ?;translation;3
 73;Entretien 01 24.10.03 01_traitement_A;C'est aussi la coupe du verre.;original;0
 73_contextual;Entretien 01 24.10.03 01_traitement_A;C'est probablement la nourriture façon verre.;contextual;0
 73_swap;Entretien 01 24.10.03 01_traitement_A;' c est aussi la coupe verre. du;swap;0
@@ -1504,10 +1504,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 78_contextual;Entretien 01 24.10.03 01_traitement_A;Selon moi, elle es fière de pouvoir faire ces trucs tu sont un minimum compliqués.;contextual;0
 78_swap;Entretien 01 24.10.03 01_traitement_A;Après et tu, es de fière faire pouvoir des qui trucs sont peu un compliqués.;swap;0
 78_translation;Entretien 01 24.10.03 01_traitement_A;Et puis tu es fier de pouvoir faire des choses un peu compliquées.;translation;0
-79;Entretien 01 24.10.03 01_traitement_A;Dans les petits détails ?;original;1
-79_contextual;Entretien 01 24.10.03 01_traitement_A;Dans les bons magasins ?;contextual;1
-79_swap;Entretien 01 24.10.03 01_traitement_A;Les dans petits? détails;swap;1
-79_translation;Entretien 01 24.10.03 01_traitement_A;Dans les petits détails ?;translation;1
+79;Entretien 01 24.10.03 01_traitement_A;Dans les petits détails ?;original;3
+79_contextual;Entretien 01 24.10.03 01_traitement_A;Dans les bons magasins ?;contextual;3
+79_swap;Entretien 01 24.10.03 01_traitement_A;Les dans petits? détails;swap;3
+79_translation;Entretien 01 24.10.03 01_traitement_A;Dans les petits détails ?;translation;3
 7_contextual;Entretien 01 24.10.03 01_traitement_A;Superbe journée, on bouge beaucoup.;contextual;0
 7_swap;Entretien 01 24.10.03 01_traitement_A;Grosse entreprise, on beaucoup était.;swap;0
 7_translation;Entretien 01 24.10.03 01_traitement_A;Grande entreprise, nous étions beaucoup.;translation;0
@@ -1568,10 +1568,10 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 92_contextual;Entretien 01 24.10.03 01_traitement_A;Du bien, la'abord, on avais sauvegardé toutes mes photos à l'aide des'une pige.;contextual;0
 92_swap;Entretien 01 24.10.03 01_traitement_A;Coup du, d ' abord, on coupé toutes les a pièces à l ' aide d ' une. pige;swap;0
 92_translation;Entretien 01 24.10.03 01_traitement_A;D'abord, on a coupé toutes les pièces avec un pigeon.;translation;0
-93;Entretien 01 24.10.03 01_traitement_A;Une pige, c'est un espèce de morceau de verre qu'on vient couper à las bonne taille pour faire des bandes parfaites de verre.;original;1
-93_contextual;Entretien 01 24.10.03 01_traitement_A;Une laige, ...'est un morceaux de morceau de papier qu'on vient couper à sos bonne forme pour monter des bandes à forme de textures.;contextual;1
-93_swap;Entretien 01 24.10.03 01_traitement_A;Une pige, ' c est un espèce de morceau verre de ' qu on vient couper à las bonne pour taille des bandes parfaites faire de verre.;swap;1
-93_translation;Entretien 01 24.10.03 01_traitement_A;Une colombe est une sorte de pièce de verre que vous voulez couper dans la bonne taille pour faire des bandes de verre parfaites.;translation;1
+93;Entretien 01 24.10.03 01_traitement_A;Une pige, c'est un espèce de morceau de verre qu'on vient couper à las bonne taille pour faire des bandes parfaites de verre.;original;3
+93_contextual;Entretien 01 24.10.03 01_traitement_A;Une laige, ...'est un morceaux de morceau de papier qu'on vient couper à sos bonne forme pour monter des bandes à forme de textures.;contextual;3
+93_swap;Entretien 01 24.10.03 01_traitement_A;Une pige, ' c est un espèce de morceau verre de ' qu on vient couper à las bonne pour taille des bandes parfaites faire de verre.;swap;3
+93_translation;Entretien 01 24.10.03 01_traitement_A;Une colombe est une sorte de pièce de verre que vous voulez couper dans la bonne taille pour faire des bandes de verre parfaites.;translation;3
 94;Entretien 01 24.10.03 01_traitement_A;Par exemple, je dois avoir une bande ou des carrés qui doivent faire 5 cm sur 5 cm.;original;0
 94_contextual;Entretien 01 24.10.03 01_traitement_A;Entre exemple, je voulais avoir la plateforme formant des carrés qui doivent faire 12 cm sur 5 cm.;contextual;0
 94_swap;Entretien 01 24.10.03 01_traitement_A;Exemple par je, dois avoir bande ou une carrés des qui faire doivent 5 cm sur 5 cm.;swap;0
@@ -1588,14 +1588,14 @@ id;filename;text;augmentation_type;difficulté_verbalisation
 97_contextual;Entretien 01 24.10.03 01_traitement_A;Et après coup, on pourrait faire 3 bandes à la chaîne et y a encore besoin du'une p pause où on revient passer et faire nos petits carrés et des moment, on a les petits carrés parfaits.;contextual;0
 97_swap;Entretien 01 24.10.03 01_traitement_A;Et coup du, vient on ces faire bandes la chaîne à et a on encore besoin d ' pige une on où pour revient passer faire nos petits carrés et du coup, on a des petits carrés parfaits.;swap;0
 97_translation;Entretien 01 24.10.03 01_traitement_A;Et puis nous sommes ici pour faire ces bandes sur la chaîne, et nous avons besoin d'un autre pigeon où nous allons faire nos petits carrés, et puis nous avons des petits carrés parfaits.;translation;0
-98;Entretien 01 24.10.03 01_traitement_A;Quand on a tous nos verres qui sont tous coupés à l'aide de cette technique qui s'appelle la pige, on monte en escalier.;original;1
-98_contextual;Entretien 01 24.10.03 01_traitement_A;lorsque on aperçoit tous nos camarades on sont tous devant et à l'aide une la technique qui s'appelle la pige, on prend son escalier.;contextual;1
-98_swap;Entretien 01 24.10.03 01_traitement_A;A quand tous on verres nos qui sont tous coupés à l ' de qui aide cette technique s ' appelle pige la, on monte en escalier.;swap;1
-98_translation;Entretien 01 24.10.03 01_traitement_A;Si nous avons tous nos verres, tous coupés par cette technique appelée colombe, nous montons dans l'escalier.;translation;1
-99;Entretien 01 24.10.03 01_traitement_A;Petite pièce après petite pièce, c'est petite pièce, petit plomb, petite pièce, petit plomb, petite pièce, petit plomb, à la chaîne comme ça.;original;1
-99_contextual;Entretien 01 24.10.03 01_traitement_A;Une étoile a fine cloche, c' au petite pièce, petit plomb, petite chaîne, petit plomb, petite pièce, 1 point, à grosse chaîne comme ça.;contextual;1
-99_swap;Entretien 01 24.10.03 01_traitement_A;Petite pièce petite après pièce, c ' est petite, pièce petit plomb, petite pièce, petit plomb, pièce petite, plomb à petit, chaîne la comme. ça;swap;1
-99_translation;Entretien 01 24.10.03 01_traitement_A;Petit morceau par petit morceau, petit morceau, petit morceau, petit morceau, petit morceau, petit morceau, dans la chaîne.;translation;1
+98;Entretien 01 24.10.03 01_traitement_A;Quand on a tous nos verres qui sont tous coupés à l'aide de cette technique qui s'appelle la pige, on monte en escalier.;original;3
+98_contextual;Entretien 01 24.10.03 01_traitement_A;lorsque on aperçoit tous nos camarades on sont tous devant et à l'aide une la technique qui s'appelle la pige, on prend son escalier.;contextual;3
+98_swap;Entretien 01 24.10.03 01_traitement_A;A quand tous on verres nos qui sont tous coupés à l ' de qui aide cette technique s ' appelle pige la, on monte en escalier.;swap;3
+98_translation;Entretien 01 24.10.03 01_traitement_A;Si nous avons tous nos verres, tous coupés par cette technique appelée colombe, nous montons dans l'escalier.;translation;3
+99;Entretien 01 24.10.03 01_traitement_A;Petite pièce après petite pièce, c'est petite pièce, petit plomb, petite pièce, petit plomb, petite pièce, petit plomb, à la chaîne comme ça.;original;3
+99_contextual;Entretien 01 24.10.03 01_traitement_A;Une étoile a fine cloche, c' au petite pièce, petit plomb, petite chaîne, petit plomb, petite pièce, 1 point, à grosse chaîne comme ça.;contextual;3
+99_swap;Entretien 01 24.10.03 01_traitement_A;Petite pièce petite après pièce, c ' est petite, pièce petit plomb, petite pièce, petit plomb, pièce petite, plomb à petit, chaîne la comme. ça;swap;3
+99_translation;Entretien 01 24.10.03 01_traitement_A;Petit morceau par petit morceau, petit morceau, petit morceau, petit morceau, petit morceau, petit morceau, dans la chaîne.;translation;3
 9_contextual;Entretien 01 24.10.03 01_traitement_A;Gardien d' églises ancienne ou pour création pour devenir restauration baies d'églises.;contextual;0
 9_swap;Entretien 01 24.10.03 01_traitement_A;Restauration d églises ' principalement ou bien création pour des baies grandes d '. églises;swap;0
 9_translation;Entretien 01 24.10.03 01_traitement_A;Restauration d'églises principalement ou pour de grandes baies d'églises.;translation;0

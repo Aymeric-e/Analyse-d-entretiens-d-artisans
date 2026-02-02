@@ -1,0 +1,12 @@
+BERT
+
+2026-02-02T02:51:31.907805 | final_train | lr=5e-05,             
+nbs=16, ml=128, epochs=7 | r2=0.8607024550437927, mae=0.5227584838867188, rmse=0.883432187690861, mse=0.7804524302482605
+
+
+REGRESSION
+
+2026-02-02 09:16:54 - __main__ - INFO - Résultats sur l'ensemble de test:
+2026-02-02 09:16:54 - __main__ - INFO -   - R² score: 0.6478
+2026-02-02 09:16:54 - __main__ - INFO -   - MAE: 0.9817
+2026-02-02 09:16:54 - __main__ - INFO -   - RMSE: 1.4047
