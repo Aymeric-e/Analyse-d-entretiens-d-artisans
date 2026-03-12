@@ -49,8 +49,8 @@ class DifficultyReportGenerator:
         logger.info("Entretiens chargés: %d", len(self.interviews_df))
 
     def difficulty_to_rgb(self, difficulty: float) -> Tuple[int, int, int]:
-        """Convert difficulty score (0-10) to RGB color (green to red)"""
-        normalized = max(0, min(1, difficulty / 10.0))
+        """Convert difficulty score (0-4) to RGB color (green to red)"""
+        normalized = max(0, min(1, difficulty / 4.0))
         hue = (1 - normalized) * 120 / 360
         saturation = 0.5
         lightness = 0.5
@@ -88,7 +88,7 @@ class DifficultyReportGenerator:
         """Wrap text with color span and tooltip on hover"""
         rgb = self.difficulty_to_rgb(difficulty)
         hex_color = self.rgb_to_hex(rgb)
-        tooltip = f"Difficulté: {difficulty:.2f}/10"
+        tooltip = f"Difficulté: {difficulty:.2f}/4"
 
         return f'<span style="background-color: {hex_color}; padding: 2px 4px; border-radius: 3px; cursor: help;" \
                        title="{tooltip}">{text}</span>'
@@ -207,7 +207,7 @@ class DifficultyReportGenerator:
         
         <div class="scale-info">
             <h3>Échelle de couleurs</h3>
-            <p>🟢 <strong>Vert (0/10)</strong>: Aucune difficulté | 🟡 <strong>Jaune (5/10)</strong>: Difficulté modérée | 🔴 <strong>Rouge (10/10)</strong>: Difficulté importante</p>
+            <p>🟢 <strong>Vert (0/4)</strong>: Aucune difficulté | 🟡 <strong>Jaune (2/4)</strong>: Difficulté modérée | 🔴 <strong>Rouge (4/4)</strong>: Difficulté importante</p>
             <p><em>Survolez les phrases colorées pour voir la note de difficulté exacte</em></p>
         </div>
         

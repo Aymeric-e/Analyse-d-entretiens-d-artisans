@@ -49,9 +49,9 @@ class DifficultyReportGenerator:
         logger.info("Entretiens chargés: %d", len(self.interviews_df))
 
     def difficulty_to_rgb(self, difficulty: float) -> Tuple[int, int, int]:
-        """Convert difficulty score (0-10) to RGB color (green to red)"""
+        """Convert difficulty score (0-4) to RGB color (green to red)"""
         # Normalize to 0-1
-        normalized = max(0, min(1, difficulty / 10.0))
+        normalized = max(0, min(1, difficulty / 4.0))
 
         # Green (0) to Red (1): HSL color space
         # Start at green (120°), end at red (0°)
@@ -145,7 +145,7 @@ class DifficultyReportGenerator:
         
         <div class="scale-info">
             <h3>Échelle de couleurs</h3>
-            <p>🟢 <strong>Vert (0/10)</strong>: Aucune difficulté | 🟡 <strong>Jaune (5/10)</strong>: Difficulté modérée | 🔴 <strong>Rouge (10/10)</strong>: Difficulté importante</p>
+            <p>🟢 <strong>Vert (0/4)</strong>: Aucune difficulté | 🟡 <strong>Jaune (2/4)</strong>: Difficulté modérée | 🔴 <strong>Rouge (4/4)</strong>: Difficulté importante</p>
         </div>
 """
 
@@ -169,7 +169,7 @@ class DifficultyReportGenerator:
                     html += f"""
                 <div class="phrase">
                     {colored_text}
-                    <span class="difficulty-badge">{difficulty:.2f}/10</span>
+                    <span class="difficulty-badge">{difficulty:.2f}/4</span>
                 </div>
 """
             else:

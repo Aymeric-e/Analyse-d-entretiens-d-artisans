@@ -1,0 +1,20 @@
+Correlation and Analysis Summary
+Target: note_bert_intimité (intimacy)
+
+--- Correlations ---
+language richness: r=0.450, rho=0.414
+fluency: r=0.495, rho=0.474
+emotions: r=0.560, rho=0.612
+imagination: r=0.460, rho=0.456
+expertise: r=0.240, rho=0.223
+vulnerability: r=0.295, rho=0.331
+difficulty of verbalisation: r=0.077, rho=0.168
+
+--- Generated Files ---
+- vif_analysis.csv: Check multicollinearity (VIF > 5 is high)
+- residuals_analysis.png/svg: Check model errors
+- shap_clustering_profiles.png/svg: Intimacy type segmentation
+- shap_interaction.png/svg: Interaction effects between factors
+- data_with_stats.csv: Input CSV with cluster and residual columns
+- cluster_means_heatmap.png/svg: Matrix of mean factors and intimacy per cluster
+- stat_par_entretien.csv: Aggregated stats by filename

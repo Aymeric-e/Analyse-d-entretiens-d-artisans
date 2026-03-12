@@ -1,0 +1,2 @@
+learning_rate;batch_size;max_length;num_epochs
+5e-05;16;256;7

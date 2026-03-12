@@ -8,8 +8,10 @@ Utilisation :
     poetry run python src/processing/statistiques_correlation.py \
         --input results/intimite/bert/all_scores_predictions.csv \
         --target note_bert_intimité \
-        --output results/intimite/analyse_stat \
-        --k-clusters 5
+        --output-dir results/intimite/analyse_stat \
+        --k-clusters 5 \
+        --label-target "intimacy" \
+        --label-factors "language richness,fluency,emotions,imagination,expertise,vulnerability,difficulty of verbalisation"
 """
 
 import argparse
@@ -23,7 +25,6 @@ import pandas as pd
 import seaborn as sns
 from scipy.stats import linregress, pearsonr, spearmanr
 
-# Essayer d'importer sklearn, shap, et statsmodels
 try:
     from sklearn.cluster import KMeans
     from sklearn.ensemble import RandomForestRegressor
@@ -117,14 +118,12 @@ def compute_vif(df: pd.DataFrame, factors: List[str], out_dir: Path = None):
 
     try:
         X = df[factors].copy()
-        # VIF nécessite un terme constant pour être précis
         X = add_constant(X)
 
         vif_data = pd.DataFrame()
         vif_data["factor"] = X.columns
         vif_data["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
 
-        # Filtrer le constant pour le rapport
         vif_data = vif_data[vif_data["factor"] != "const"].sort_values(by="VIF", ascending=False)
 
         if out_dir:
@@ -137,25 +136,38 @@ def compute_vif(df: pd.DataFrame, factors: List[str], out_dir: Path = None):
         return None
 
 
-def plot_heatmap(corr_df: pd.DataFrame, target: str, out_path: Path):
-    """Pour la heatmap de correlation pearson"""
-    plt.figure(figsize=(6, len(corr_df) * 0.5 + 2))
+def plot_heatmap(corr_df: pd.DataFrame, target: str, factors: List[str], label_map: dict, out_path: Path):
+    """Trace la heatmap de corrélation pearson avec labels rebaptisés."""
+    plt.figure(figsize=(8, 6))
     sns.set_theme(style="whitegrid")
-    mat = corr_df.set_index("factor")["pearson"].to_frame()
+
+    corr_df_renamed = corr_df.copy()
+    corr_df_renamed["factor"] = corr_df_renamed["factor"].map(lambda x: label_map.get(x, x))
+
+    mat = corr_df_renamed.set_index("factor")["pearson"].to_frame()
     sns.heatmap(mat, annot=True, cmap="coolwarm", vmin=-1, vmax=1, cbar_kws={"label": "Pearson r"})
-    plt.title(f"Corrélation Pearson avec {target}")
+    plt.title(f"Pearson correlation with {label_map.get(target, target)}")
+    plt.ylabel("")
     plt.tight_layout()
-    plt.savefig(out_path, dpi=150)
+    for ext in ("png", "svg"):
+        plt.savefig(out_path.with_suffix(f".{ext}"), dpi=150)
     plt.close()
 
 
-def plot_scatter(df: pd.DataFrame, target: str, factor: str, out_path: Path):
-    """Pour tracer les notes en fonction de chaque facteur + régression"""
+def plot_scatter(df: pd.DataFrame, target: str, factor: str, label_map: dict, out_path: Path):
+    """Trace la relation cible/facteur avec régression et annotations."""
     plt.figure(figsize=(6, 4))
-    sns.regplot(x=factor, y=target, data=df, scatter_kws={"s": 10, "alpha": 0.6}, line_kws={"color": "red"}, ci=None)
-    plt.xlabel(factor)
-    plt.ylabel(target)
-    plt.title(f"{factor} vs {target}")
+    sns.regplot(
+        x=factor,
+        y=target,
+        data=df,
+        scatter_kws={"s": 10, "alpha": 0.6},
+        line_kws={"color": "red"},
+        ci=None,
+    )
+    plt.xlabel(label_map.get(factor, factor))
+    plt.ylabel(label_map.get(target, target))
+    plt.title(f"{label_map.get(factor, factor)} vs {label_map.get(target, target)}")
     try:
         lr = linregress(df[factor].values, df[target].values)
         text = f"slope={lr.slope:.3f}\nintercept={lr.intercept:.3f}\nr={lr.rvalue:.3f}"
@@ -172,7 +184,8 @@ def plot_scatter(df: pd.DataFrame, target: str, factor: str, out_path: Path):
     except Exception:
         pass
     plt.tight_layout()
-    plt.savefig(out_path, dpi=150)
+    for ext in ("png", "svg"):
+        plt.savefig(out_path.with_suffix(f".{ext}"), dpi=150)
     plt.close()
 
 
@@ -181,41 +194,42 @@ def analyze_residuals(y_test, y_pred, out_dir: Path):
     residuals = y_test - y_pred
     plt.figure(figsize=(12, 5))
 
-    # Scatter : Prédit vs Résidus
     plt.subplot(1, 2, 1)
     plt.scatter(y_pred, residuals, alpha=0.5)
     plt.axhline(0, color="red", linestyle="--")
-    plt.xlabel("Valeurs Prédites")
-    plt.ylabel("Résidus (Réel - Préd)")
-    plt.title("Résidus vs Prédictions")
+    plt.xlabel("Predicted Values")
+    plt.ylabel("Residuals (Actual - Pred)")
+    plt.title("Residuals vs Predictions")
 
-    # Hist : Distribution des Résidus
     plt.subplot(1, 2, 2)
     sns.histplot(residuals, kde=True)
-    plt.title("Distribution des Résidus")
+    plt.title("Distribution of Residuals")
 
     plt.tight_layout()
-    plt.savefig(out_dir / "residuals_analysis.png", dpi=150)
+    for ext in ("png", "svg"):
+        plt.savefig(out_dir / f"residuals_analysis.{ext}", dpi=150)
     plt.close()
 
 
-def analyze_shap_clustering(shap_values, factors, out_dir: Path, k: int = 5):
-    """Clusterise les valeurs SHAP pour identifier les 'Profils d'Intimité'."""
+def analyze_shap_clustering(shap_values, factors, label_map, out_dir: Path, k: int = 5):
+    """Clusterise les valeurs SHAP pour identifier les profils d'intimité."""
     try:
-        # Clustering K-Means sur les valeurs SHAP
         kmeans = KMeans(n_clusters=k, random_state=42)
         _ = kmeans.fit_predict(shap_values.values)
 
-        # Créer un DataFrame pour les centres de cluster (Impact SHAP moyen par cluster)
         cluster_centers = pd.DataFrame(kmeans.cluster_centers_, columns=factors)
-        cluster_centers["Cluster_ID"] = [f"Cluster {i}" for i in range(k)]
-        cluster_centers = cluster_centers.set_index("Cluster_ID")
 
-        plt.figure(figsize=(10, 6))
-        sns.heatmap(cluster_centers, cmap="coolwarm", center=0, annot=True, fmt=".3f")
-        plt.title("Profils de Clustering SHAP (Impact Moyen par Facteur)")
+        cluster_centers_renamed = cluster_centers.copy()
+        cluster_centers_renamed.columns = [label_map.get(f, f) for f in factors]
+        cluster_centers_renamed["Cluster_ID"] = [f"Cluster {i}" for i in range(k)]
+        cluster_centers_renamed = cluster_centers_renamed.set_index("Cluster_ID")
+
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(cluster_centers_renamed, cmap="coolwarm", center=0, annot=True, fmt=".3f")
+        plt.title("SHAP Clustering Profiles (Average Impact per Factor)")
         plt.tight_layout()
-        plt.savefig(out_dir / "shap_clustering_profiles.png", dpi=150)
+        for ext in ("png", "svg"):
+            plt.savefig(out_dir / f"shap_clustering_profiles.{ext}", dpi=150)
         plt.close()
 
         logger.info("Analyse de clustering SHAP sauvegardée")
@@ -226,7 +240,7 @@ def analyze_shap_clustering(shap_values, factors, out_dir: Path, k: int = 5):
 
 
 def compute_shap_advanced(
-    df_clean: pd.DataFrame, df_original: pd.DataFrame, target: str, factors: List[str], out_dir: Path, k: int = 5
+    df_clean: pd.DataFrame, df_original: pd.DataFrame, target: str, factors: List[str], label_map: dict, out_dir: Path, k: int = 5
 ):
     """Fonction réalisant tous les calculs pour l'analyse SHAP"""
     if not (SKLEARN_AVAILABLE and SHAP_AVAILABLE):
@@ -236,109 +250,102 @@ def compute_shap_advanced(
     X = df_clean[factors]
     y = df_clean[target]
 
-    # Entraîner le Modèle (Le 'Modèle d'Analyse')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     model = RandomForestRegressor(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
 
-    # Analyse des Résidus
     y_pred = model.predict(X_test)
     analyze_residuals(y_test, y_pred, out_dir)
 
-    # SHAP Standard
     explainer = shap.TreeExplainer(model)
     shap_values = explainer(X_test)
 
-    # Beeswarm
     try:
         plt.figure(figsize=(8, 6))
         shap.plots.beeswarm(shap_values, show=False)
-        plt.title("Résumé SHAP (beeswarm)")
+        plt.title("SHAP Summary (Beeswarm)")
         plt.tight_layout()
-        plt.savefig(out_dir / "shap_summary.png", dpi=150)
+        for ext in ("png", "svg"):
+            plt.savefig(out_dir / f"shap_summary.{ext}", dpi=150)
         plt.close()
     except Exception:
         pass
 
-    # Bar plot
     try:
         mean_abs = np.abs(shap_values.values).mean(axis=0)
         order = np.argsort(mean_abs)[::-1]
-        features = np.array(factors)[order]
+        features_renamed = [label_map.get(factors[i], factors[i]) for i in order]
         vals = mean_abs[order]
         plt.figure(figsize=(8, max(4, len(factors) * 0.4)))
-        # Correction warning palette: assigner hue=y et legend=False
-        sns.barplot(x=vals, y=features, hue=features, palette="viridis", legend=False)
-        plt.xlabel("Moyenne |valeur SHAP|")
-        plt.title("Importance des caractéristiques (SHAP)")
+        sns.barplot(x=vals, y=features_renamed, hue=features_renamed, palette="viridis", legend=False)
+        plt.xlabel("Mean |SHAP value|")
+        plt.title("Feature Importance (SHAP)")
         plt.tight_layout()
-        plt.savefig(out_dir / "shap_bar.png", dpi=150)
+        for ext in ("png", "svg"):
+            plt.savefig(out_dir / f"shap_bar.{ext}", dpi=150)
         plt.close()
     except Exception:
         pass
 
-    # Valeurs d'Interaction SHAP
     try:
         shap_interaction_values = explainer.shap_interaction_values(X_test)
 
-        # CORRECTION ICI:
-        # Au lieu de passer feature_names comme liste (ce qui cause l'erreur d'indexation numpy),
-        # on renomme le DataFrame directement. SHAP gère très bien les DataFrames.
-        X_test_renamed = X_test.rename(columns=lambda x: x.replace("note_bert_", ""))
+        X_test_renamed = X_test.copy()
+        X_test_renamed.columns = [label_map.get(f, f) for f in factors]
 
         plt.figure(figsize=(12, 10))
-        # On passe le DataFrame renommé, et on retire l'argument feature_names
         shap.summary_plot(shap_interaction_values, X_test_renamed, show=False)
 
-        plt.title("Résumé des Interactions SHAP", fontsize=16, pad=20, loc="center")
+        plt.title("SHAP Interaction Effects", fontsize=16, pad=20, loc="center")
         plt.tight_layout()
-        plt.savefig(out_dir / "shap_interaction.png", dpi=150)
+        for ext in ("png", "svg"):
+            plt.savefig(out_dir / f"shap_interaction.{ext}", dpi=150)
         plt.close()
     except Exception:
         logger.exception("Erreur lors du calcul des interactions SHAP")
 
-    # Clustering SHAP (Segmentation)
-    kmeans = analyze_shap_clustering(shap_values, factors, out_dir, k)
+    kmeans = analyze_shap_clustering(shap_values, factors, label_map, out_dir, k)
 
-    # Ajouter les clusters et résidus
     if kmeans is not None:
         shap_values_all = explainer(df_clean[factors])
         clusters = kmeans.predict(shap_values_all.values)
 
-        # Mise à jour du dataframe original pour sauvegarde
         df_original.loc[df_clean.index, "cluster"] = clusters
 
-        # Mise à jour du dataframe de travail 'df_clean' pour le groupby suivant
         df_clean = df_clean.copy()
         df_clean["cluster"] = clusters
 
-        # Calculer les résidus
         y_pred_all = model.predict(df_clean[factors])
         residuals_all = df_clean[target] - y_pred_all
 
-        # Sauvegarde dans original
         df_original.loc[df_clean.index, "residual"] = residuals_all
         df_original.to_csv(out_dir / "data_with_stats.csv", index=False, sep=";")
         logger.info("CSV avec clusters et résidus sauvegardé")
 
-        # Matrice des moyennes par cluster (heatmap)
         try:
             cluster_means = df_clean.groupby("cluster")[factors + [target]].mean()
 
-            # Créer les annotations avec moyenne et erreur moyenne absolue
-            annot_df = pd.DataFrame(index=cluster_means.index, columns=factors + [target])
+            factors_renamed = [label_map.get(f, f) for f in factors]
+            target_renamed = label_map.get(target, target)
+            all_renamed = factors_renamed + [target_renamed]
+
+            cluster_means_display = cluster_means.copy()
+            cluster_means_display.columns = all_renamed
+
+            annot_df = pd.DataFrame(index=cluster_means.index, columns=all_renamed)
             for cluster in cluster_means.index:
                 group = df_clean[df_clean["cluster"] == cluster]
-                for var in factors + [target]:
+                for i, var in enumerate(factors + [target]):
                     mean_val = cluster_means.loc[cluster, var]
                     mae = (group[var] - mean_val).abs().mean()
-                    annot_df.loc[cluster, var] = f"{mean_val:.3f}\n({mae:.3f})"
+                    annot_df.loc[cluster, all_renamed[i]] = f"{mean_val:.3f}\n({mae:.3f})"
 
-            plt.figure(figsize=(12, 8))
-            sns.heatmap(cluster_means.T, cmap="coolwarm", center=0, annot=annot_df.T, fmt="")
-            plt.title("Moyennes des Facteurs et Intimité par Cluster\n(Erreur Moyenne Absolue en parenthèses)")
+            plt.figure(figsize=(14, 8))
+            sns.heatmap(cluster_means_display.T, cmap="coolwarm", center=0, annot=annot_df.T, fmt="")
+            plt.title("Mean Factors and Intimacy by Cluster\n(Mean Absolute Error in parentheses)")
             plt.tight_layout()
-            plt.savefig(out_dir / "cluster_means_heatmap.png", dpi=150)
+            for ext in ("png", "svg"):
+                plt.savefig(out_dir / f"cluster_means_heatmap.{ext}", dpi=150)
             plt.close()
             logger.info("Heatmap des moyennes par cluster sauvegardée")
         except Exception:
@@ -348,8 +355,8 @@ def compute_shap_advanced(
 
 
 def compute_stats_per_filename(df_with_stats: pd.DataFrame, target: str, factors: List[str], k: int, out_dir: Path):
-    """Calcule les stats par filename : moyennes, clusters, corrélations, VIF."""
-    # Vérification si filename existe
+    """Calcule les stats par filename : moyennes, écart‑type, min/max, quartiles,
+    clusters, corrélations, VIF."""
     if "filename" not in df_with_stats.columns:
         logger.warning("Colonne 'filename' manquante, saut de l'analyse par entretien.")
         return
@@ -358,29 +365,31 @@ def compute_stats_per_filename(df_with_stats: pd.DataFrame, target: str, factors
     stats_list = []
 
     for filename, group in grouped:
-        # Gestion du texte (concaténation si présent)
         text_concat = ""
         if "text" in group.columns:
             text_concat = " ".join(group["text"].astype(str).tolist())
 
-        # Conversion forcée en numérique pour les calculs de moyenne/corr
-        # (df_with_stats vient de df_original qui peut avoir des types mixtes)
         group_numeric = group.copy()
         cols_to_convert = [target] + factors
         for col in cols_to_convert:
             group_numeric[col] = pd.to_numeric(group[col], errors="coerce")
 
-        # Moyennes
-        mean_target = group_numeric[target].mean()
-        mean_factors = {f: group_numeric[f].mean() for f in factors}
+        stats_dict = {}
+        for var in cols_to_convert:
+            colnum = group_numeric[var]
+            stats_dict[f"mean_{var}"] = colnum.mean()
+            stats_dict[f"std_{var}"] = colnum.std()
+            stats_dict[f"min_{var}"] = colnum.min()
+            stats_dict[f"max_{var}"] = colnum.max()
+            stats_dict[f"range_{var}"] = colnum.max() - colnum.min()
+            stats_dict[f"q1_{var}"] = colnum.quantile(0.25)
+            stats_dict[f"q3_{var}"] = colnum.quantile(0.75)
 
-        # Compte des clusters (si la colonne existe)
         cluster_cols = {}
         if "cluster" in group.columns:
             cluster_counts = group["cluster"].value_counts()
             cluster_cols = {f"cluster_{i}": cluster_counts.get(i, 0) for i in range(k)}
 
-        # Corrélations sur les données numériques nettoyées
         corr_df = compute_correlations(group_numeric.dropna(subset=cols_to_convert), target, factors)
         corr_dict = {}
         for _, row in corr_df.iterrows():
@@ -388,12 +397,8 @@ def compute_stats_per_filename(df_with_stats: pd.DataFrame, target: str, factors
             corr_dict[f"pearson_{f}"] = row["pearson"]
             corr_dict[f"spearman_{f}"] = row["spearman"]
 
-        # VIF sur les données numériques nettoyées
-        # On utilise une fonction VIF qui retourne un dataframe ou None
-        # Attention: compute_vif recalcule les VIF globaux, ici on veut local par fichier ?
-        # Si le fichier a peu de lignes, VIF plantera ou sera infini. On tente quand même.
         vif_dict = {}
-        if len(group_numeric) > len(factors) + 1:  # Minimum de lignes pour VIF
+        if len(group_numeric) > len(factors) + 1:
             vif_df_local = compute_vif(group_numeric.dropna(subset=factors), factors)
             if vif_df_local is not None:
                 for _, row in vif_df_local.iterrows():
@@ -403,8 +408,7 @@ def compute_stats_per_filename(df_with_stats: pd.DataFrame, target: str, factors
         stat_row = {
             "filename": filename,
             "text": text_concat,
-            f"mean_{target}": mean_target,
-            **{f"mean_{f}": mean_factors[f] for f in factors},
+            **stats_dict,
             **cluster_cols,
             **corr_dict,
             **vif_dict,
@@ -426,6 +430,18 @@ def main():
     )
     parser.add_argument("--target", type=str, default=None, help="Nom de la colonne cible")
     parser.add_argument("--factors", type=str, nargs="*", default=None, help="Noms des colonnes de facteurs")
+    parser.add_argument(
+        "--label-target",
+        type=str,
+        default=None,
+        help="Libellé à utiliser pour la cible dans les graphiques",
+    )
+    parser.add_argument(
+        "--label-factors",
+        type=str,
+        default=None,
+        help="Libellés séparés par des virgules pour les facteurs (ordre doit correspondre)",
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("results/intimite/analyse_stat"), help="Dossier de sortie")
     parser.add_argument("--no-shap", action="store_true", help="Désactiver l'explication SHAP")
     parser.add_argument("--k-clusters", type=int, default=5, help="Nombre de clusters pour SHAP")
@@ -442,7 +458,18 @@ def main():
     target, default_factors = infer_default_columns(df, target_hint=args.target)
     factors = args.factors if args.factors else default_factors
 
-    logger.info("Cible : %s", target)
+    label_map = {target: args.label_target or target}
+    if args.label_factors:
+        labels = [l.strip() for l in args.label_factors.split(",")]
+        if len(labels) != len(factors):
+            logger.error("Nombre de libellés de facteurs incorrect (attendu %d).", len(factors))
+            sys.exit(1)
+        label_map.update({f: lab for f, lab in zip(factors, labels)})
+    else:
+        for f in factors:
+            label_map.setdefault(f, f)
+
+    logger.info("Cible : %s (affiché %s)", target, label_map[target])
     logger.info("Facteurs : %s", factors)
 
     missing = [c for c in [target] + factors if c not in df.columns]
@@ -459,57 +486,50 @@ def main():
     out_dir = args.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Corrélations
     corr_df = compute_correlations(df_clean, target, factors)
     corr_csv = out_dir / "correlations.csv"
     corr_df.to_csv(corr_csv, index=False, sep=";")
 
-    # Analyse VIF
     compute_vif(df_clean, factors, out_dir)
 
-    # Visuels
     try:
-        plot_heatmap(corr_df, target, out_dir / "heatmap.png")
+        plot_heatmap(corr_df, target, factors, label_map, out_dir / "heatmap")
     except Exception:
         pass
 
     for f in factors:
         try:
-            plot_scatter(df_clean, target, f, out_dir / f"scatter_{f}.png")
+            plot_scatter(df_clean, target, f, label_map, out_dir / f"scatter_{f}")
         except Exception:
             pass
 
-    # Analyse SHAP Avancée
     kmeans = None
     if not args.no_shap:
         if SHAP_AVAILABLE and SKLEARN_AVAILABLE:
-            kmeans = compute_shap_advanced(df_clean, df_original, target, factors, out_dir, args.k_clusters)
+            kmeans = compute_shap_advanced(df_clean, df_original, target, factors, label_map, out_dir, args.k_clusters)
         else:
             logger.warning("SHAP/Sklearn manquants, analyse avancée ignorée.")
 
-    # Stats par entretien
-    # Utiliser df_original (qui a le filename) mais filtré sur les index propres
-    if kmeans is not None:
-        df_with_stats = df_original.loc[df_clean.index].copy()
-        compute_stats_per_filename(df_with_stats, target, factors, args.k_clusters, out_dir)
+    df_with_stats = df_original.loc[df_clean.index].copy()
+    compute_stats_per_filename(df_with_stats, target, factors, args.k_clusters, out_dir)
 
-    # Résumé Texte
     summary_txt = out_dir / "correlation_summary.txt"
     with open(summary_txt, "w", encoding="utf-8") as f:
-        f.write("Résumé des Corrélations et Analyses\n")
-        f.write(f"Cible : {target}\n")
-        f.write("\n--- Corrélations ---\n")
+        f.write("Correlation and Analysis Summary\n")
+        f.write(f"Target: {target} ({label_map[target]})\n")
+        f.write("\n--- Correlations ---\n")
         for _, row in corr_df.iterrows():
-            f.write(f"{row['factor']}: r={row['pearson']:.3f}, rho={row['spearman']:.3f}\n")
+            factor_label = label_map.get(row["factor"], row["factor"])
+            f.write(f"{factor_label}: r={row['pearson']:.3f}, rho={row['spearman']:.3f}\n")
 
-        f.write("\n--- Fichiers Générés ---\n")
-        f.write("- vif_analysis.csv : Vérifier la multicolinéarité (VIF > 5 est élevé)\n")
-        f.write("- residuals_analysis.png : Vérifier les erreurs du modèle\n")
-        f.write("- shap_clustering_profiles.png : Segmentation des types d'intimité\n")
-        f.write("- shap_interaction.png : Effets d'interaction entre facteurs\n")
-        f.write("- data_with_clusters.csv : CSV d'entrée avec colonnes cluster et residual\n")
-        f.write("- cluster_means_heatmap.png : Matrice des moyennes des facteurs et intimité par cluster\n")
-        f.write("- stat_par_entretien.csv : Stats agrégées par filename\n")
+        f.write("\n--- Generated Files ---\n")
+        f.write("- vif_analysis.csv: Check multicollinearity (VIF > 5 is high)\n")
+        f.write("- residuals_analysis.png/svg: Check model errors\n")
+        f.write("- shap_clustering_profiles.png/svg: Intimacy type segmentation\n")
+        f.write("- shap_interaction.png/svg: Interaction effects between factors\n")
+        f.write("- data_with_stats.csv: Input CSV with cluster and residual columns\n")
+        f.write("- cluster_means_heatmap.png/svg: Matrix of mean factors and intimacy per cluster\n")
+        f.write("- stat_par_entretien.csv: Aggregated stats by filename\n")
 
     logger.info("Analyse terminée. Résultats dans %s", out_dir)
 
