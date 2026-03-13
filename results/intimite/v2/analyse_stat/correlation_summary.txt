@@ -1,14 +1,14 @@
 Correlation and Analysis Summary
-Target: note_bert_intimité (intimacy)
+Target: note_bert_intimité (Intimacy)
 
 --- Correlations ---
-language richness: r=0.450, rho=0.414
-fluency: r=0.495, rho=0.474
-emotions: r=0.560, rho=0.612
-imagination: r=0.460, rho=0.456
-expertise: r=0.240, rho=0.223
-vulnerability: r=0.295, rho=0.331
-difficulty of verbalisation: r=0.077, rho=0.168
+Language Richness: r=0.450, rho=0.414
+Fluency: r=0.495, rho=0.474
+Emotions: r=0.560, rho=0.612
+Imagination: r=0.460, rho=0.456
+Expertise: r=0.240, rho=0.223
+Vulnerability: r=0.295, rho=0.331
+Difficulty of Verbalisation: r=0.077, rho=0.168
 
 --- Generated Files ---
 - vif_analysis.csv: Check multicollinearity (VIF > 5 is high)

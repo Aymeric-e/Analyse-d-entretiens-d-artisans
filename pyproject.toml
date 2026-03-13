@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bert-artisan-nlp"
-version = "1.2.0"
+version = "1.2.1"
 description = "Analyse automatique d'entretiens d'artisans avec NER"
 authors = ["Aymeric Eyer <aymeric.eyer@gmail.com>"]
 license = "MIT"  # À vérifier

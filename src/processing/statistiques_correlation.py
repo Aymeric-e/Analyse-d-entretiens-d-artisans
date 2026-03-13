@@ -260,6 +260,9 @@ def compute_shap_advanced(
     explainer = shap.TreeExplainer(model)
     shap_values = explainer(X_test)
 
+    # Set English feature names for SHAP plots
+    shap_values.feature_names = [label_map.get(f, f) for f in factors]
+
     try:
         plt.figure(figsize=(8, 6))
         shap.plots.beeswarm(shap_values, show=False)
@@ -293,10 +296,10 @@ def compute_shap_advanced(
         X_test_renamed = X_test.copy()
         X_test_renamed.columns = [label_map.get(f, f) for f in factors]
 
-        plt.figure(figsize=(12, 10))
+        plt.figure(figsize=(14, 14))
         shap.summary_plot(shap_interaction_values, X_test_renamed, show=False)
 
-        plt.title("SHAP Interaction Effects", fontsize=16, pad=20, loc="center")
+        plt.suptitle("SHAP Interaction Effects", fontsize=16)
         plt.tight_layout()
         for ext in ("png", "svg"):
             plt.savefig(out_dir / f"shap_interaction.{ext}", dpi=150)
@@ -460,7 +463,7 @@ def main():
 
     label_map = {target: args.label_target or target}
     if args.label_factors:
-        labels = [l.strip() for l in args.label_factors.split(",")]
+        labels = [label.strip() for label in args.label_factors.split(",")]
         if len(labels) != len(factors):
             logger.error("Nombre de libellés de facteurs incorrect (attendu %d).", len(factors))
             sys.exit(1)
@@ -503,10 +506,9 @@ def main():
         except Exception:
             pass
 
-    kmeans = None
     if not args.no_shap:
         if SHAP_AVAILABLE and SKLEARN_AVAILABLE:
-            kmeans = compute_shap_advanced(df_clean, df_original, target, factors, label_map, out_dir, args.k_clusters)
+            _ = compute_shap_advanced(df_clean, df_original, target, factors, label_map, out_dir, args.k_clusters)
         else:
             logger.warning("SHAP/Sklearn manquants, analyse avancée ignorée.")
 
