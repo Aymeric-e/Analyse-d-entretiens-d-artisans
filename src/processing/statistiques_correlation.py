@@ -204,6 +204,7 @@ def analyze_residuals(y_test, y_pred, out_dir: Path):
     plt.subplot(1, 2, 2)
     sns.histplot(residuals, kde=True)
     plt.title("Distribution of Residuals")
+    plt.xlabel("Residuals")
 
     plt.tight_layout()
     for ext in ("png", "svg"):
